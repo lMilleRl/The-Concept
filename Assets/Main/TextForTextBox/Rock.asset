@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e01bca1f4120f24eaacdc9485371764, type: 3}
+  m_Name: Rock
+  m_EditorClassIdentifier: 
+  _ownText: kj kdjflkjlkdfjsaklj;kdjsfakl;jldfksajkl;fjdlk;ajslkfjasdl;kjflkjdsfal;kjl;k
+    fdsjlkjdsaflkj l;kdsja lkjlkdsj lkjsal kdjlk;jdfsa lkkjlk;dsja lkjsda;lkj flkjdfsakl;j;lkjsad;lk
+    jflkdsj lkjasldkdj lkj dskjdfkjkjdsnfn    md   dsf  ds  fds f s dfs  fd d f dsf 
+    fds  dsf ds  fsdj oj fjo  js ja s  sd ndkonoksn n  jsakjdkfjaspj fj pasj [pj
+    poj jp[o jasp joij i hioi hois hdoifijodsijfopi jdsojasdopijfokpdsafjf;lkjdsfa;j
+    ;klsajd lkjs lk jalkj l;kj saj al l;lj lkds jfl;jdsfkl jlkksjdalkjk l;ksdjakljflsdkjaldfksjlkdjal;kj
+    lksjl; kjlk ;kj ;ldkjlkj sdal;kjl;dskj fl;kjsfadlj ;daj;lkjas;jsadlkjdsflkjfdsal;kj
+    ;lkdsja lfkjl;kaj slk;ja;dslkj lkj ak jlkj lk jjk lds s k lk jfsaj f;asj;kfdsjakjsf;ksajlkjdsflkjaslkjafsj
+    ksadj dsakfjkddkdkk jkkj     BOCCHI THE ROCK!!!!
+  _fontSize: 72
+  _textAppearDuration: 1
+  _easeTextTweenType: 0

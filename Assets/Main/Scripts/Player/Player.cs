@@ -7,9 +7,13 @@ public class Player : MonoBehaviour
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
+    [SerializeField] private KeyCode _keyToInteract;
+
     private Rigidbody2D _rigidbody2D;
 
     private List<GameObject> _interactableObjects;
+
+    private bool _canUpdate = true;
 
     private void Start()
     {
@@ -19,16 +23,34 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Interact();
+        if (_canUpdate)
+        {
+            Interact();
+        }
     }
 
     private void FixedUpdate()
     {
-        float velocityX = Input.GetAxis("Horizontal") * _moveSpeed;
-        float velocityY = Input.GetAxis("Vertical") * _moveSpeed;
+        if (_canUpdate)
+        {
+            Move();
+        }
+        else
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+        }
+    }
 
+    private void Move()
+    {
+        float velocityX, velocityY;
+        velocityX = Input.GetAxis("Horizontal") * _moveSpeed;
+        velocityY = Input.GetAxis("Vertical") * _moveSpeed;
         _rigidbody2D.velocity = new Vector2(velocityX, velocityY);
     }
+
+    public void StopUpdate() => _canUpdate = false;
+    public void ResumeUpdate() => _canUpdate = true;
 
     private bool TryGetInteractableObjByMinDistance(out GameObject minDistanceObj)
     {
@@ -52,7 +74,7 @@ public class Player : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E) && TryGetInteractableObjByMinDistance(out GameObject objToInteract))
+        if (Input.GetKeyDown(_keyToInteract) && TryGetInteractableObjByMinDistance(out GameObject objToInteract))
         {
             if (objToInteract.TryGetComponent(out IInteractable interaction))
                 interaction.Activate();
