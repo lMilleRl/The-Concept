@@ -12,15 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e01bca1f4120f24eaacdc9485371764, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
-  _ownText: kj kdjflkjlkdfjsaklj;kdjsfakl;jldfksajkl;fjdlk;ajslkfjasdl;kjflkjdsfal;kjl;k
-    fdsjlkjdsaflkj l;kdsja lkjlkdsj lkjsal kdjlk;jdfsa lkkjlk;dsja lkjsda;lkj flkjdfsakl;j;lkjsad;lk
-    jflkdsj lkjasldkdj lkj dskjdfkjkjdsnfn    md   dsf  ds  fds f s dfs  fd d f dsf 
-    fds  dsf ds  fsdj oj fjo  js ja s  sd ndkonoksn n  jsakjdkfjaspj fj pasj [pj
-    poj jp[o jasp joij i hioi hois hdoifijodsijfopi jdsojasdopijfokpdsafjf;lkjdsfa;j
-    ;klsajd lkjs lk jalkj l;kj saj al l;lj lkds jfl;jdsfkl jlkksjdalkjk l;ksdjakljflsdkjaldfksjlkdjal;kj
-    lksjl; kjlk ;kj ;ldkjlkj sdal;kjl;dskj fl;kjsfadlj ;daj;lkjas;jsadlkjdsflkjfdsal;kj
-    ;lkdsja lfkjl;kaj slk;ja;dslkj lkj ak jlkj lk jjk lds s k lk jfsaj f;asj;kfdsjakjsf;ksajlkjdsflkjaslkjafsj
-    ksadj dsakfjkddkdkk jkkj     BOCCHI THE ROCK!!!!
+  _ownText: "This fist-sized stone does not gleam. It does not warm to the touch,
+    nor does it hum with obvious magic. At first glance, it is a mistake\u2014a lump
+    of unremarkable gray sediment, pitted and scarred as if it had been chewed by
+    time itself. But when the light shifts, or when you are not quite looking at
+    it, a faint, internal shimmer pulses from its core. Like a dying star seen through
+    murky water. Like a memory of a feeling you forgot you had."
   _fontSize: 72
   _textAppearDuration: 1
   _easeTextTweenType: 0
