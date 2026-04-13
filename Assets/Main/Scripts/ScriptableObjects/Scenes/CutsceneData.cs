@@ -1,0 +1,18 @@
+using DG.Tweening;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "New CutsceneData", menuName = "Game/CutsceneData")]
+public class CutsceneData : ScriptableObject
+{
+    [SerializeField] private Sprite _sprite;
+    [SerializeField] private Ease _scrollSpriteEase;
+    [Range(0f, float.MaxValue)] [SerializeField] private float scrollDurationInSec;
+    [SerializeField] private TextForTextBox _text;
+    [Range(0f, float.MaxValue)] [SerializeField] private float _pausePerPageInSec;
+    
+    public Sprite OwnSprite => _sprite;
+    public float ScrollDurationInSec => scrollDurationInSec;
+    public Ease ScrollSpriteEase => _scrollSpriteEase;
+    public TextForTextBox OwnTextInfo => _text;
+    public float PausePerPageInSec => _pausePerPageInSec;
+}

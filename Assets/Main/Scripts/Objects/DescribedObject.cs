@@ -13,6 +13,6 @@ public class DescribedObject : MonoBehaviour, IInteractable
 
     public void Activate()
     {
-        _textShower.Show(_textToShow);
+        _textShower.ShowText(_textToShow);
     }
 }

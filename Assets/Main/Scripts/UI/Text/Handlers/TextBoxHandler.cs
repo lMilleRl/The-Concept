@@ -7,33 +7,73 @@ using UnityEngine.Events;
 public class TextBoxHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private bool _isHasOwnDuration;
     [SerializeField] private KeyCode _nextPageKey;
 
     public UnityEvent OnShow;
     public UnityEvent OnEndPages;
 
-    public void Show(TextForTextBox description)
+    public void SetText(TextForTextBox text)
+    {
+        _text.overflowMode = TextOverflowModes.Page;
+        _text.text = text.OwnText;
+        _text.fontSize = text.FontSize;
+
+        _text.ForceMeshUpdate();
+    }
+    
+    public int GetPagesCount()
+    {
+        return _text.textInfo.pageCount;
+    }
+    
+    public Coroutine ShowText(TextForTextBox text)
     {
         OnShow?.Invoke();
 
-        _text.overflowMode = TextOverflowModes.Page;
-        _text.text = description.OwnText;
-        _text.fontSize = description.FontSize;
+        SetText(text);
 
-        _text.ForceMeshUpdate();
-
-        StartCoroutine(TurnPages(description));
+        return StartCoroutine(TurnPages(text));
     }
 
     private IEnumerator TurnPages(TextForTextBox description)
     {
+        var waitForKey = new WaitUntil(() => Input.GetKeyDown(_nextPageKey));
         for (int i = 1; i <= _text.textInfo.pageCount; i++)
         {
             _text.pageToDisplay = i;
             var textAppearAnim = _text.DOPage(_text.textInfo.pageInfo[i - 1], description.TextAppearDuration)
                 .SetEase(description.EaseTextTweenType);
-            yield return new DOTweenCYInstruction.WaitForCompletion(textAppearAnim);
-            yield return new WaitUntil(() => Input.GetKeyDown(_nextPageKey));
+            yield return textAppearAnim.WaitForCompletion();
+            yield return waitForKey;
+        }
+        
+        OnEndPages?.Invoke();
+    }
+    
+    public Coroutine ShowText(TextForTextBox text, float pausePerPageInSec)
+    {
+        OnShow?.Invoke();
+
+        _text.overflowMode = TextOverflowModes.Page;
+        _text.text = text.OwnText;
+        _text.fontSize = text.FontSize;
+
+        _text.ForceMeshUpdate();
+
+        return StartCoroutine(TurnPages(text));
+    }
+
+    private IEnumerator TurnPages(TextForTextBox description, float pausePerPageInSec)
+    {
+        var waitForPause = new WaitForSeconds(pausePerPageInSec);
+        for (int i = 1; i <= _text.textInfo.pageCount; i++)
+        {
+            _text.pageToDisplay = i;
+            var textAppearAnim = _text.DOPage(_text.textInfo.pageInfo[i - 1], description.TextAppearDuration)
+                .SetEase(description.EaseTextTweenType);
+            yield return textAppearAnim.WaitForCompletion();
+            yield return waitForPause;
         }
         
         OnEndPages?.Invoke();
