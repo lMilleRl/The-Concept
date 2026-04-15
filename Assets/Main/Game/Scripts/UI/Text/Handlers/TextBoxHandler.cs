@@ -27,13 +27,14 @@ public class TextBoxHandler : MonoBehaviour
         return _text.textInfo.pageCount;
     }
     
-    public Coroutine ShowText(TextForTextBox text)
+    public void ShowText(TextForTextBox text)
     {
         OnShow?.Invoke();
+        Player.Instance.StopUpdate();
 
         SetText(text);
 
-        return StartCoroutine(TurnPages(text));
+        StartCoroutine(TurnPages(text));
     }
 
     private IEnumerator TurnPages(TextForTextBox description)
@@ -49,11 +50,13 @@ public class TextBoxHandler : MonoBehaviour
         }
         
         OnEndPages?.Invoke();
+        Player.Instance.ResumeUpdate();
     }
     
-    public Coroutine ShowText(TextForTextBox text, float pausePerPageInSec)
+    public void ShowText(TextForTextBox text, float pausePerPageInSec)
     {
         OnShow?.Invoke();
+        Player.Instance.StopUpdate();
 
         _text.overflowMode = TextOverflowModes.Page;
         _text.text = text.OwnText;
@@ -61,7 +64,7 @@ public class TextBoxHandler : MonoBehaviour
 
         _text.ForceMeshUpdate();
 
-        return StartCoroutine(TurnPages(text, pausePerPageInSec));
+        StartCoroutine(TurnPages(text, pausePerPageInSec));
     }
 
     private IEnumerator TurnPages(TextForTextBox description, float pausePerPageInSec)
@@ -77,5 +80,6 @@ public class TextBoxHandler : MonoBehaviour
         }
         
         OnEndPages?.Invoke();
+        Player.Instance.ResumeUpdate();
     }
 }

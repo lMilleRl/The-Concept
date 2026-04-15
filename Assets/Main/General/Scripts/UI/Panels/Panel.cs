@@ -14,8 +14,6 @@ public class Panel : MonoBehaviour
 
     private CanvasGroup _canvasGroup;
 
-    public Tween CurrentTween { get; private set; }
-
     private void Start()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -28,17 +26,21 @@ public class Panel : MonoBehaviour
         }
     }
 
-    public void Show()
+    public void Show() => ShowWithAnimation();
+    
+    public Tween ShowWithAnimation()
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        CurrentTween = _canvasGroup.DOFade(1f, _appearanceDuration);
+        return _canvasGroup.DOFade(1f, _appearanceDuration);
     }
 
-    public void Hide()
+    public void Hide() => HideWithAnimation();
+    
+    public Tween HideWithAnimation()
     {
         _canvasGroup.interactable = false;
         _canvasGroup.blocksRaycasts = false;
-        CurrentTween = _canvasGroup.DOFade(0f, _fadingDuration);
+        return _canvasGroup.DOFade(0f, _fadingDuration);
     }
 }

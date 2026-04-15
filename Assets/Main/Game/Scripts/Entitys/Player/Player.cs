@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+    
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
@@ -15,6 +18,11 @@ public class Player : MonoBehaviour
 
     private bool _canUpdate = true;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -41,6 +49,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent(out IInteractable interactableObject))
+        {
+            _interactableObjects.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        _interactableObjects.Remove(other.gameObject);
+    }
+    
     private void Move()
     {
         float velocityX, velocityY;
@@ -81,16 +102,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnDestroy()
     {
-        if (other.gameObject.TryGetComponent(out IInteractable interactableObject))
-        {
-            _interactableObjects.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        _interactableObjects.Remove(other.gameObject);
+        if (Instance == this)
+            Instance = null;
     }
 }
