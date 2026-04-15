@@ -61,7 +61,7 @@ public class TextBoxHandler : MonoBehaviour
 
         _text.ForceMeshUpdate();
 
-        return StartCoroutine(TurnPages(text));
+        return StartCoroutine(TurnPages(text, pausePerPageInSec));
     }
 
     private IEnumerator TurnPages(TextForTextBox description, float pausePerPageInSec)

@@ -19,5 +19,5 @@ MonoBehaviour:
     it, a faint, internal shimmer pulses from its core. Like a dying star seen through
     murky water. Like a memory of a feeling you forgot you had."
   _fontSize: 72
-  _textAppearDuration: 1
+  _textAppearDuration: 3
   _easeTextTweenType: 0
