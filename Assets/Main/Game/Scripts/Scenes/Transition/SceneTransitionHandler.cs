@@ -23,18 +23,32 @@ public class SceneTransitionHandler : MonoBehaviour
     {
         StopPlayerUpdate();
         
-        yield return _fadePanel.DOFade(1f, transitionData.FadeInTransitionPanelDurationInSec)
-            .SetEase(transitionData.TransitionPanelEase).WaitForCompletion();
-        SceneManager.LoadScene(transitionData.SceneIndex);
+        yield return FadeInTransitionPanel
+            (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
+        SceneManager.LoadScene(transitionData.SceneName);
         
         yield return PlayCutscene(transitionData.OwnCutsceneData);
         
-        _fadePanel.DOFade(0f, transitionData.FadeOutTransitionPanelDurationInSec)
-            .SetEase(transitionData.TransitionPanelEase);
+        FadeOutTransitionPanel
+            (transitionData.FadeOutTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
 
         ResumePlayerUpdate();
     }
 
+    private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
+    {
+        _fadePanel.raycastTarget = true;
+        yield return _fadePanel.DOFade(1f, durationInSec)
+            .SetEase(easeType).WaitForCompletion();
+    }
+    
+    private void FadeOutTransitionPanel(float durationInSec, Ease easeType)
+    {
+        _fadePanel.DOFade(0f, durationInSec)
+            .SetEase(easeType);
+        _fadePanel.raycastTarget = false;
+    }
+    
     private void StopPlayerUpdate()
     {
         var player = FindObjectOfType<Player>();

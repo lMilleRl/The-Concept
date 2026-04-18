@@ -30,7 +30,6 @@ public class TextBoxHandler : MonoBehaviour
     public void ShowText(TextForTextBox text)
     {
         OnShow?.Invoke();
-        Player.Instance.StopUpdate();
 
         SetText(text);
 
@@ -50,13 +49,11 @@ public class TextBoxHandler : MonoBehaviour
         }
         
         OnEndPages?.Invoke();
-        Player.Instance.ResumeUpdate();
     }
     
     public void ShowText(TextForTextBox text, float pausePerPageInSec)
     {
         OnShow?.Invoke();
-        Player.Instance.StopUpdate();
 
         _text.overflowMode = TextOverflowModes.Page;
         _text.text = text.OwnText;
@@ -80,6 +77,5 @@ public class TextBoxHandler : MonoBehaviour
         }
         
         OnEndPages?.Invoke();
-        Player.Instance.ResumeUpdate();
     }
 }

@@ -1,28 +1,26 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
-    
+    [Range(0f, float.MaxValue)] [SerializeField]
+    private float _interactDelayAfterStopUpdateInSec;
+
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
     [SerializeField] private KeyCode _keyToInteract;
 
+    private Vector2 _moveDirection;
     private Rigidbody2D _rigidbody2D;
-
     private List<GameObject> _interactableObjects;
-
     private bool _canUpdate = true;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private bool _canInteract = true;
     
+    public Vector2 Velocity => _rigidbody2D.velocity;
+
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -49,7 +47,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnInteractionTriggerEnter(Collider2D other)
     {
         if (other.gameObject.TryGetComponent(out IInteractable interactableObject))
         {
@@ -57,21 +55,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void OnInteractionTriggerExit(Collider2D other)
     {
         _interactableObjects.Remove(other.gameObject);
     }
-    
+
     private void Move()
     {
-        float velocityX, velocityY;
-        velocityX = Input.GetAxis("Horizontal") * _moveSpeed;
-        velocityY = Input.GetAxis("Vertical") * _moveSpeed;
-        _rigidbody2D.velocity = new Vector2(velocityX, velocityY);
+        float moveX, moveY;
+        moveX = Input.GetAxis("Horizontal");
+        moveY = Input.GetAxis("Vertical");
+        _rigidbody2D.velocity = new Vector2(moveX, moveY) * _moveSpeed;
     }
 
-    public void StopUpdate() => _canUpdate = false;
-    public void ResumeUpdate() => _canUpdate = true;
+    public void StopUpdate()
+    {
+        _canInteract = false;
+        _canUpdate = false;
+    }
+
+    public void ResumeUpdate()
+    {
+        StartCoroutine(InteractDelay());
+        _canUpdate = true;
+    }
+
+    private IEnumerator InteractDelay()
+    {
+        yield return new WaitForSeconds(_interactDelayAfterStopUpdateInSec);
+        _canInteract = true;
+    }
 
     private bool TryGetInteractableObjByMinDistance(out GameObject minDistanceObj)
     {
@@ -95,16 +108,12 @@ public class Player : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(_keyToInteract) && TryGetInteractableObjByMinDistance(out GameObject objToInteract))
+        bool _isInteractingNow = _canInteract && Input.GetKeyDown(_keyToInteract);
+        if (_isInteractingNow)
         {
-            if (objToInteract.TryGetComponent(out IInteractable interaction))
-                interaction.Activate();
+            if (TryGetInteractableObjByMinDistance(out GameObject objToInteract))
+                if (objToInteract.TryGetComponent(out IInteractable interaction))
+                    interaction.Activate();
         }
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-            Instance = null;
     }
 }

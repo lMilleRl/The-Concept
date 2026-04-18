@@ -3,10 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class SwitchSceneHandler : MonoBehaviour
 {
-    [SerializeField] private int _sceneToSwith;
+    [SerializeField] private SceneTransitionHandler _sceneTransitionHandler;
+    [SerializeField] private SceneTransitionData _sceneTransitionData;
 
+    
     public void SwitchToScene()
     {
-        SceneManager.LoadScene(_sceneToSwith);
+        _sceneTransitionHandler.StartAnimatedTransitionToScene(_sceneTransitionData);
     }
 }
