@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a73b360008d5464da1c14ab2b245352, type: 3}
-  m_Name: ToLocation2
+  m_Name: ToLocation3
   m_EditorClassIdentifier: 
-  _sceneName: Location 2
-  _transitionPanelEase: 0
-  _fadeInTransitionPanelDurationInSec: 2
-  _fadeOutTransitionPanelDurationInSec: 2
+  _sceneName: Location 3
+  _transitionPanelEase: 33
+  _fadeInTransitionPanelDurationInSec: 3
+  _fadeOutTransitionPanelDurationInSec: 5
   ownCutsceneData: {fileID: 11400000, guid: cd4cf80ef88538a448adca3b74ea306b, type: 2}

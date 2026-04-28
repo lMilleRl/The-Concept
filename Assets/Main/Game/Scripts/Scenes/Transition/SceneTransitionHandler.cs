@@ -26,6 +26,7 @@ public class SceneTransitionHandler : MonoBehaviour
         yield return FadeInTransitionPanel
             (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
         SceneManager.LoadScene(transitionData.SceneName);
+        StopPlayerUpdate();
         
         yield return PlayCutscene(transitionData.OwnCutsceneData);
         

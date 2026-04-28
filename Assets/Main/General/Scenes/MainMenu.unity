@@ -2094,7 +2094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneTransitionHandler: {fileID: 1250396952}
-  _sceneTransitionData: {fileID: 11400000, guid: a72e734e0d95df44cb98d966e23bed2b, type: 2}
+  _sceneTransitionData: {fileID: 11400000, guid: 8c6af24c6e7b486428dee111931d0e34, type: 2}
 --- !u!1 &2121273932 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6329267345792103770, guid: 5a96496c02ace9d42b4fe63fd31200aa, type: 3}

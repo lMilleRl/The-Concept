@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: b71a31cd43d9a4e4da4fffec0e709639, type: 3}
   _scrollSpriteEase: 0
-  scrollDurationInSec: 1
+  scrollDurationInSec: 20
   _text: {fileID: 11400000, guid: b921bfcf26c158940b3cbb75c07db82f, type: 2}
-  _pausePerPageInSec: 1
-  _uiFadeInDurationInSec: 1
-  _uiFadeOutDurationInSec: 1
+  _pausePerPageInSec: 2
+  _uiFadeInDurationInSec: 2
+  _uiFadeOutDurationInSec: 2
   _pauseBeforeCutsceneInSec: 2
   _pauseAfterCutsceneInSec: 2.5
