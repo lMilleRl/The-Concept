@@ -105535,7 +105535,7 @@ PrefabInstance:
     - target: {fileID: 528519469849982068, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: _textToShow
       value: 
-      objectReference: {fileID: 11400000, guid: 4e8f6e8a3a39fdb4087f28a8574f8388, type: 2}
+      objectReference: {fileID: 11400000, guid: 230dc34aa91364141bf2ea2b3b7197f0, type: 2}
     - target: {fileID: 1874529531446888243, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_Name
       value: kite

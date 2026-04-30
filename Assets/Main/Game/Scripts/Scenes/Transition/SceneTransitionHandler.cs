@@ -22,14 +22,14 @@ public class SceneTransitionHandler : MonoBehaviour
     private IEnumerator TranslateToScene(SceneTransitionData transitionData)
     {
         StopPlayerUpdate();
-        
+
         yield return FadeInTransitionPanel
             (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
         SceneManager.LoadScene(transitionData.SceneName);
         StopPlayerUpdate();
-        
-        yield return PlayCutscene(transitionData.OwnCutsceneData);
-        
+
+        yield return PlayCutscenes(transitionData.OwnCutscenesData);
+
         FadeOutTransitionPanel
             (transitionData.FadeOutTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
 
@@ -42,24 +42,30 @@ public class SceneTransitionHandler : MonoBehaviour
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
-    
+
     private void FadeOutTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.DOFade(0f, durationInSec)
             .SetEase(easeType);
         _fadePanel.raycastTarget = false;
     }
-    
+
     private void StopPlayerUpdate()
     {
         var player = FindObjectOfType<Player>();
         player?.StopUpdate();
     }
-    
+
     private void ResumePlayerUpdate()
     {
         var player = FindObjectOfType<Player>();
         player?.ResumeUpdate();
+    }
+
+    private IEnumerator PlayCutscenes(CutsceneData[] cutscenes)
+    {
+        foreach (var cutsceneData in cutscenes)
+            yield return PlayCutscene(cutsceneData);
     }
     
     private IEnumerator PlayCutscene(CutsceneData cutscene)
@@ -67,16 +73,16 @@ public class SceneTransitionHandler : MonoBehaviour
         if (cutscene != null)
         {
             yield return new WaitForSeconds(cutscene.PauseBeforeCutsceneInSec);
-            
+
             var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
             _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
-            
+
             yield return _cutscenesHandler.PlayCutscene(cutscene);
-            
+
             var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
             var fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
             yield return fadeOutAnim.WaitForCompletion();
-            
+
             yield return new WaitForSeconds(cutscene.PauseAfterCutsceneInSec);
         }
     }

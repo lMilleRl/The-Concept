@@ -14,11 +14,11 @@ public class SceneTransitionData : ScriptableObject
     [Range(0, float.MaxValue)] [SerializeField]
     private float _fadeOutTransitionPanelDurationInSec;
 
-    [SerializeField] private CutsceneData ownCutsceneData;
+    [SerializeField] private CutsceneData[] ownCutscenesData;
 
     public string SceneName => _sceneName;
     public float FadeInTransitionPanelDurationInSec => _fadeInTransitionPanelDurationInSec;
     public float FadeOutTransitionPanelDurationInSec => _fadeOutTransitionPanelDurationInSec;
     public Ease TransitionPanelEase => _transitionPanelEase;
-    public CutsceneData OwnCutsceneData => ownCutsceneData;
+    public CutsceneData[] OwnCutscenesData => ownCutscenesData;
 }

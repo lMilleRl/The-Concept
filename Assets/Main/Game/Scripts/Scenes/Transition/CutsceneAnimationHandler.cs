@@ -15,37 +15,80 @@ public class CutsceneAnimationHandler : MonoBehaviour
     {
         _initImagePos = _currentImage.rectTransform.anchoredPosition;
     }
-    
+
     public IEnumerator PlayCutscene(CutsceneData cutscene)
     {
-        AdjustImageToFitSprite(cutscene.OwnSprite);
-        _currentImage.sprite = cutscene.OwnSprite;
+        if (cutscene.IsScrolling)
+        {
+            PlayImageScroll(cutscene.OwnSprite, cutscene.ScrollDurationInSec, cutscene.ScrollSpriteEase);
+        }
+        else
+        {
+            PlayStaticImage(cutscene.OwnSprite);
+        }
 
-        float targetY = _initImagePos.y + _currentImage.rectTransform.rect.height;
-
-        _currentImage.rectTransform.DOAnchorPosY(targetY, cutscene.ScrollDurationInSec)
-            .SetEase(cutscene.ScrollSpriteEase);
         _textBoxHandler.ShowText(cutscene.OwnTextInfo, cutscene.PausePerPageInSec);
 
         float textDuration = (cutscene.PausePerPageInSec + cutscene.OwnTextInfo.TextAppearDuration)
                              * _textBoxHandler.GetPagesCount();
+        float imageAnimationDuration = cutscene.IsScrolling ? cutscene.ScrollDurationInSec : 0f;
 
-        float totalDuration = Mathf.Max(textDuration, cutscene.ScrollDurationInSec);
+        float totalDuration = Mathf.Max(textDuration, imageAnimationDuration);
 
         float durationWithFading = totalDuration + cutscene.UIFadeOutDurationInSec;
         StartCoroutine(ResetCutsceneImagePosAfter(durationWithFading));
-        
+
         yield return new WaitForSeconds(totalDuration);
     }
 
-    private void AdjustImageToFitSprite(Sprite sprite)
+    // чтобы корректно отыграть скролл, нужно, чтобы пивот изображения был (0.5, 1)
+    private void PlayImageScroll(Sprite sprite, float duration, Ease easeType)
+    {
+        FitImageToMaskWidth(sprite);
+        _currentImage.sprite = sprite;
+
+        // предполагается, что изначальная позиция изображения - корректная
+        float targetY = _initImagePos.y + _currentImage.rectTransform.rect.height;
+
+        _currentImage.rectTransform.DOAnchorPosY(targetY, duration)
+            .SetEase(easeType);
+    }
+
+    private void PlayStaticImage(Sprite sprite)
+    {
+        FitImageToMaskHeight(sprite);
+        _currentImage.sprite = sprite;
+        FitImageToMask();
+    }
+
+    // Работает для image с anchors (0,0)-(1,1) (stretched) и pivot (0.5, 1).
+    // При других настройках формулу нужно пересчитать.
+    private void FitImageToMask()
+    {
+        _currentImage.rectTransform.anchoredPosition = Vector2.zero;
+    }
+
+    private void FitImageToMaskWidth(Sprite sprite)
     {
         float maskWidth = _mask.rectTransform.rect.width;
-        float spriteAspect = sprite.rect.height / sprite.rect.width;
-        float newHeight = maskWidth * spriteAspect;
+        float newHeight = maskWidth * GetHeightToWidthRatio(sprite);
+        SetImageSize(maskWidth, newHeight);
+    }
 
+    private void FitImageToMaskHeight(Sprite sprite)
+    {
+        float maskHeight = _mask.rectTransform.rect.height;
+        float newWidth = maskHeight * GetWidthToHeightRaio(sprite);
+        SetImageSize(newWidth, maskHeight);
+    }
+
+    private float GetHeightToWidthRatio(Sprite sprite) => sprite.rect.height / sprite.rect.width;
+    private float GetWidthToHeightRaio(Sprite sprite) => sprite.rect.width / sprite.rect.height;
+
+    private void SetImageSize(float newWidth, float newHeight)
+    {
         var rt = _currentImage.rectTransform;
-        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maskWidth);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newWidth);
         rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newHeight);
     }
 

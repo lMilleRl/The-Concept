@@ -6,6 +6,7 @@ public class CutsceneData : ScriptableObject
 {
     [SerializeField] private Sprite _sprite;
     [SerializeField] private Ease _scrollSpriteEase;
+    [SerializeField] private bool _isScrolling;
     [Range(0f, float.MaxValue)] [SerializeField] private float scrollDurationInSec;
     [SerializeField] private TextForTextBox _text;
     [Range(0f, float.MaxValue)] [SerializeField] private float _pausePerPageInSec;
@@ -17,6 +18,7 @@ public class CutsceneData : ScriptableObject
     [Range(0f, float.MaxValue)] [SerializeField] private float _pauseAfterCutsceneInSec;
     
     public Sprite OwnSprite => _sprite;
+    public bool IsScrolling => _isScrolling;
     public float ScrollDurationInSec => scrollDurationInSec;
     public Ease ScrollSpriteEase => _scrollSpriteEase;
     public TextForTextBox OwnTextInfo => _text;
