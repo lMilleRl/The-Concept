@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneName: Prelude
   _transitionPanelEase: 0
-  _fadeInTransitionPanelDurationInSec: 3
-  _fadeOutTransitionPanelDurationInSec: 2
-  ownCutsceneData: {fileID: 0}
+  _fadeInTransitionPanelDurationInSec: 2
+  _fadeOutTransitionPanelDurationInSec: 1
+  ownCutscenesData: []

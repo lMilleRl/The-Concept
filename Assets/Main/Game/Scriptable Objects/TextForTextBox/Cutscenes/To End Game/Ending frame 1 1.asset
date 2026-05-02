@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e01bca1f4120f24eaacdc9485371764, type: 3}
   m_Name: Ending frame 1 1
   m_EditorClassIdentifier: 
-  _ownText: There is no exit.<page>You are in a "concept." An imaginary universe.<page>No
-    physics. No return.
+  _ownText: '"There is no exit."<page>"You are in a "concept." An imaginary universe."<page>"No
+    physics. No return."'
   _fontSize: 72
-  _textAppearDuration: 3
+  _textAppearDuration: 2
   _easeTextTweenType: 1

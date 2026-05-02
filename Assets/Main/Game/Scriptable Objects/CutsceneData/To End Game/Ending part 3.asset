@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac42f40c2565e542aedcc9f62ccf21e, type: 3}
+  m_Name: Ending part 3
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 21300000, guid: b71a31cd43d9a4e4da4fffec0e709639, type: 3}
+  _scrollSpriteEase: 1
+  _isScrolling: 0
+  scrollDurationInSec: 0
+  _text: {fileID: 11400000, guid: bf3a09a97f9d54341968b7c635980443, type: 2}
+  _pausePerPageInSec: 0.5
+  _uiFadeInDurationInSec: 0
+  _uiFadeOutDurationInSec: 0
+  _pauseBeforeCutsceneInSec: 0
+  _pauseAfterCutsceneInSec: 0

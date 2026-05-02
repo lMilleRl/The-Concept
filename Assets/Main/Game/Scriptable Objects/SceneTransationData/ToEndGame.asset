@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: ToEndGame
   m_EditorClassIdentifier: 
   _sceneName: MainMenu
-  _transitionPanelEase: 0
-  _fadeInTransitionPanelDurationInSec: 3
-  _fadeOutTransitionPanelDurationInSec: 5
-  ownCutsceneData: {fileID: 11400000, guid: cd4cf80ef88538a448adca3b74ea306b, type: 2}
+  _transitionPanelEase: 1
+  _fadeInTransitionPanelDurationInSec: 1
+  _fadeOutTransitionPanelDurationInSec: 0
+  ownCutscenesData:
+  - {fileID: 11400000, guid: b1bd44b73b26de34dbe4cfac494269fa, type: 2}
+  - {fileID: 11400000, guid: ae57be96ed4443b4e831ff97377015bf, type: 2}
+  - {fileID: 11400000, guid: 74c1114178e15da4da6991a60f8544dc, type: 2}
+  - {fileID: 11400000, guid: 4ea5f57fd20cea74c9edf1ddc6dcdd57, type: 2}
+  - {fileID: 11400000, guid: 9dff27f8b7f72bd4e89c708b2667a9c7, type: 2}
