@@ -130,17 +130,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1676070029}
     m_Modifications:
+    - target: {fileID: 5857568135399309134, guid: 73204b06194a7054f83572680c085181, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8abc5e6b963bce74d8c4c756188fa9ef, type: 3}
     - target: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_Name
-      value: Broken train
+      value: Broken tank
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -37.7
+      value: -28.8
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -11
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.z
@@ -193,17 +197,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1676070029}
     m_Modifications:
+    - target: {fileID: 5857568135399309134, guid: 73204b06194a7054f83572680c085181, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e9c4975dd2bed14db6bcf0ef3c87cfc, type: 3}
+    - target: {fileID: 5857568135399309134, guid: 73204b06194a7054f83572680c085181, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_Name
-      value: Broken tank
+      value: Broken train
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.1
+      value: -15.7
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8647397937665062944, guid: 73204b06194a7054f83572680c085181, type: 3}
       propertyPath: m_LocalPosition.z
@@ -85965,13 +85977,17 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1558281699804318881, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 89cbbd728ebd3fc4eb47f0e5a6109d44, type: 3}
     - target: {fileID: 1874529531446888243, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_Name
       value: Broken house
       objectReference: {fileID: 0}
     - target: {fileID: 2860807752700787525, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -101.2
+      value: -119.9
       objectReference: {fileID: 0}
     - target: {fileID: 2860807752700787525, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_LocalPosition.y
@@ -85983,11 +85999,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4389841164513299407, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -67
+      value: -78.8
       objectReference: {fileID: 0}
     - target: {fileID: 4389841164513299407, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.4
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 7540125523149690292, guid: 5389d9215ca2ec14cb57d8197fe84467, type: 3}
       propertyPath: _transitionData
