@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class SceneTransitionHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject _rootToDestroyAfterTransition;
     [SerializeField] private Image _fadePanel;
     [SerializeField] private CanvasGroup _fadeCutsceneGroup;
     [SerializeField] private CutsceneAnimationHandler _cutscenesHandler;
-
 
     private void OnEnable() => SceneTransitionTrigger.OnTriggerActivated += StartAnimatedTransitionToScene;
     private void OnDisable() => SceneTransitionTrigger.OnTriggerActivated -= StartAnimatedTransitionToScene;
@@ -27,27 +27,31 @@ public class SceneTransitionHandler : MonoBehaviour
             (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
         SceneManager.LoadScene(transitionData.SceneName);
         StopPlayerUpdate();
+        MuteAmbient();
 
         yield return PlayCutscenes(transitionData.OwnCutscenesData);
 
-        FadeOutTransitionPanel
+        yield return FadeOutTransitionPanel
             (transitionData.FadeOutTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
-
+        
+        Destroy(_rootToDestroyAfterTransition);
         ResumePlayerUpdate();
     }
 
     private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = true;
+        FadeOutAmbient(durationInSec);
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
 
-    private void FadeOutTransitionPanel(float durationInSec, Ease easeType)
+    private IEnumerator FadeOutTransitionPanel(float durationInSec, Ease easeType)
     {
-        _fadePanel.DOFade(0f, durationInSec)
-            .SetEase(easeType);
         _fadePanel.raycastTarget = false;
+        FadeInAmbient(durationInSec);
+        yield return _fadePanel.DOFade(0f, durationInSec)
+            .SetEase(easeType).WaitForCompletion();
     }
 
     private void StopPlayerUpdate()
@@ -62,12 +66,30 @@ public class SceneTransitionHandler : MonoBehaviour
         player?.ResumeUpdate();
     }
 
+    private void MuteAmbient()
+    {
+        var audioManager = FindObjectOfType<AudioManager>();
+        audioManager?.MuteAmbient();
+    }
+
+    private void FadeOutAmbient(float duration)
+    {
+        var audioManager = FindObjectOfType<AudioManager>();
+        audioManager?.FadeAmbient(0f, duration);
+    }
+
+    private void FadeInAmbient(float duration)
+    {
+        var audioManager = FindObjectOfType<AudioManager>();
+        audioManager?.FadeAmbient(1f, duration);
+    }
+
     private IEnumerator PlayCutscenes(CutsceneData[] cutscenes)
     {
         foreach (var cutsceneData in cutscenes)
             yield return PlayCutscene(cutsceneData);
     }
-    
+
     private IEnumerator PlayCutscene(CutsceneData cutscene)
     {
         if (cutscene != null)
