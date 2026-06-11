@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac42f40c2565e542aedcc9f62ccf21e, type: 3}
   m_Name: Cutscene To Location 1 2
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 9ead5a68aca4f144cbd9343493a4f87b, type: 3}
-  _scrollSpriteEase: 1
-  _isScrolling: 1
-  scrollDurationInSec: 10
-  _text: {fileID: 11400000, guid: 714fce7bdfced464d8afb06b36088931, type: 2}
-  _pausePerPageInSec: 1
-  _uiFadeInDurationInSec: 1
-  _uiFadeOutDurationInSec: 1
+  _clip: {fileID: 0}
+  _uiFadeInDurationInSec: 0
+  _uiFadeOutDurationInSec: 0
   _pauseBeforeCutsceneInSec: 0
-  _pauseAfterCutsceneInSec: 2
+  _pauseAfterCutsceneInSec: 0

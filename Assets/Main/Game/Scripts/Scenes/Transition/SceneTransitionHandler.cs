@@ -26,11 +26,11 @@ public class SceneTransitionHandler : MonoBehaviour
         yield return FadeInTransitionPanel
             (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
         SceneManager.LoadScene(transitionData.SceneName);
+        VolumeAudioManager.Instance.MuteGameplay();
         StopPlayerUpdate();
-        MuteAmbient();
 
         yield return PlayCutscenes(transitionData.OwnCutscenesData);
-
+        
         yield return FadeOutTransitionPanel
             (transitionData.FadeOutTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
         
@@ -41,7 +41,7 @@ public class SceneTransitionHandler : MonoBehaviour
     private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = true;
-        FadeOutAmbient(durationInSec);
+        FadeOutSound(durationInSec, easeType);
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
@@ -49,9 +49,19 @@ public class SceneTransitionHandler : MonoBehaviour
     private IEnumerator FadeOutTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = false;
-        FadeInAmbient(durationInSec);
+        FadeInSound(durationInSec, easeType);
         yield return _fadePanel.DOFade(0f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
+    }
+
+    private void FadeOutSound(float durationInSec, Ease easeType)
+    {
+        VolumeAudioManager.Instance.FadeOutGameplay(durationInSec, easeType);
+    }
+
+    private void FadeInSound(float durationInSec, Ease easeType)
+    {
+        VolumeAudioManager.Instance.InitializeSceneAudio(durationInSec, easeType);
     }
 
     private void StopPlayerUpdate()
@@ -66,24 +76,6 @@ public class SceneTransitionHandler : MonoBehaviour
         player?.ResumeUpdate();
     }
 
-    private void MuteAmbient()
-    {
-        var audioManager = FindObjectOfType<AudioManager>();
-        audioManager?.MuteAmbient();
-    }
-
-    private void FadeOutAmbient(float duration)
-    {
-        var audioManager = FindObjectOfType<AudioManager>();
-        audioManager?.FadeAmbient(0f, duration);
-    }
-
-    private void FadeInAmbient(float duration)
-    {
-        var audioManager = FindObjectOfType<AudioManager>();
-        audioManager?.FadeAmbient(1f, duration);
-    }
-
     private IEnumerator PlayCutscenes(CutsceneData[] cutscenes)
     {
         foreach (var cutsceneData in cutscenes)
@@ -95,12 +87,12 @@ public class SceneTransitionHandler : MonoBehaviour
         if (cutscene != null)
         {
             yield return new WaitForSeconds(cutscene.PauseBeforeCutsceneInSec);
-
+            
             var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
             _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
-
+            
             yield return _cutscenesHandler.PlayCutscene(cutscene);
-
+            
             var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
             var fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
             yield return fadeOutAnim.WaitForCompletion();

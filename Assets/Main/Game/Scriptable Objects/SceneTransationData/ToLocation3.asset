@@ -15,7 +15,7 @@ MonoBehaviour:
   _sceneName: Location 3
   _transitionPanelEase: 33
   _fadeInTransitionPanelDurationInSec: 1
-  _fadeOutTransitionPanelDurationInSec: 0
+  _fadeOutTransitionPanelDurationInSec: 5
   ownCutscenesData:
   - {fileID: 11400000, guid: d11d8013622d3b44d87e8bb31105eafa, type: 2}
   - {fileID: 11400000, guid: 2366dfb10b5f91d45af5d3280756f3ff, type: 2}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9115720251307501814}
   - component: {fileID: 3215183798465051083}
   m_Layer: 0
-  m_Name: EmbientAudio
+  m_Name: Audio Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,10 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0371532356eb65741b8d92a1fbfd399d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ambientSource: {fileID: 3215183798465051083}
-  _maxVolume: 1
-  _volumeOnStart: 0
-  _volumeFadeOnStart: 3
+  _mixer: {fileID: 24100000, guid: bf5e11fad988cf144afa2d4fb70876ae, type: 2}
+  _gameplayVolumeParam: GameplayVolume
+  _cutsceneVolumeParam: CutsceneVolume
+  _isFadeInGameplaySoundOnStart: 0
+  _easeFadeInType: 0
+  _fadeInGameplaySoundDuration: 2
 --- !u!82 &3215183798465051083
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58,7 +60,7 @@ AudioSource:
   m_GameObject: {fileID: 3382052032400770143}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7536425630541181826, guid: bf5e11fad988cf144afa2d4fb70876ae, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

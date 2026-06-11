@@ -1,28 +1,41 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class TriggerAudio : MonoBehaviour, IInteractable
 {
-    [SerializeField] private AudioClip _clip;
-    [Range(0f, 1f)] [SerializeField] private float _volume = 1f;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _clips;
+    [SerializeField] [Range(0f, float.MaxValue)] private float _defaultDelayInSec;
     [SerializeField] private bool _playOnInteract = true;
+
+    private WaitForSeconds _waitForDelay;
+
+    private void Awake()
+    {
+        _waitForDelay = new WaitForSeconds(_defaultDelayInSec);
+    }
 
     public void Activate()
     {
         if (_playOnInteract)
-            Play();
+        {
+            StartCoroutine(PlaySequence());
+        }
     }
 
-    public void Play()
+    private IEnumerator PlaySequence()
     {
-        if (_clip == null) return;
-        
-        AudioSource.PlayClipAtPoint(_clip, transform.position, _volume);
+        foreach (var clip in _clips)
+        {
+            Play(clip);
+            yield return _waitForDelay;
+        }
     }
-
-    public void Play(AudioClip overrideClip)
+    
+    public void Play(AudioClip clip)
     {
-        if (overrideClip == null) return;
-        
-        AudioSource.PlayClipAtPoint(overrideClip, transform.position, _volume);
+        if (clip == null || _audioSource == null) return;
+        _audioSource.PlayOneShot(clip);
     }
 }
