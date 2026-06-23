@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -12,7 +13,7 @@ public class TextBoxHandler : MonoBehaviour
 
     public UnityEvent OnShow;
     public UnityEvent OnEndPages;
-
+    
     public void SetText(TextForTextBox text)
     {
         _text.overflowMode = TextOverflowModes.Page;
@@ -22,14 +23,10 @@ public class TextBoxHandler : MonoBehaviour
         _text.ForceMeshUpdate();
     }
     
-    public int GetPagesCount()
-    {
-        return _text.textInfo.pageCount;
-    }
-    
     public void ShowText(TextForTextBox text)
     {
         OnShow?.Invoke();
+        GameStateManager.Instance.SetState(GameState.TextBox);
 
         SetText(text);
 
@@ -49,33 +46,6 @@ public class TextBoxHandler : MonoBehaviour
         }
         
         OnEndPages?.Invoke();
-    }
-    
-    public void ShowText(TextForTextBox text, float pausePerPageInSec)
-    {
-        OnShow?.Invoke();
-
-        _text.overflowMode = TextOverflowModes.Page;
-        _text.text = text.OwnText;
-        _text.fontSize = text.FontSize;
-
-        _text.ForceMeshUpdate();
-
-        StartCoroutine(TurnPages(text, pausePerPageInSec));
-    }
-
-    private IEnumerator TurnPages(TextForTextBox description, float pausePerPageInSec)
-    {
-        var waitForPause = new WaitForSeconds(pausePerPageInSec);
-        for (int i = 1; i <= _text.textInfo.pageCount; i++)
-        {
-            _text.pageToDisplay = i;
-            var textAppearAnim = _text.DOPage(_text.textInfo.pageInfo[i - 1], description.TextAppearDuration)
-                .SetEase(description.EaseTextTweenType);
-            yield return textAppearAnim.WaitForCompletion();
-            yield return waitForPause;
-        }
-        
-        OnEndPages?.Invoke();
+        GameStateManager.Instance.SetState(GameState.Gameplay);
     }
 }

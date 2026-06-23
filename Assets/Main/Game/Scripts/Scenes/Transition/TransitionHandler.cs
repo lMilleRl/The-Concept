@@ -4,44 +4,61 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneTransitionHandler : MonoBehaviour
+public class TransitionHandler : MonoBehaviour, ITransitionHandler
 {
-    [SerializeField] private GameObject _rootToDestroyAfterTransition;
+    public static ITransitionHandler Instance;
+    
     [SerializeField] private Image _fadePanel;
     [SerializeField] private CanvasGroup _fadeCutsceneGroup;
-    [SerializeField] private CutsceneAnimationHandler _cutscenesHandler;
+    [SerializeField] private CutscenePlayer _cutscenesHandler;
 
-    private void OnEnable() => SceneTransitionTrigger.OnTriggerActivated += StartAnimatedTransitionToScene;
-    private void OnDisable() => SceneTransitionTrigger.OnTriggerActivated -= StartAnimatedTransitionToScene;
-
-    public void StartAnimatedTransitionToScene(SceneTransitionData transitionData)
+    private void Awake()
     {
-        StartCoroutine(TranslateToScene(transitionData));
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        
+        Instance = this;
     }
 
-    private IEnumerator TranslateToScene(SceneTransitionData transitionData)
+    public void StartTransition(TransitionData transitionData)
     {
-        StopPlayerUpdate();
+        StartCoroutine(Translate(transitionData));
+    }
 
+    private IEnumerator Translate(TransitionData transitionData)
+    {
+        GameStateManager.Instance.SetState(GameState.PassiveShow);
+
+        FadeOutSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
+        _fadePanel.color = transitionData.FadePanelColorInFadeIn;
         yield return FadeInTransitionPanel
-            (transitionData.FadeInTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
-        SceneManager.LoadScene(transitionData.SceneName);
-        VolumeAudioManager.Instance.MuteGameplay();
-        StopPlayerUpdate();
+            (transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
+
+        // Пауза после затухания экрана: даём доиграть звукам триггера (дверь, шаги) до уничтожения сцены
+        yield return new WaitForSeconds(transitionData.PauseBeforeLoadInSec);
+
+        if (!string.IsNullOrEmpty(transitionData.SceneName))
+        {
+            SceneManager.LoadScene(transitionData.SceneName);
+            VolumeAudioManager.Instance.MuteGameplay();
+        }
 
         yield return PlayCutscenes(transitionData.OwnCutscenesData);
+
+        GameStateManager.Instance.SetState(GameState.Gameplay);
         
+        FadeInSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
+        _fadePanel.color = transitionData.FadePanelColorInFadeOut;
         yield return FadeOutTransitionPanel
-            (transitionData.FadeOutTransitionPanelDurationInSec, transitionData.TransitionPanelEase);
-        
-        Destroy(_rootToDestroyAfterTransition);
-        ResumePlayerUpdate();
+            (transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
     }
 
     private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = true;
-        FadeOutSound(durationInSec, easeType);
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
@@ -49,7 +66,6 @@ public class SceneTransitionHandler : MonoBehaviour
     private IEnumerator FadeOutTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = false;
-        FadeInSound(durationInSec, easeType);
         yield return _fadePanel.DOFade(0f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
@@ -64,18 +80,6 @@ public class SceneTransitionHandler : MonoBehaviour
         VolumeAudioManager.Instance.InitializeSceneAudio(durationInSec, easeType);
     }
 
-    private void StopPlayerUpdate()
-    {
-        var player = FindObjectOfType<Player>();
-        player?.StopUpdate();
-    }
-
-    private void ResumePlayerUpdate()
-    {
-        var player = FindObjectOfType<Player>();
-        player?.ResumeUpdate();
-    }
-
     private IEnumerator PlayCutscenes(CutsceneData[] cutscenes)
     {
         foreach (var cutsceneData in cutscenes)
@@ -87,12 +91,12 @@ public class SceneTransitionHandler : MonoBehaviour
         if (cutscene != null)
         {
             yield return new WaitForSeconds(cutscene.PauseBeforeCutsceneInSec);
-            
+
             var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
             _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
-            
+
             yield return _cutscenesHandler.PlayCutscene(cutscene);
-            
+
             var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
             var fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
             yield return fadeOutAnim.WaitForCompletion();

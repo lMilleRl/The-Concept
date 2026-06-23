@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class CutsceneAnimationHandler : MonoBehaviour
+public class CutsceneAnimationHandler : CutscenePlayer
 {
     [SerializeField] private VideoPlayer _clipsPlayer;
 
-    public IEnumerator PlayCutscene(CutsceneData cutscene)
+    public override IEnumerator PlayCutscene(CutsceneData cutscene)
     {
         if (cutscene.Clip != null)
         {
