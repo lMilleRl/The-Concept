@@ -15,7 +15,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private List<GameObject> _interactableObjects;
 
-    private void Start()
+    private void Awake()
     {
         _interactableObjects = new List<GameObject>();
         _interactionDelayWait = new WaitForSeconds(_interactionDelay);
@@ -77,7 +77,11 @@ public class PlayerInteraction : MonoBehaviour
                     var interactions = objToInteract.GetComponents<IInteractable>();
                     foreach (var i in interactions)
                     {
-                        i.Activate();
+                        if (i is MonoBehaviour interactionComponent)
+                        {
+                            if (interactionComponent.enabled)
+                                i.Activate();
+                        }
                     }
                 }
         }

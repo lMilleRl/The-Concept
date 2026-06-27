@@ -7,6 +7,19 @@ using UnityEngine.Events;
 
 public class TextBoxHandler : MonoBehaviour
 {
+    public static TextBoxHandler Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        
+        Instance = this;
+    }
+
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private bool _isHasOwnDuration;
     [SerializeField] private KeyCode _nextPageKey;
@@ -36,13 +49,14 @@ public class TextBoxHandler : MonoBehaviour
     private IEnumerator TurnPages(TextForTextBox description)
     {
         var waitForKey = new WaitUntil(() => Input.GetKeyDown(_nextPageKey));
+        var waitBetweenPages = new WaitForSeconds(description.PauseBetweenPagesInSec);
         for (int i = 1; i <= _text.textInfo.pageCount; i++)
         {
             _text.pageToDisplay = i;
             var textAppearAnim = _text.DOPage(_text.textInfo.pageInfo[i - 1], description.TextAppearDuration)
                 .SetEase(description.EaseTextTweenType);
             yield return textAppearAnim.WaitForCompletion();
-            yield return waitForKey;
+            yield return description.IsAutoPlay ? waitBetweenPages : waitForKey;
         }
         
         OnEndPages?.Invoke();

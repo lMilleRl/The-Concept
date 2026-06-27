@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 Velocity => _rigidbody2D.velocity;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _inputHandler = GetComponent<IMoveInputHandler>();

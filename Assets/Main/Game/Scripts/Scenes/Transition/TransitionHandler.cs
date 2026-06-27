@@ -8,6 +8,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
 {
     public static ITransitionHandler Instance;
     
+    [SerializeField] private GameObject _root;
     [SerializeField] private Image _fadePanel;
     [SerializeField] private CanvasGroup _fadeCutsceneGroup;
     [SerializeField] private CutscenePlayer _cutscenesHandler;
@@ -16,7 +17,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     {
         if (Instance != null)
         {
-            Destroy(this);
+            Destroy(_root);
             return;
         }
         
@@ -33,7 +34,6 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         GameStateManager.Instance.SetState(GameState.PassiveShow);
 
         FadeOutSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
-        _fadePanel.color = transitionData.FadePanelColorInFadeIn;
         yield return FadeInTransitionPanel
             (transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
 
@@ -50,8 +50,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
 
         GameStateManager.Instance.SetState(GameState.Gameplay);
         
-        FadeInSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
-        _fadePanel.color = transitionData.FadePanelColorInFadeOut;
+        FadeInSound(transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
         yield return FadeOutTransitionPanel
             (transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
     }

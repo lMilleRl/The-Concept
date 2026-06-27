@@ -5,7 +5,7 @@ public class GameStateManager : MonoBehaviour, IGameStateManager
 {
     public static IGameStateManager Instance;
 
-    private GameState _currentState;
+    private GameState _currentState = GameState.Gameplay;
 
     public GameState CurrentState => _currentState;
     

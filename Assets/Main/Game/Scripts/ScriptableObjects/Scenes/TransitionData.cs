@@ -9,9 +9,6 @@ public class TransitionData : ScriptableObject
 
     [SerializeField] private Ease _transitionPanelEase;
 
-    [SerializeField] private Color _fadePanelColorInFadeIn = Color.black;
-    [SerializeField] private Color _fadePanelColorInFadeOut= Color.black;
-    
     [Range(0, float.MaxValue)] [SerializeField]
     private float _fadeInPanelDurationInSec = 1;
     
@@ -25,8 +22,6 @@ public class TransitionData : ScriptableObject
     [SerializeField] private CutsceneData[] ownCutscenesData;
 
     public string SceneName => _sceneName;
-    public Color FadePanelColorInFadeIn => _fadePanelColorInFadeIn;
-    public Color FadePanelColorInFadeOut => _fadePanelColorInFadeOut;
     public float FadeInPanelDurationInSec => _fadeInPanelDurationInSec;
     public float FadeOutPanelDurationInSec => _fadeOutPanelDurationInSec;
     public float PauseBeforeLoadInSec => _pauseBeforeLoadInSec;
