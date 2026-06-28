@@ -966,9 +966,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1631836683}
-    - targetCorrespondingSourceObject: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1631836686}
     - targetCorrespondingSourceObject: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
       insertIndex: -1
@@ -984,20 +981,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6839218997449487580, guid: 73204b06194a7054f83572680c085181, type: 3}
   m_PrefabInstance: {fileID: 1631836680}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1631836683
+--- !u!114 &1631836683 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4881847519904155547, guid: 73204b06194a7054f83572680c085181, type: 3}
+  m_PrefabInstance: {fileID: 1631836680}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631836682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daeeb9a0cbe11fa4c8908c94a35bf59b, type: 3}
+  m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toDeactivation: []
-  _toActivation: []
 --- !u!320 &1631836685
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -1007,7 +1001,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1631836682}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 0}
+  m_PlayableAsset: {fileID: 11400000, guid: 2b9e3c048c43dae4f91c074ccca8534f, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -1219,6 +1213,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 754649656121316396, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: orthographic size
+      value: 5.625
+      objectReference: {fileID: 0}
     - target: {fileID: 3983089636480771733, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.06363119
@@ -1234,6 +1232,18 @@ PrefabInstance:
     - target: {fileID: 6178040654102946146, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_Name
       value: Player Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012581442365084458, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00000035762787
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012581442365084458, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000017881393
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012581442365084458, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7467303400231437831, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1560,8 +1570,8 @@ MonoBehaviour:
   _onActivate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1631836683}
-        m_TargetAssemblyTypeName: InteractionSwitcher, Assembly-CSharp
+      - m_Target: {fileID: 2080698630}
+        m_TargetAssemblyTypeName: ComponentsSwitcher, Assembly-CSharp
         m_MethodName: Switch
         m_Mode: 1
         m_Arguments:
@@ -1571,6 +1581,42 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1631836683}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1631836686}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2080698631}
+        m_TargetAssemblyTypeName: PlayerSpritesSwitcher, Assembly-CSharp
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!320 &2080698628
 PlayableDirector:
@@ -1614,7 +1660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daeeb9a0cbe11fa4c8908c94a35bf59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toDeactivation: []
+  _toDeactivation:
+  - {fileID: 2080698629}
+  - {fileID: 2080698627}
   _toActivation: []
 --- !u!114 &2080698631
 MonoBehaviour:

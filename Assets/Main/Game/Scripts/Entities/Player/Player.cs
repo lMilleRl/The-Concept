@@ -14,17 +14,29 @@ public class Player : MonoBehaviour
         _interaction = GetComponent<PlayerInteraction>();
     }
 
+    private void Start()
+    {
+        SubscribeToGameplayState();
+    }
+
     private void OnEnable()
+    {
+        if (GameStateManager.Instance == null) return;
+        SubscribeToGameplayState();
+    }
+    
+    private void OnDisable()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.OnStateChanged -= TryChangeUpdate;
+    }
+
+    private void SubscribeToGameplayState()
     {
         GameStateManager.Instance.OnStateChanged += TryChangeUpdate;
         TryChangeUpdate(GameStateManager.Instance.CurrentState);
     }
     
-    private void OnDisable()
-    {
-        GameStateManager.Instance.OnStateChanged -= TryChangeUpdate;
-    }
-
     private void TryChangeUpdate(GameState state)
     {
         if (state == GameState.Gameplay)

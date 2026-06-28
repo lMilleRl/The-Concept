@@ -11,6 +11,11 @@ public class TriggerAudio : MonoBehaviour, IInteractable
 
     private WaitForSeconds _waitForDelay;
 
+    private void OnEnable()
+    {
+        
+    }
+
     private void Awake()
     {
         _waitForDelay = new WaitForSeconds(_defaultDelayInSec);
