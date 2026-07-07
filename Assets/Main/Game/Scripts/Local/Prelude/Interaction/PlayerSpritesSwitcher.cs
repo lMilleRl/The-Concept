@@ -8,11 +8,11 @@ public class PlayerSpritesSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        
     }
 
     public void Switch()
     {
-        _playerAnimator.runtimeAnimatorController = _newController;
+        if (_playerAnimator && _newController)
+            _playerAnimator.runtimeAnimatorController = _newController;
     }
 }

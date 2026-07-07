@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PanelSwitchHandler : MonoBehaviour
 {
-    [SerializeField] private Panel _panel;
-    [SerializeField] private Panel _toPanel;
+    [SerializeField] private FadeCanvasGroupAnimator fadeCanvasGroupAnimator;
+    [SerializeField] private FadeCanvasGroupAnimator toFadeCanvasGroupAnimator;
 
     private bool _isSwitchingComplete;
 
@@ -16,7 +16,7 @@ public class PanelSwitchHandler : MonoBehaviour
     {
         if (_isSwitchingComplete)
         {
-            var fadingAnim = _panel.HideWithAnimation();
+            var fadingAnim = fadeCanvasGroupAnimator.HideWithAnimation();
 
             fadingAnim.onComplete += StartOtherPanelAppearanceAnim;
 
@@ -26,7 +26,7 @@ public class PanelSwitchHandler : MonoBehaviour
 
     private void StartOtherPanelAppearanceAnim()
     {
-        var appearanceAnim = _toPanel.ShowWithAnimation();
+        var appearanceAnim = toFadeCanvasGroupAnimator.ShowWithAnimation();
         appearanceAnim.onComplete = () => _isSwitchingComplete = true;
     }
 }

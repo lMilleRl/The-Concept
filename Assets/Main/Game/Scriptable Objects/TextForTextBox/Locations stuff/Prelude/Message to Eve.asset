@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ownText: Forgive me, Eva. I can't do this anymore.
   _fontSize: 56
-  _textAppearDuration: 4
+  _textAppearDuration: 2
   _easeTextTweenType: 5
   _isAutoPlay: 1
   _pauseBetweenPagesInSec: 2

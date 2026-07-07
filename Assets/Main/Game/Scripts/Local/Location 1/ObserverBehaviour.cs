@@ -5,6 +5,7 @@ public class ObserverBehaviour : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private Transform _playerTransform;
     [SerializeField] private Vector2 _viewportTargetPosition = new Vector2(0.5f, 0.05f);
     [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private float _escapeDuration = 0.4f;
@@ -18,14 +19,15 @@ public class ObserverBehaviour : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        Vector3 startPos = GetViewportWorldPosition();
+        Vector3 startPos = GetTargetObserverPos();
         startPos.y += _startPosOffsetY;
         transform.position = startPos;
     }
 
     private void UpdateMove()
     {
-        transform.position = Vector3.MoveTowards(transform.position, GetViewportWorldPosition(), _moveSpeed * Time.deltaTime);
+        var targetPos = GetTargetObserverPos();
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, _moveSpeed * Time.deltaTime);
     }
     
     private void Update()
@@ -47,10 +49,11 @@ public class ObserverBehaviour : MonoBehaviour
             .OnComplete(() => gameObject.SetActive(false));
     }
 
-    private Vector3 GetViewportWorldPosition()
+    private Vector3 GetTargetObserverPos()
     {
-        Vector3 worldPos = _camera.ViewportToWorldPoint(new Vector3(_viewportTargetPosition.x, _viewportTargetPosition.y, 0f));
-        worldPos.z = 0f;
-        return worldPos;
+        Vector3 targetPos = _camera.ViewportToWorldPoint(new Vector3(_viewportTargetPosition.x, _viewportTargetPosition.y, 0));
+        targetPos.z = 0f;
+        targetPos.x = _playerTransform.position.x;
+        return targetPos;
     }
 }

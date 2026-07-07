@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] [Range(0f, float.MaxValue)]
-    private float _interactionDelay;
+    private float _interactionDelay = 1f;
 
     [SerializeField] private KeyCode _keyToInteract;
 
