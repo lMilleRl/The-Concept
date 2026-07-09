@@ -216,22 +216,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7467303400231437831}
     m_Modifications:
-    - target: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-      propertyPath: field of view
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-      propertyPath: far clip plane
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-      propertyPath: near clip plane
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-      propertyPath: orthographic size
-      value: 5.625
-      objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

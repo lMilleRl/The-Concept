@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class RandomSinConeMovement : MonoBehaviour
 {
+    [Header("Frequency of movement")]
     [SerializeField] private float _verticalFrequency;
     [SerializeField] private float _horizontalFrequency;
 
+    [Header("Form of movement")]
     [SerializeField] private Transform _coneVertexStartPoint;
     [SerializeField] private float _coneHeight;
     [SerializeField] private float _coneRadius;
