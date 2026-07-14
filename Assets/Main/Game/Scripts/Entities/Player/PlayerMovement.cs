@@ -1,22 +1,25 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(IMoveInputHandler))]
+[RequireComponent(typeof(IMoveInput))]
 public class PlayerMovement : MonoBehaviour
 {
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
-    private Vector2 _moveDirection;
     private Rigidbody2D _rigidbody2D;
-    private IMoveInputHandler _inputHandler;
+    private IMoveInput _input;
 
     public Vector2 Velocity => _rigidbody2D.velocity;
 
+    public void Init(IMoveInput input)
+    {
+        SetInput(input);
+    }
+    
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _inputHandler = GetComponent<IMoveInputHandler>();
     }
 
     private void OnDisable()
@@ -29,8 +32,16 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
+    public void SetInput(IMoveInput input)
+    {
+        _input = input;
+    }
+
     private void Move()
     {
-        _rigidbody2D.velocity = _inputHandler.GetMovementInput() * _moveSpeed;
+        if (_input == null)
+            return;
+        
+        _rigidbody2D.velocity = _input.GetMovementInput() * _moveSpeed;
     }
 }

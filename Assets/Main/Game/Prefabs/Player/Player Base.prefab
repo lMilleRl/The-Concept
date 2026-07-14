@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5309352928416517934}
   - component: {fileID: 4865652239488704858}
-  - component: {fileID: 4679442575603200911}
   m_Layer: 0
   m_Name: Main player virtual camera
   m_TagString: Untagged
@@ -73,18 +72,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1089266671821635276}
---- !u!114 &4679442575603200911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386606865650560514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5424663210882846791
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,17 +203,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7467303400231437831}
     m_Modifications:
+    - target: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
+      propertyPath: orthographic size
+      value: 5.77
+      objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00000035762787
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000017881393
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -263,55 +254,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5838858356938598542, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 960329487724415041}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
 --- !u!4 &7012581442365084458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
   m_PrefabInstance: {fileID: 2468038450419007894}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8306873404579801368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5838858356938598542, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-  m_PrefabInstance: {fileID: 2468038450419007894}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &960329487724415041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8306873404579801368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &3540332491258205294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -320,10 +269,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7467303400231437831}
     m_Modifications:
-    - target: {fileID: 1302888604682626072, guid: 0172b4ff1b1981244be5bc2018e4af30, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1302888604682626072, guid: 0172b4ff1b1981244be5bc2018e4af30, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0

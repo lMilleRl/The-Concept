@@ -8,13 +8,17 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] [Range(0f, float.MaxValue)]
     private float _interactionDelay = 1f;
 
-    [SerializeField] private KeyCode _keyToInteract;
-
     private bool _isInteractionDelay;
     private WaitForSeconds _interactionDelayWait;
+    private IInteractionPlayerInput _input;
 
     private List<GameObject> _interactableObjects;
 
+    public void Init(IInteractionPlayerInput input)
+    {
+        SetInput(input);
+    }
+    
     private void Awake()
     {
         _interactableObjects = new List<GameObject>();
@@ -34,6 +38,11 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+    public void SetInput(IInteractionPlayerInput input)
+    {
+        _input = input;
+    }
+    
     public void OnInteractionTriggerEnter(Collider2D other)
     {
         if (other.gameObject.TryGetComponent(out IInteractable interactableObject))
@@ -69,7 +78,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(_keyToInteract))
+        if (_input != null && _input.IsInteractionButtonPressed())
         {
             if (TryGetInteractableObjByMinDistance(out GameObject objToInteract))
                 if (objToInteract.TryGetComponent(out IInteractable interaction))
