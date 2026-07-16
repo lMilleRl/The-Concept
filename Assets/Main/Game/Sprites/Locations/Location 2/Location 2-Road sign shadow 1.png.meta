@@ -1,0 +1,515 @@
+fileFormatVersion: 2
+guid: 09c87c62c2fb4e3408c2130ba5d2b7af
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Prelude room for unity v3_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 94
+        width: 192
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8849d3de55e943a4598d472431b413ec
+      internalID: -822042353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 94
+        width: 198
+        height: 146
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4087bd79a3c6370468f22c39c54ac0e2
+      internalID: -79110612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 30
+        width: 64
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f58bde64f1314949b355acb3c606e14
+      internalID: -1412866352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_3
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 46
+        width: 60
+        height: 26
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15384616}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0e9d49df7b041349ace8747c70246a0
+      internalID: 1493552716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_4
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 36
+        width: 70
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1be4c4c5b04211f4ebfb77732946bce4
+      internalID: 817146066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_5
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 33
+        width: 53
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4716981, y: 0.29411766}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5cbd0c96ebf3364f99a7325ec2b5a50
+      internalID: 558349559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_6
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 46
+        width: 25
+        height: 23
+      alignment: 9
+      pivot: {x: 0.35999998, y: 0.08695652}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 609d441a95b18844e9c5ea14cb35a779
+      internalID: -1294939763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_7
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 20
+        width: 19
+        height: 55
+      alignment: 9
+      pivot: {x: 0.47368422, y: 0.16363636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d93cd09dcf12ad24fbc29b500a5983b4
+      internalID: -1134320826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_8
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 44
+        width: 21
+        height: 30
+      alignment: 9
+      pivot: {x: 0.47619048, y: 0.16666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dea91bb12994ef14fa93f3eb3f694d5c
+      internalID: 449160003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_9
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 12
+        width: 26
+        height: 14
+      alignment: 9
+      pivot: {x: 0.4615385, y: 0.42857146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13ad0483fe0e735488d23b708773b541
+      internalID: -779916414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_10
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 9
+        width: 17
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5294118, y: 0.15}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02a8c9b2784b79347aa29481bd84b132
+      internalID: 948840183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_11
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 11
+        width: 11
+        height: 11
+      alignment: 9
+      pivot: {x: 2.1818182, y: -1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49158f853f1d3c346a2e9f1fd5709eac
+      internalID: 1717627284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_12
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 6
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d70a099557ebd3498c6af2ac2161882
+      internalID: 1388424772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_13
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 12
+        width: 13
+        height: 10
+      alignment: 9
+      pivot: {x: -1, y: -1.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9613f32e4e3ded149a13990d961cba86
+      internalID: -1010867923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_14
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 21
+        width: 9
+        height: 9
+      alignment: 9
+      pivot: {x: 0.6666667, y: -1.1111112}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 373e1395a1f53044797242a68df4c156
+      internalID: -748950466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_16
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 4
+        width: 19
+        height: 16
+      alignment: 9
+      pivot: {x: 0.57894737, y: 0.0625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45b886a102e568a409fc0b4c2cd44347
+      internalID: 1719510134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Prelude room for unity v3_17
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 10
+        width: 11
+        height: 8
+      alignment: 9
+      pivot: {x: -0.36363637, y: -1.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cfe259b77c54fc4ba0418d6ed952ceb
+      internalID: -1201447610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Prelude room for unity v3_0: -822042353
+      Prelude room for unity v3_1: -79110612
+      Prelude room for unity v3_10: 948840183
+      Prelude room for unity v3_11: 1717627284
+      Prelude room for unity v3_12: 1388424772
+      Prelude room for unity v3_13: -1010867923
+      Prelude room for unity v3_14: -748950466
+      Prelude room for unity v3_15: -1596762115
+      Prelude room for unity v3_16: 1719510134
+      Prelude room for unity v3_17: -1201447610
+      Prelude room for unity v3_2: -1412866352
+      Prelude room for unity v3_3: 1493552716
+      Prelude room for unity v3_4: 817146066
+      Prelude room for unity v3_5: 558349559
+      Prelude room for unity v3_6: -1294939763
+      Prelude room for unity v3_7: -1134320826
+      Prelude room for unity v3_8: 449160003
+      Prelude room for unity v3_9: -779916414
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
