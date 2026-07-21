@@ -5,6 +5,9 @@ Shader "TheConcept/GrassWind"
         _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 
+        [Header(Grass properties)]
+        _YWeight ("Y Weight's Offset", Float) = 1.0
+        
         [Header(Wind Waves)]
         _Frequency1 ("Wave 1 Frequency", Float) = 1.0
         _Amplitude1 ("Wave 1 Amplitude", Float) = 0.05
@@ -13,10 +16,6 @@ Shader "TheConcept/GrassWind"
         _Frequency2 ("Wave 2 Frequency", Float) = 2.3
         _Amplitude2 ("Wave 2 Amplitude", Float) = 0.02
         _Speed2 ("Wave 2 Speed", Float) = 1.7
-
-        [Header(Wind Global)]
-        _WindDirection ("Wind Direction X", Float) = 1.0
-        _WindStrength ("Wind Strength", Range(0, 2)) = 1.0
     }
 
     SubShader
@@ -71,10 +70,18 @@ Shader "TheConcept/GrassWind"
                 float _Frequency2;
                 float _Amplitude2;
                 float _Speed2;
-                float _WindDirection;
-                float _WindStrength;
+                float _YWeight;
             CBUFFER_END
 
+            float2 _GlobalWindDirection;
+            float _GlobalWindStrength;
+            float _GlobalWindTime;
+            
+            float GetWavePhase(float2 worldPosition, float2 windDirection)
+            {
+                return dot(worldPosition, normalize(windDirection));
+            }
+            
             Varyings vert(Attributes input)
             {
                 Varyings output;
@@ -89,13 +96,15 @@ Shader "TheConcept/GrassWind"
                 float3 worldPos = TransformObjectToWorld(posOS);
 
                 // Fourier series: 2 harmonics
-                float wave1 = sin(worldPos.x * _Frequency1 + _Time.y * _Speed1) * _Amplitude1;
-                float wave2 = sin(worldPos.x * _Frequency2 + _Time.y * _Speed2) * _Amplitude2;
+                float phasePosition = GetWavePhase(worldPos.xy, _GlobalWindDirection);
+                float wave1 = sin(phasePosition * _Frequency1 + _GlobalWindTime * _Speed1) * _Amplitude1;
+                float wave2 = sin(phasePosition * _Frequency2 + _Time.y * _Speed2) * _Amplitude2;
 
                 // Combined displacement
-                float displacement = (wave1 + wave2) * heightFactor * _WindStrength * _WindDirection;
+                float2 displacement = (wave1 + wave2) * heightFactor * _GlobalWindStrength * normalize(_GlobalWindDirection);
 
-                posOS.x += displacement;
+                posOS.x += displacement.x;
+                posOS.y += displacement.y * _YWeight;
 
                 output.positionCS = TransformObjectToHClip(posOS);
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
