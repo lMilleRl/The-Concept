@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1302888604682626072}
   - component: {fileID: 7379333349646890479}
   - component: {fileID: 8525963295389845337}
+  - component: {fileID: 8330184820774946189}
   - component: {fileID: 3717539297603786154}
   - component: {fileID: 4622378683949098399}
   - component: {fileID: 3955907018230046604}
-  - component: {fileID: 8330184820774946189}
   - component: {fileID: 2054866531990537972}
   - component: {fileID: 630840696573029105}
   - component: {fileID: 6159629223776993770}
@@ -124,6 +124,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8330184820774946189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2667942366604925445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef4b50a219580249ba4c95e594567a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementInput: {fileID: 3955907018230046604}
+  _interactionInput: {fileID: 2054866531990537972}
+  _interactionActivator: {fileID: 6345016053137031172}
+  _rigidbody2D: {fileID: 8525963295389845337}
+  _playerCollisionsDetector: {fileID: 3810645051866797858}
+  _playerBody: {fileID: 7140324045091413740}
+  _animator: {fileID: 6733323098166882477}
+  _playerSpriteRenderer: {fileID: 7379333349646890479}
+  _ignoreGroundLayer: 6
 --- !u!114 &3717539297603786154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,25 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92504a7416749624e9c59cc8e96df370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8330184820774946189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2667942366604925445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ef4b50a219580249ba4c95e594567a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementInput: {fileID: 3955907018230046604}
-  _interactionInput: {fileID: 2054866531990537972}
-  _interactionActivator: {fileID: 6345016053137031172}
-  _rigidbody2D: {fileID: 8525963295389845337}
-  _playerCollisionsDetector: {fileID: 3810645051866797858}
-  _playerBody: {fileID: 7140324045091413740}
-  _animator: {fileID: 6733323098166882477}
 --- !u!114 &2054866531990537972
 MonoBehaviour:
   m_ObjectHideFlags: 0
