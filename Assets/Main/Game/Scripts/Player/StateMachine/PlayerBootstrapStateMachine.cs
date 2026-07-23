@@ -24,13 +24,13 @@ public class PlayerBootstrapStateMachine : MonoBehaviour
         _states = GeneratePlayerStates();
         InitStateMachine(_states);
         InitTransitionMachine();
-        
-        _playerStatesTransitionsMachine.Init(_coreTransitionMachine);
     }
 
     private void InitTransitionMachine()
     {
         _coreTransitionMachine = new TransitionMachine(_coreStateMachine, GenerateStatesTransitions());
+        
+        _playerStatesTransitionsMachine.Init(_coreTransitionMachine);
     }
 
     private void InitStateMachine(IState[] initStates)

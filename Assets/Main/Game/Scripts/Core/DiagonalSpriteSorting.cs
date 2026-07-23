@@ -6,6 +6,7 @@ public class DiagonalSpriteSorting : MonoBehaviour
     [SerializeField] private Transform _linePointA;
     [SerializeField] private Transform _linePointB;
     [SerializeField] private int _sortingOrderOffset = 1;
+    [SerializeField] private bool _isFlipLineSides;
 
     private Dictionary<SpriteRenderer, int> _trackedObjects = new Dictionary<SpriteRenderer, int>();
 
@@ -20,7 +21,7 @@ public class DiagonalSpriteSorting : MonoBehaviour
         {
             float side = GetSide(lineDir, lineOrigin, pair.Key.transform.position);
 
-            pair.Key.sortingOrder = side > 0
+            pair.Key.sortingOrder = side > 0 ^ _isFlipLineSides
                 ? pair.Value - _sortingOrderOffset
                 : pair.Value + _sortingOrderOffset;
         }
