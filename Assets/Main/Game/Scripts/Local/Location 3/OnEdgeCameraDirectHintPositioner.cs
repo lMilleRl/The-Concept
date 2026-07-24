@@ -7,6 +7,7 @@ public class OnEdgeCameraDirectHintPositioner : MonoBehaviour
     private const float ParallelTolerance = 0.000001f;
     [SerializeField] private Camera _camera;
     [SerializeField] private Transform _targetToDirectHint;
+    [SerializeField] private Transform _centerOfDirectionToTarget;
     [SerializeField] private Transform _hint;
 
     private readonly Vector2[] _cameraCorners = new Vector2[4];
@@ -64,7 +65,7 @@ public class OnEdgeCameraDirectHintPositioner : MonoBehaviour
 
     private Vector2 FindClosestCameraBoundsIntersection(Vector2 lineEnd)
     {
-        Vector2 lineStart = (_cameraCorners[0] + _cameraCorners[2]) * 0.5f;
+        Vector2 lineStart = _centerOfDirectionToTarget.position;
         Vector2 closestIntersection = lineStart;
         float closestDistanceToDevice = float.PositiveInfinity;
 
