@@ -1,19 +1,22 @@
-public struct GameplayPlayerStateData
+public readonly struct GameplayPlayerStateData
 {
-    public PlayerMovement PlayerMovement;
-    public PlayerInteraction PlayerInteraction;
-    public IInteractionPlayerInput InteractionInput;
-    public IMoveInput MoveInput;
+    public readonly PlayerMovement PlayerMovement;
+    public readonly PlayerInteraction PlayerInteraction;
+    public readonly IInteractionPlayerInput InteractionInput;
+    public readonly IMoveInput MoveInput;
+    public readonly MovementStateData MovementStateData;
 
     public GameplayPlayerStateData(
         PlayerMovement playerMovement,
         PlayerInteraction playerInteraction,
         IInteractionPlayerInput interactionInput,
-        IMoveInput moveInput)
+        IMoveInput moveInput,
+        MovementStateData movementStateData)
     {
         PlayerMovement = playerMovement;
         PlayerInteraction = playerInteraction;
         InteractionInput = interactionInput;
         MoveInput = moveInput;
+        MovementStateData = movementStateData;
     }
 }

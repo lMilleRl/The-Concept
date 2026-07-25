@@ -10,6 +10,7 @@ public class StateMachine : IStateMachine
     public StateMachine(IState initState, IState[] states)
     {
         _currentState = initState;
+        _currentState?.Enter();
         _states = states;
     }
     

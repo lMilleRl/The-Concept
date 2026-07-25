@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ClimbingPlayerState : State
+public class ClimbingPlayerState : MovementState
 {
     private ITriggerDetector _ladderDetector;
     private GameObject _playerCollisionsDetector;
@@ -9,23 +9,19 @@ public class ClimbingPlayerState : State
     private Vector2 _playerAttachmentEnterPoint;
     private Vector2 _playerAttachmentExitPoint;
     private Transform _playerTransform;
-
     private SpriteRenderer _playerSpriteRenderer;
     private int _playerInitialOrder;
     private PlayerMovement _movement;
     private Rigidbody2D _playerRigidBody;
     private Collider2D _playerCollider;
     private IMoveInput _climbingInput;
-
     private SpriteRenderer _ladderSpriteRenderer;
-
     private Animator _animator;
 
-    public ClimbingPlayerState(ClimbingPlayerStateData data)
+    public ClimbingPlayerState(ClimbingPlayerStateData data) : base(data.MovementStateData)
     {
         _ladderDetector = data.LadderDetector;
         _ladderDetector.Triggered += HandleCollision;
-
         _playerCollisionsDetector = data.PlayerCollisionsDetector;
         _ignoreGroundLayer = data.IgnoreGroundLayer;
         _playerTransform = data.PlayerTransform;
@@ -46,13 +42,15 @@ public class ClimbingPlayerState : State
         _playerCollisionsDetectorInitialLayer = _playerCollisionsDetector.layer;
         _playerCollisionsDetector.layer = _ignoreGroundLayer;
         _animator.SetBool("IsClimbing", true);
-
         SetPlayerOrderAboveLadder();
+        
+        EnterMovementEffects();
     }
 
     public override void Update()
     {
         _animator.SetFloat("ClimbSpeed", _climbingInput.GetMovementInput().y);
+        UpdateMovementEffects();
     }
 
     public override void FixedUpdate()
@@ -67,8 +65,9 @@ public class ClimbingPlayerState : State
         _playerCollisionsDetector.layer = _playerCollisionsDetectorInitialLayer;
         _movement.SetInput(null);
         _animator.SetBool("IsClimbing", false);
-
         RestorePlayerOrder();
+        
+        ExitMovementEffects();
     }
 
     private void HandleCollision(Collider2D other)
@@ -102,6 +101,11 @@ public class ClimbingPlayerState : State
         _playerSpriteRenderer.sortingOrder = _playerInitialOrder;
     }
 
+    protected override bool IsMoving()
+    {
+        return _climbingInput != null && _movement.Velocity.sqrMagnitude > 0.001f;
+    }
+    
     ~ClimbingPlayerState()
     {
         _ladderDetector.Triggered -= HandleCollision;
