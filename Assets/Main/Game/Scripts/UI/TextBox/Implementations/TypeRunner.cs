@@ -11,7 +11,8 @@ namespace TextBox
 
         private ITextBoxUI _currentTextBoxUI;
         private TMP_TextInfo _currentTextInfo;
-        private Coroutine _currentCoroutine;
+        private Coroutine _turnPagesCoroutine;
+        private Coroutine _typePageCoroutine;
 
         private float _perCharPause;
         private float _currentPause;
@@ -35,15 +36,22 @@ namespace TextBox
             _currentTextInfo = _currentTextBoxUI.GetTextInfo();
             _currentVisibleChars = 0;
             _currentTextBoxUI.ContentText.maxVisibleCharacters = 0;
-            _currentCoroutine = _coroutineRunner.StartCoroutine(TurnPages());
+            Stop();
+            _turnPagesCoroutine = _coroutineRunner.StartCoroutine(TurnPages());
         }
 
         public void Stop()
         {
-            if (_currentCoroutine != null)
+            if (_typePageCoroutine != null)
             {
-                _coroutineRunner.StopCoroutine(_currentCoroutine);
-                _currentCoroutine = null;
+                _coroutineRunner.StopCoroutine(_typePageCoroutine);
+                _typePageCoroutine = null;
+            }
+
+            if (_turnPagesCoroutine != null)
+            {
+                _coroutineRunner.StopCoroutine(_turnPagesCoroutine);
+                _turnPagesCoroutine = null;
             }
         }
 
@@ -81,7 +89,8 @@ namespace TextBox
             for (int page = 0; page < pageCount; page++)
             {
                 _currentTextBoxUI.SetPage(page + 1);
-                yield return _coroutineRunner.StartCoroutine(TypePage(page));
+                _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page));
+                yield return _typePageCoroutine;
 
                 OnPageFinished?.Invoke();
 
@@ -102,7 +111,7 @@ namespace TextBox
             {
                 _currentVisibleChars = i + 1;
                 _currentTextBoxUI.ContentText.maxVisibleCharacters = _currentVisibleChars;
-
+    
                 OnCharRevealed?.Invoke(i);
 
                 float totalPause = _perCharPause + _currentPause;

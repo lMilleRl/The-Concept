@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
+using UnityEngine;
 
 namespace TextBox
 {
@@ -33,15 +34,6 @@ namespace TextBox
                 TMP_LinkInfo linkInfo = textInfo.linkInfo[i];
                 string linkID = linkInfo.GetLinkID();
 
-                // TODO: парсить linkID в TextBoxCommandContext
-                // Формат: "commandName=param", например "pause=0.5", "shake", "speed=30"
-                // 1. Сплит по '=' → commandName и (опционально) paramString
-                // 2. Enum.TryParse(commandName) → TextBoxCommandType
-                // 3. float.TryParse(paramString) → FloatParam (если есть)
-                // 4. Заполнить StartCharIndex = linkInfo.linkTextfirstCharacterIndex
-                //    и CharLength = linkInfo.linkTextLength
-                // 5. Добавить в _commands
-
                 TextBoxCommandContext context = ParseLinkID(linkID, linkInfo);
                 _commands.Add(context);
             }
@@ -60,14 +52,6 @@ namespace TextBox
 
         private TextBoxCommandContext ParseLinkID(string linkID, TMP_LinkInfo linkInfo)
         {
-            // TODO: реализовать парсинг — это твоя часть
-            // Подсказка:
-            // string[] parts = linkID.Split('=');
-            // string commandName = parts[0];
-            // string paramBlock = parts.Length > 1 ? parts[1] : "";
-            // float[] params = ParseParams(paramBlock);
-            // System.Enum.TryParse(commandName, true, out TextBoxCommandType type);
-
             var paramsAndCmdParts = linkID.Split('=');
 
             string commandName = paramsAndCmdParts[0];

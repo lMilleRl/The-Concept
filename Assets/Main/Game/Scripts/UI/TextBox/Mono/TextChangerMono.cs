@@ -4,18 +4,18 @@ namespace TextBox
 {
     public class TextChangerMono : MonoBehaviour
     {
-        private TextChanger _textChanger;
+        private TextFormChanger _textFormChanger;
 
-        public TextChanger TextChanger => _textChanger;
+        public TextFormChanger TextFormChanger => _textFormChanger;
 
-        public void Init(TextChanger textChanger)
+        public void Init(TextFormChanger textFormChanger)
         {
-            _textChanger = textChanger;
+            _textFormChanger = textFormChanger;
         }
 
         private void Update()
         {
-            _textChanger?.Tick();
+            _textFormChanger?.Tick();
         }
     }
 }

@@ -1,18 +1,20 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace TextBox
 {
-    public class TextChanger : ITextChanger
+    public class TextFormChanger : ITextChanger
     {
         private readonly List<TextEffectData> _activeEffects = new List<TextEffectData>();
         private readonly Dictionary<TextBoxCommandType, ITextEffect> _effects;
 
         private TMP_Text _text;
         private TMP_MeshInfo[] _cachedMeshInfo;
+        private float _canvasScale = 1f;
 
-        public TextChanger(ITextEffect[] effects)
+        public TextFormChanger(ITextEffect[] effects)
         {
             _effects = new Dictionary<TextBoxCommandType, ITextEffect>(effects.Length);
 
@@ -22,9 +24,18 @@ namespace TextBox
 
         public void SetText(TMP_Text text)
         {
+            if (_text != null)
+                _text.OnPreRenderText -= OnPreRenderText;
+
             _text = text;
+
+            Canvas canvas = _text.GetComponentInParent<Canvas>();
+            float scaleFactor = canvas != null ? canvas.scaleFactor : 1f;
+            _canvasScale = scaleFactor > 0f ? 1f / scaleFactor : 1f;
+
             _text.ForceMeshUpdate();
             _cachedMeshInfo = _text.textInfo.CopyMeshInfoVertexData();
+            _text.OnPreRenderText += OnPreRenderText;
         }
 
         public void AddEffect(TextEffectData effectData)
@@ -40,7 +51,7 @@ namespace TextBox
         public void ClearAll()
         {
             _activeEffects.Clear();
-            RestoreVertices();
+            _text?.ForceMeshUpdate(false, false);
         }
 
         public void Tick()
@@ -48,8 +59,15 @@ namespace TextBox
             if (_text == null || _activeEffects.Count == 0)
                 return;
 
-            TMP_TextInfo textInfo = _text.textInfo;
-            RestoreVertices();
+            _text.ForceMeshUpdate(false, false);
+        }
+
+        private void OnPreRenderText(TMP_TextInfo textInfo)
+        {
+            if (_cachedMeshInfo == null)
+                return;
+
+            RestoreVertices(textInfo);
 
             for (int e = 0; e < _activeEffects.Count; e++)
             {
@@ -74,35 +92,30 @@ namespace TextBox
                     for (int v = 0; v < 4; v++)
                     {
                         Vector3 original = sourceVertices[vertexIndex + v];
-                        destVertices[vertexIndex + v] = effect.Apply(i, original, effectData.Params);
+                        Vector3 modified = effect.Apply(i, original, effectData.Params);
+                        Vector3 offset = modified - original;
+                        destVertices[vertexIndex + v] = original + offset * _canvasScale;
                     }
                 }
             }
-
-            UpdateMesh(textInfo);
         }
 
-        private void RestoreVertices()
+        private void RestoreVertices(TMP_TextInfo textInfo)
         {
-            if (_text == null || _cachedMeshInfo == null) return;
-
-            TMP_TextInfo textInfo = _text.textInfo;
-            for (int i = 0; i < textInfo.meshInfo.Length; i++)
+            for (int i = 0; i < textInfo.characterCount; i++)
             {
-                var source = _cachedMeshInfo[i].vertices;
-                var dest = textInfo.meshInfo[i].vertices;
-                System.Array.Copy(source, dest, source.Length);
-            }
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+                if (!charInfo.isVisible)
+                    continue;
 
-            UpdateMesh(textInfo);
-        }
+                int materialIndex = charInfo.materialReferenceIndex;
+                int vertexIndex = charInfo.vertexIndex;
 
-        private void UpdateMesh(TMP_TextInfo textInfo)
-        {
-            for (int i = 0; i < textInfo.meshInfo.Length; i++)
-            {
-                textInfo.meshInfo[i].mesh.vertices = textInfo.meshInfo[i].vertices;
-                _text.UpdateGeometry(textInfo.meshInfo[i].mesh, i);
+                Vector3[] source = _cachedMeshInfo[materialIndex].vertices;
+                Vector3[] dest = textInfo.meshInfo[materialIndex].vertices;
+
+                for (int v = 0; v < 4; v++)
+                    dest[vertexIndex + v] = source[vertexIndex + v];
             }
         }
     }

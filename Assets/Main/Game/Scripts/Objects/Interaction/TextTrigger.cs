@@ -1,11 +1,9 @@
-using System;
-using Unity.VisualScripting;
+using TextBox;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class TextTrigger : MonoBehaviour, IInteractable
 {
-    [SerializeField] private TextForTextBox _textToShow;
+    [SerializeField] private TextBoxData _textBoxData;
 
     private void OnEnable()
     {
@@ -14,6 +12,6 @@ public class TextTrigger : MonoBehaviour, IInteractable
 
     public void Activate()
     {
-        TextBoxHandler.Instance.ShowText(_textToShow);
+        TextBoxFacadeMono.Instance.Show(_textBoxData);
     }
 }

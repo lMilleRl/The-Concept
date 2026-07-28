@@ -28,6 +28,7 @@ namespace TextBox
         public void SetText(string richText)
         {
             _text.text = richText;
+            _text.overflowMode = TextOverflowModes.Page;
             _text.ForceMeshUpdate();
         }
 

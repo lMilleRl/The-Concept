@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace TextBox
 {
     public class TextBoxFacade : ITextBoxFacade
     {
+        public event Action OnHidden;
+
         private readonly ITextBoxUI _ui;
         private readonly ITypeRunner _typeRunner;
         private readonly ICommandParser _commandParser;
@@ -36,21 +39,27 @@ namespace TextBox
         
         public void Show(TextBoxData data)
         {
+            _typeRunner.Stop();
+            StopAutoTurn();
+
             _autoPlay = data.AutoPlay;
             _autoPagePause = data.AutoPagePause;
 
             _hideTransition = data.HideTransition;
 
-            _ui.SetText(data.Text);
+            InitUI(data);
             _ui.ShowBoard(data.ShowTransition);
             
-            _typeRunner.SetSpeed(data.DefaultSpeed);
-            _typeRunner.Run(_ui);
             _textChanger.ClearAll();
+            _textChanger.SetText(_ui.ContentText);
             _commandParser.Init(_ui.GetTextInfo());
             _voiceSpeaker.SetProfile(data.Voice);
             _voiceSpeaker.Resume();
             _input.Enable();
+            
+            
+            _typeRunner.SetSpeed(data.DefaultSpeed);
+            _typeRunner.Run(_ui);
         }
 
         public void Hide()
@@ -62,6 +71,7 @@ namespace TextBox
             _ui.HideBoard(_hideTransition);
             _input.Disable();
             _canTurnPage = false;
+            OnHidden?.Invoke();
         }
 
         public void TryTurnPage()
@@ -86,6 +96,17 @@ namespace TextBox
         {
             yield return new WaitForSeconds(_autoPagePause);
             TryTurnPage();
+        }
+
+        private void InitUI(TextBoxData data)
+        {
+            _ui.ContentText.color = data.DefaultColor;
+            _ui.ContentText.fontSize = data.DefaultFontSize;
+
+            if (data.DefaultFont != null)
+                _ui.ContentText.font = data.DefaultFont;
+
+            _ui.SetText(data.Text);
         }
 
         private void StopAutoTurn()

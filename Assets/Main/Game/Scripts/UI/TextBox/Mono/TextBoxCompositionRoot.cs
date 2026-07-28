@@ -9,48 +9,40 @@ namespace TextBox
         [SerializeField] private TMP_Text _contentText;
         [SerializeField] private TextBoxBoard _board;
 
-        [Header("Input")]
-        [SerializeField] private KeyCode _turnPageKey = KeyCode.Space;
-
-        [Header("Effects")]
+        [Header("Mono Wrappers")]
         [SerializeField] private TextBoxFacadeMono _facadeMono;
         [SerializeField] private TextChangerMono _textChangerMono;
         [SerializeField] private TextBoxInputMono _inputMono;
 
+        [Header("Input")]
+        [SerializeField] private KeyCode _turnPageKey = KeyCode.Z;
+
         [Header("Audio")]
         [SerializeField] private AudioSource _voiceAudioSource;
 
-        [Header("Transitions")]
-        [SerializeField] private MonoBehaviour[] _boardTransitions;
-
-        [Header("Text Effects")]
-        [SerializeField] private MonoBehaviour[] _textEffects;
-
-        [Header("Commands")]
-        [SerializeField] private MonoBehaviour[] _textBoxCommands;
+        [Header("Registry")]
+        [SerializeField] private TextBoxRegistry _registry;
 
         private void Awake()
         {
             var input = new TextBoxInput(_turnPageKey);
             _inputMono.Init(input);
 
-            var boardTransitions = GetInterfaces<IBoardTransition>(_boardTransitions);
+            var boardTransitions = CreateTransitions(_registry.Transitions);
             _board.Init(boardTransitions);
 
-            var textEffects = GetInterfaces<ITextEffect>(_textEffects);
-            var textChanger = new TextChanger(textEffects);
-            textChanger.SetText(_contentText);
+            var textEffects = CreateEffects(_registry.Effects);
+            var textChanger = new TextFormChanger(textEffects);
             _textChangerMono.Init(textChanger);
 
             var ui = new TextBoxUI(_contentText, _board);
             var voiceSpeaker = new TextBoxVoiceSpeaker(_voiceAudioSource);
 
-            var commands = GetInterfaces<ITextBoxCommand>(_textBoxCommands);
-            var coordinator = new CommandCoordinator(commands);
-
             ICoroutineRunner coroutineRunner = _facadeMono;
-
             var typeRunner = new TypeRunner(coroutineRunner);
+
+            var commands = CreateCommands(_registry.Commands, typeRunner, voiceSpeaker, textChanger);
+            var coordinator = new CommandCoordinator(commands);
             var commandParser = new CommandParser(coordinator, typeRunner);
 
             var facadeData = new TextBoxFacadeData
@@ -68,14 +60,56 @@ namespace TextBox
             _facadeMono.Init(facade);
         }
 
-        private T[] GetInterfaces<T>(MonoBehaviour[] sources) where T : class
+        private ITextEffect[] CreateEffects(TextEffectEntry[] entries)
         {
-            var result = new T[sources.Length];
+            var effects = new ITextEffect[entries.Length];
 
-            for (int i = 0; i < sources.Length; i++)
-                result[i] = sources[i] as T;
+            for (int i = 0; i < entries.Length; i++)
+            {
+                effects[i] = entries[i].Type switch
+                {
+                    TextBoxCommandType.Wave => new WaveEffect(entries[i].Params),
+                    TextBoxCommandType.Shake => new ShakeEffect(entries[i].Params),
+                    TextBoxCommandType.Distortion => new DistortionEffect(entries[i].Params),
+                    _ => null
+                };
+            }
 
-            return result;
+            return effects;
+        }
+
+        private ITextBoxCommand[] CreateCommands(TextCommandEntry[] entries,
+            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextChanger textChanger)
+        {
+            var commands = new ITextBoxCommand[entries.Length];
+
+            for (int i = 0; i < entries.Length; i++)
+            {
+                commands[i] = entries[i].Type switch
+                {
+                    TextBoxCommandType.Pause => new PauseCommand(typeRunner, entries[i].DefaultValue),
+                    TextBoxCommandType.Speed => new SpeedCommand(typeRunner, entries[i].DefaultValue),
+                    TextBoxCommandType.Wave or
+                    TextBoxCommandType.Shake or
+                    TextBoxCommandType.Distortion => new EffectCommand(entries[i].Type, textChanger),
+                    _ => null
+                };
+            }
+
+            return commands;
+        }
+
+        private IBoardTransition[] CreateTransitions(BoardTransitionEntry[] entries)
+        {
+            var transitions = new IBoardTransition[entries.Length];
+
+            for (int i = 0; i < entries.Length; i++)
+            {
+                // TODO: switch по entries[i].Type → new FadeTransition() и т.д.
+                transitions[i] = null;
+            }
+
+            return transitions;
         }
     }
 }

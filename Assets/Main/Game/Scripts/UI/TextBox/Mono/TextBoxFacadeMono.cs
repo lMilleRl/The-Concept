@@ -25,9 +25,26 @@ namespace TextBox
         public void Init(TextBoxFacade facade)
         {
             _facade = facade;
+            _facade.OnHidden += OnFacadeHidden;
         }
 
-        public void Show(TextBoxData data) => _facade.Show(data);
-        public void Hide() => _facade.Hide();
+        private void OnFacadeHidden()
+        {
+            GameStateManager.Instance.SetState(_previousState);
+        }
+
+        private GameState _previousState;
+
+        public void Show(TextBoxData data)
+        {
+            _previousState = GameStateManager.Instance.CurrentState;
+            GameStateManager.Instance.SetState(GameState.TextBox);
+            _facade.Show(data);
+        }
+
+        public void Hide()
+        {
+            _facade.Hide();
+        }
     }
 }
