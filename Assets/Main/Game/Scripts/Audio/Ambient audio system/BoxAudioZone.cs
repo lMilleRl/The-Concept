@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class AmbientAudioZone : MonoBehaviour
+public class BoxAudioZone : MonoBehaviour
 {
+    private const float FullIntensity = 1f;
+
     [SerializeField] private Transform _listener;
     [SerializeField] private AudioSource[] _audioSources;
     [SerializeField] private Vector2 _size = Vector2.one;
     [SerializeField] [Min(0f)] private float _falloffDistance = 3f;
     [SerializeField] [Min(0f)] private float _volumeSmoothSpeed = 4f;
+    [SerializeField] private bool _invertIntensity;
 
     private float[] _maxVolumes;
     private float _currentIntensity;
@@ -29,7 +32,8 @@ public class AmbientAudioZone : MonoBehaviour
     {
         if (_listener == null) return;
 
-        float targetIntensity = GetIntensity(_listener.position);
+        float zoneIntensity = GetIntensity(_listener.position);
+        float targetIntensity = _invertIntensity ? FullIntensity - zoneIntensity : zoneIntensity;
         _currentIntensity = Smooth(_currentIntensity, targetIntensity, _volumeSmoothSpeed);
 
         for (int i = 0; i < _audioSources.Length; i++)

@@ -3,6 +3,7 @@ Shader "TheConcept/GrassWind"
     Properties
     {
         _MainTex ("Sprite Texture", 2D) = "white" {}
+        _MaskTex ("Mask", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 
         [Header(Grass properties)]
@@ -27,9 +28,10 @@ Shader "TheConcept/GrassWind"
             "Queue" = "Transparent"
         }
 
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
         Cull Off
         ZWrite Off
+        ZTest LEqual
 
         Pass
         {
@@ -40,8 +42,14 @@ Shader "TheConcept/GrassWind"
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile _ UNITY_INSTANCING_ENABLED
+            #pragma multi_compile _ DEBUG_DISPLAY
+            #pragma multi_compile USE_SHAPE_LIGHT_TYPE_0 __
+            #pragma multi_compile USE_SHAPE_LIGHT_TYPE_1 __
+            #pragma multi_compile USE_SHAPE_LIGHT_TYPE_2 __
+            #pragma multi_compile USE_SHAPE_LIGHT_TYPE_3 __
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/LightingUtility.hlsl"
 
             struct Attributes
             {
@@ -56,10 +64,13 @@ Shader "TheConcept/GrassWind"
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 float4 color : COLOR;
+                half2 lightingUV : TEXCOORD1;
             };
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
+            TEXTURE2D(_MaskTex);
+            SAMPLER(sampler_MaskTex);
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _MainTex_ST;
@@ -81,6 +92,21 @@ Shader "TheConcept/GrassWind"
             {
                 return dot(worldPosition, normalize(windDirection));
             }
+
+            #if USE_SHAPE_LIGHT_TYPE_0
+            SHAPE_LIGHT(0)
+            #endif
+            #if USE_SHAPE_LIGHT_TYPE_1
+            SHAPE_LIGHT(1)
+            #endif
+            #if USE_SHAPE_LIGHT_TYPE_2
+            SHAPE_LIGHT(2)
+            #endif
+            #if USE_SHAPE_LIGHT_TYPE_3
+            SHAPE_LIGHT(3)
+            #endif
+
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
             
             Varyings vert(Attributes input)
             {
@@ -109,14 +135,23 @@ Shader "TheConcept/GrassWind"
                 output.positionCS = TransformObjectToHClip(posOS);
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
                 output.color = input.color * _Color;
+                output.lightingUV = half2(ComputeScreenPos(output.positionCS / output.positionCS.w).xy);
 
                 return output;
             }
 
             half4 frag(Varyings input) : SV_Target
             {
-                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
-                return tex * input.color;
+                const half4 main = input.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                const half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, input.uv);
+
+                SurfaceData2D surfaceData;
+                InputData2D inputData;
+
+                InitializeSurfaceData(main.rgb, main.a, mask, surfaceData);
+                InitializeInputData(input.uv, input.lightingUV, inputData);
+
+                return CombinedShapeLightShared(surfaceData, inputData);
             }
             ENDHLSL
         }
