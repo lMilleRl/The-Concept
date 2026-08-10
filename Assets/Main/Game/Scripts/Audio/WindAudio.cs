@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -12,12 +13,14 @@ public class WindAudio : MonoBehaviour, IWindSignal
     public float NormalizedStrength { get; private set; }
 
     private float[] _samples;
+    private float[] _remainingSamples;
 
     private void Awake()
     {
         _audioSource ??= GetComponent<AudioSource>();
         _sampleCount = Mathf.NextPowerOfTwo(_sampleCount);
         _samples = new float[_sampleCount];
+        _remainingSamples = new float[_sampleCount];
     }
 
     private void Update()
@@ -29,13 +32,15 @@ public class WindAudio : MonoBehaviour, IWindSignal
 
     private float GetNormalizedRms()
     {
-        if (!_audioSource.isPlaying) return 0f;
+        if (!_audioSource.isPlaying || _audioSource.clip == null) return 0f;
 
-        _audioSource.GetOutputData(_samples, 0);
+        _audioSource.clip.GetData(_samples, _audioSource.timeSamples);
 
         float sumOfSquares = 0f;
         foreach (float sample in _samples)
+        {
             sumOfSquares += sample * sample;
+        }
 
         float rms = Mathf.Sqrt(sumOfSquares / _samples.Length);
         return Mathf.Clamp01(rms / _maximumRms);

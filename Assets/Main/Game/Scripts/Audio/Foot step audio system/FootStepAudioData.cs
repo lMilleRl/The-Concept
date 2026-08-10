@@ -33,24 +33,12 @@ public class FootStepAudioData : ScriptableObject
         }
     }
 
-    public AudioClip[] GetFootStepAudio(SurfaceType surfaceType)
+    public bool TryGetAudioStepData(SurfaceType surfaceType, out AudioStepData data)
     {
         if (_audioStepDictionary == null)
             BuildDictionary();
 
-        if (_audioStepDictionary.TryGetValue(surfaceType, out var data))
-        {
-            if (data.StepsAudio == null || data.StepsAudio.Length == 0)
-            {
-                Debug.LogWarning($"No audio clips configured for surface type: {surfaceType}", this);
-                return null;
-            }
-
-            return data.StepsAudio;
-        }
-
-        Debug.LogWarning($"Surface type {surfaceType} not found in {nameof(FootStepAudioData)}", this);
-        return null;
+        return _audioStepDictionary.TryGetValue(surfaceType, out data);
     }
 }
 
@@ -59,4 +47,10 @@ public struct AudioStepData
 {
     public AudioClip[] StepsAudio;
     public SurfaceType SurfaceTypeToLink;
+
+    [Range(0.5f, 2f)]
+    public float MinPitch;
+
+    [Range(0.5f, 2f)]
+    public float MaxPitch;
 }

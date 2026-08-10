@@ -14,7 +14,7 @@ public class FootStepControllerHandler : MonoBehaviour, IToggleable, IMovementSt
     {
         var dependencies = new FootStepDependencies(
             _stepsSource,
-            _surfaceDetectorSource as ISurfaceDetector,
+            _surfaceDetectorSource?.GetComponent<ISurfaceDetector>(),
             _audioData,
             _soundsPlayer);
 

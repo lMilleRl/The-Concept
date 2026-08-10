@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class WindController : MonoBehaviour
 {
+    [SerializeField] private Material _grassWindZoneMaterial;
+    
     [Header("Wind Signal")]
     [SerializeField] private MonoBehaviour _windSignalSource;
 
@@ -16,9 +18,9 @@ public class WindController : MonoBehaviour
     public float WindStrength { get; private set; }
     public Vector2 WindDirection { get; private set; }
 
-    private static readonly int GlobalWindStrengthId = Shader.PropertyToID("_GlobalWindStrength");
-    private static readonly int GlobalWindDirectionId = Shader.PropertyToID("_GlobalWindDirection");
-    private static readonly int GlobalWindTimeId = Shader.PropertyToID("_GlobalWindTime");
+    private static readonly int _WindStrengthId = Shader.PropertyToID("_WindStrength");
+    private static readonly int _WindDirectionId = Shader.PropertyToID("_WindDirection");
+    private static readonly int _WindTimeId = Shader.PropertyToID("_WindTime");
 
     private IWindSignal _windSignal;
     private float _windTime;
@@ -31,7 +33,7 @@ public class WindController : MonoBehaviour
             Debug.LogError($"{nameof(WindController)} requires an {nameof(IWindSignal)} source.", this);
 
         WindDirection = _windDirection.sqrMagnitude > 0f ? _windDirection.normalized : Vector2.right;
-        Shader.SetGlobalVector(GlobalWindDirectionId, WindDirection);
+        _grassWindZoneMaterial.SetVector(_WindDirectionId, WindDirection);
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class WindController : MonoBehaviour
 
         _windTime += Time.deltaTime * waveSpeedMultiplier;
 
-        Shader.SetGlobalFloat(GlobalWindStrengthId, WindStrength);
-        Shader.SetGlobalFloat(GlobalWindTimeId, _windTime);
+        _grassWindZoneMaterial.SetFloat(_WindTimeId, _windTime);
+        _grassWindZoneMaterial.SetFloat(_WindStrengthId, WindStrength);
     }
 }

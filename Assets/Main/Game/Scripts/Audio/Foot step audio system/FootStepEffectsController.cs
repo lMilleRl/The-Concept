@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FootStepEffectsController : IStepEffectsProfileController
+public class 
+    FootStepEffectsController : IStepEffectsProfileController
 {
     private Transform _stepsSource;
     private ISurfaceDetector _surfaceDetector;
@@ -13,7 +14,7 @@ public class FootStepEffectsController : IStepEffectsProfileController
     private bool _isSourceMoving;
     
     private Dictionary<StepEffectsProfileType, StepEffectsProfileData> _profilesData;
-    private StepEffectsProfileData _activeProfile;
+    private StepEffectsProfileData _activeProfileData;
     
     public FootStepEffectsController(FootStepDependencies dependencies, StepEffectsProfileData[] profilesData)
     {
@@ -62,14 +63,14 @@ public class FootStepEffectsController : IStepEffectsProfileController
             _surfaceDetector.GetSurface(_stepsSource.position),
             _stepsSource.position,
             _lastMovementDirection);
-        foreach (var s in _activeProfile.StepEffectStrategies)
+        foreach (var s in _activeProfileData.StepEffectStrategies)
             s.Execute(context);
         _currentDistance = 0f;
     }
 
     public void SetProfile(StepEffectsProfileType profileType)
     {
-        _activeProfile = _profilesData[profileType];
+        _activeProfileData = _profilesData[profileType];
         _distanceBetweenSteps = _profilesData[profileType].DistanceBetweenSteps;
     }
 }

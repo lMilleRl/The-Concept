@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class InspectorSurfaceDetector : MonoBehaviour, ISurfaceDetector
+public class InspectorSurfaceDetector : SurfaceProvider
 {
     [SerializeField] private SurfaceType _defaultSurface;
 
-    public SurfaceType GetSurface(Vector3 worldPosition) => _defaultSurface;
+    public override SurfaceType GetSurface(Vector3 worldPosition) => _defaultSurface;
 }

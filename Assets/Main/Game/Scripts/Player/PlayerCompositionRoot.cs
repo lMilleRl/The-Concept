@@ -8,6 +8,7 @@ public class PlayerCompositionRoot : MonoBehaviour
     [Header("Behaviours in inspector")] 
     [SerializeField] private PlayerMovementInput _movementInput;
     [SerializeField] private PlayerInteractionInput _interactionInput;
+    [SerializeField] private CutsceneCommandInput _cutsceneCommandInput;
     [SerializeField] private PlayerInteractionActivator _interactionActivator;
     [SerializeField] private FootStepControllerHandler footStepControllerHandler;
     [SerializeField] private PlayerMovement _movement;
@@ -71,6 +72,7 @@ public class PlayerCompositionRoot : MonoBehaviour
         var stateMachineDependencies = new PlayerStateMachineDependencies(
             _movementInput,
             climbingInput,
+            _cutsceneCommandInput,
             _movement,
             _interactionInput,
             _interaction,

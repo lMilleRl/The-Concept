@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
-    private Rigidbody2D _rigidbody2D;
+    [SerializeField] private Rigidbody2D _rigidbody2D;
     private IMoveInput _input;
 
     public Vector2 Velocity => _rigidbody2D.velocity;
@@ -17,11 +17,6 @@ public class PlayerMovement : MonoBehaviour
         SetInput(input);
     }
     
-    private void Awake()
-    {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
     private void OnDisable()
     {
         _rigidbody2D.velocity = Vector2.zero;

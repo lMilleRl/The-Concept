@@ -5,5 +5,6 @@ public enum GameState
     MainMenu,
     Gameplay,
     PassiveShow,
-    TextBox
+    TextBox,
+    MovementCutscene
 }

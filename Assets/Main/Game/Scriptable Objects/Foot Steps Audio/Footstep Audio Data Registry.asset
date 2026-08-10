@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d453d17f161a224e95c5a892112ba9a, type: 3}
+  m_Name: Footstep Audio Data Registry
+  m_EditorClassIdentifier: 
+  _audioStepData:
+  - StepsAudio:
+    - {fileID: 8300000, guid: 2e19390fa54754141a2d9ef7c027fb34, type: 3}
+    - {fileID: 8300000, guid: 00e48a50b64ff0d478029ae5f96b170d, type: 3}
+    - {fileID: 8300000, guid: 33237175c7f260a499450270a4290b0e, type: 3}
+    SurfaceTypeToLink: 0
+    MinPitch: 0.8
+    MaxPitch: 1.2
+  - StepsAudio:
+    - {fileID: 8300000, guid: 6542fe135eea8ee4a9d6e4ad169ac990, type: 3}
+    - {fileID: 8300000, guid: 0a20cef97bb1d3e43ace6f513c9e3bfc, type: 3}
+    - {fileID: 8300000, guid: 1fd93d323c2dcc646b2cfa8d194e8267, type: 3}
+    - {fileID: 8300000, guid: 3ca355df3f9c39248867a8f1c408fd4a, type: 3}
+    SurfaceTypeToLink: 2
+    MinPitch: 0.8
+    MaxPitch: 1.2
+  - StepsAudio:
+    - {fileID: 8300000, guid: 78aab425b0672bc499af5afd1edf6b5c, type: 3}
+    - {fileID: 8300000, guid: 6c641721dbc4ee4479961fb5ac0534fe, type: 3}
+    - {fileID: 8300000, guid: c53da3b3653de3441aa93c887881c7e1, type: 3}
+    SurfaceTypeToLink: 1
+    MinPitch: 0.8
+    MaxPitch: 1.2
+  - StepsAudio:
+    - {fileID: 8300000, guid: cda1c1f362a113d4ea7f59e77df68ca6, type: 3}
+    - {fileID: 8300000, guid: 7ff87966e61c7324fb40c51f366b3936, type: 3}
+    - {fileID: 8300000, guid: 1e33b3055848a7145beba8255fa8c938, type: 3}
+    - {fileID: 8300000, guid: d9cec6f8910fce349942eb5c4050fa40, type: 3}
+    SurfaceTypeToLink: 4
+    MinPitch: 0.8
+    MaxPitch: 1.2
+  - StepsAudio:
+    - {fileID: 8300000, guid: ab23e19e5cf5b2d4ea0d0268dd00f75e, type: 3}
+    - {fileID: 8300000, guid: f1566f7d308ff07458f1d9366de4a82b, type: 3}
+    - {fileID: 8300000, guid: 5013e5925a0849641bdbd796c1028939, type: 3}
+    - {fileID: 8300000, guid: 8481dd5b8c1363e47919c57d689ea2eb, type: 3}
+    SurfaceTypeToLink: 3
+    MinPitch: 0.8
+    MaxPitch: 1.2

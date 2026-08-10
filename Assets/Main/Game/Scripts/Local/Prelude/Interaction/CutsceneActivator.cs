@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 public class CutsceneActivator : MonoBehaviour, IInteractable
 {
     [SerializeField] private PlayableDirector _director;
+    [SerializeField] private GameState _cutsceneStateToActivate = GameState.PassiveShow;
     [SerializeField] private bool _isReturningToGameplayInAnimationStopped = true;
 
     private void OnEnable()
@@ -13,7 +14,8 @@ public class CutsceneActivator : MonoBehaviour, IInteractable
 
     public void Activate()
     {
-        GameStateManager.Instance.SetState(GameState.PassiveShow);
+        GameStateManager.Instance.SetState(_cutsceneStateToActivate);
+
         _director.Play();
         if (_isReturningToGameplayInAnimationStopped)
             _director.stopped += ReturnToGameplay;
@@ -25,7 +27,9 @@ public class CutsceneActivator : MonoBehaviour, IInteractable
     {
         if (_isReturningToGameplayInAnimationStopped)
             _director.stopped -= ReturnToGameplay;
+
         GameStateManager.Instance.SetState(GameState.Gameplay);
+        Debug.Log($"cut is end");
     }
 
     private void OnDestroy()
