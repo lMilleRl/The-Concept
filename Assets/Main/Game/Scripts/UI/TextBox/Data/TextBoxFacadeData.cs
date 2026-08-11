@@ -6,8 +6,9 @@ namespace TextBox
         public ITypeRunner TypeRunner;
         public ICommandParser CommandParser;
         public ITextBoxVoiceSpeaker VoiceSpeaker;
-        public ITextChanger TextChanger;
+        public ITextFormChanger TextFormChanger;
         public ITextBoxInput Input;
         public ICoroutineRunner CoroutineRunner;
+        public TextStyleProfile DefaultStyle;
     }
 }

@@ -498,6 +498,7 @@ MonoBehaviour:
   _turnPageKey: 122
   _voiceAudioSource: {fileID: 3077146241844009603}
   _registry: {fileID: 11400000, guid: 3edc36b64fd01b1498608301f98a67af, type: 2}
+  _defaultStyleProfile: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
 --- !u!114 &6615682289621145626
 MonoBehaviour:
   m_ObjectHideFlags: 0

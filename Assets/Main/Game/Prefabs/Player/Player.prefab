@@ -216,7 +216,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &3717539297603786154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 8072726712007017317}
   - component: {fileID: 5438455263677500903}
   - component: {fileID: 6345016053137031172}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: InteractionTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

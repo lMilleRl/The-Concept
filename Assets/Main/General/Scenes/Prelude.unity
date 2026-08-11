@@ -392,7 +392,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: 2b3b69025a609bb47afc2e2819d86406, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!1 &334776607
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +580,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: 624df013b96a1524cb337587b9da61d1, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!1 &847553589
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,32 +753,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc5adf44f86e4a9429c037c0070873ff, type: 3}
---- !u!1 &928550528 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5906918052943353189, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-  m_PrefabInstance: {fileID: 1986642344}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &928550534
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928550528}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &984143974
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,103 +837,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!1 &1080316530
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1080316531}
-  - component: {fileID: 1080316533}
-  - component: {fileID: 1080316532}
-  - component: {fileID: 1080316534}
-  m_Layer: 5
-  m_Name: Cutscenes Panel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1080316531
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080316530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1318123683}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1080316532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080316530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1080316533
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080316530}
-  m_CullTransparentMesh: 1
---- !u!95 &1080316534
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080316530}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1095473395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,11 +1052,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!224 &1318123683 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9139690190772831905, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-  m_PrefabInstance: {fileID: 1986642344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1488281605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,7 +1302,7 @@ PlayableDirector:
     value: {fileID: 1986642346}
   m_ExposedReferences:
     m_References:
-    - d7167bcd031611048a4fdc222200a33b: {fileID: 2112139844}
+    - d7167bcd031611048a4fdc222200a33b: {fileID: 0}
     - bf85f792b35ca264892ef1d2402ab3a6: {fileID: 6839218996933799636}
 --- !u!114 &1631836686
 MonoBehaviour:
@@ -1399,6 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 1631836685}
+  _cutsceneStateToActivate: 2
   _isReturningToGameplayInAnimationStopped: 0
 --- !u!114 &1631836687
 MonoBehaviour:
@@ -1831,7 +1750,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 754649656121316396, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: orthographic size
-      value: 5.625
+      value: 5.77
       objectReference: {fileID: 0}
     - target: {fileID: 2099373841087163011, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1848,6 +1767,14 @@ PrefabInstance:
     - target: {fileID: 3983089636480771733, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0.10188681
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560111470653113730, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+    - target: {fileID: 4560111470653113730, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5148608149615481655, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_CollisionDetection
@@ -1917,19 +1844,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8852633037204095442, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: _defaultStyleProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9139690190772831905, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 1080316531}
+    m_RemovedGameObjects:
+    - {fileID: 6686993921743292629, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1452312846167412331, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1986642346}
-    - targetCorrespondingSourceObject: {fileID: 5906918052943353189, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 928550534}
   m_SourcePrefab: {fileID: 100100000, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
 --- !u!1 &1986642345 stripped
 GameObject:
@@ -2394,6 +2320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 2080698628}
+  _cutsceneStateToActivate: 2
   _isReturningToGameplayInAnimationStopped: 1
 --- !u!114 &2080698631
 MonoBehaviour:
@@ -2496,11 +2423,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1 &2112139844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2448233334207477453, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-  m_PrefabInstance: {fileID: 1986642344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2133723550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,7 +2739,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: a0884a6c5273b5447b351e7742425920, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847519303039534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2830,7 +2775,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: fd69d219f781660499598dc9920f99be, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847519354658195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2843,7 +2811,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: 5e02944a38cacd442879a7237cced8b6, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847519646199441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2856,7 +2847,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: 8e0754d8a87522d479e92f6b4ee028a6, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847520107391627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2869,7 +2883,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: da2ddd48d2f178545a685a40e425512e, type: 2}
+  _textBoxData:
+    Text: I didn't sleep again.<link="pause=0.4"> </link> Sat at the desk all night.<page>
+      She'd wake up alone.<link="pause=0.6"> </link> Every morning.<link="pause=1.0">
+      </link> ...<page> She'd ask:<link="pause=0.3"> </link> <i>'You didn't sleep
+      again?'</i> I would nod.<page> <link="pause=0.8"> </link>She would say nothing.<link="event=1">
+      </link>
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847520292319671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,7 +2923,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: d187b9dde386a8840b7317acf3f43534, type: 2}
+  _textBoxData:
+    Text: 
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 0}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &4881847520761629225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2895,7 +2959,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50332fdd90bce5246a0e7de9ca3a4357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textToShow: {fileID: 11400000, guid: 7ea13be0b198f5e4f87c0ba4d60d4703, type: 2}
+  _textBoxData:
+    Text: test akjdslkfj;lkjdslk jflk;asdklfjlkaj.<page> akldjsflkjsaddlkfj <page>
+      kjadsflk;jl;kjdslkajflk;jldasfjl kajds f;j askljdlk jasl;kjds l;kjak sljd
+    Voice: {fileID: 0}
+    AutoPlay: 0
+    AutoPagePause: 0
+    Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
+    ShowTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    HideTransition:
+      Type: 0
+      Duration: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!58 &4923040769358275480
 CircleCollider2D:
   m_ObjectHideFlags: 0

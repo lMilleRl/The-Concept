@@ -18,3 +18,5 @@ MonoBehaviour:
   _fontSize: 56
   _textAppearDuration: 3
   _easeTextTweenType: 1
+  _isAutoPlay: 0
+  _pauseBetweenPagesInSec: 1

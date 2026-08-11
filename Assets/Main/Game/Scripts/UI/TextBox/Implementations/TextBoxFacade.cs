@@ -12,9 +12,10 @@ namespace TextBox
         private readonly ITypeRunner _typeRunner;
         private readonly ICommandParser _commandParser;
         private readonly ITextBoxVoiceSpeaker _voiceSpeaker;
-        private readonly ITextChanger _textChanger;
+        private readonly ITextFormChanger _textFormChanger;
         private readonly ITextBoxInput _input;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly TextStyleProfile _defaultStyle;
 
         private bool _canTurnPage;
         private bool _autoPlay;
@@ -28,9 +29,10 @@ namespace TextBox
             _typeRunner = data.TypeRunner;
             _commandParser = data.CommandParser;
             _voiceSpeaker = data.VoiceSpeaker;
-            _textChanger = data.TextChanger;
+            _textFormChanger = data.TextFormChanger;
             _input = data.Input;
             _coroutineRunner = data.CoroutineRunner;
+            _defaultStyle = data.DefaultStyle;
 
             _typeRunner.OnTextFinished += Hide;
             _typeRunner.OnPageFinished += ResumeTurningPage;
@@ -49,16 +51,17 @@ namespace TextBox
 
             InitUI(data);
             _ui.ShowBoard(data.ShowTransition);
-            
-            _textChanger.ClearAll();
-            _textChanger.SetText(_ui.ContentText);
+
+            _textFormChanger.SetText(_ui);
+            _textFormChanger.ClearAll();
             _commandParser.Init(_ui.GetTextInfo());
             _voiceSpeaker.SetProfile(data.Voice);
             _voiceSpeaker.Resume();
             _input.Enable();
             
             
-            _typeRunner.SetSpeed(data.DefaultSpeed);
+            var style = data.Style != null ? data.Style : _defaultStyle;
+            _typeRunner.SetSpeed(style.DefaultSpeed);
             _typeRunner.Run(_ui);
         }
 
@@ -67,7 +70,7 @@ namespace TextBox
             StopAutoTurn();
             _typeRunner.Stop();
             _voiceSpeaker.Mute();
-            _textChanger.ClearAll();
+            _textFormChanger.ClearAll();
             _ui.HideBoard(_hideTransition);
             _input.Disable();
             _canTurnPage = false;
@@ -100,11 +103,13 @@ namespace TextBox
 
         private void InitUI(TextBoxData data)
         {
-            _ui.ContentText.color = data.DefaultColor;
-            _ui.ContentText.fontSize = data.DefaultFontSize;
+            var style = data.Style != null ? data.Style : _defaultStyle;
 
-            if (data.DefaultFont != null)
-                _ui.ContentText.font = data.DefaultFont;
+            _ui.ContentText.color = style.DefaultColor;
+            _ui.ContentText.fontSize = style.DefaultFontSize;
+
+            if (style.DefaultFont != null)
+                _ui.ContentText.font = style.DefaultFont;
 
             _ui.SetText(data.Text);
         }

@@ -45,6 +45,7 @@ namespace TextBox
         public void SetPage(int pageIndex)
         {
             _text.pageToDisplay = pageIndex;
+            _text.ForceMeshUpdate();
         }
     }
 }

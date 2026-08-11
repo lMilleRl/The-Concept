@@ -111,7 +111,7 @@ namespace TextBox
             {
                 _currentVisibleChars = i + 1;
                 _currentTextBoxUI.ContentText.maxVisibleCharacters = _currentVisibleChars;
-    
+
                 OnCharRevealed?.Invoke(i);
 
                 float totalPause = _perCharPause + _currentPause;

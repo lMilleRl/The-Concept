@@ -23,6 +23,9 @@ namespace TextBox
         [Header("Registry")]
         [SerializeField] private TextBoxRegistry _registry;
 
+        [Header("Style")]
+        [SerializeField] private TextStyleProfile _defaultStyleProfile;
+
         private void Awake()
         {
             var input = new TextBoxInput(_turnPageKey);
@@ -51,9 +54,10 @@ namespace TextBox
                 TypeRunner = typeRunner,
                 CommandParser = commandParser,
                 VoiceSpeaker = voiceSpeaker,
-                TextChanger = textChanger,
+                TextFormChanger = textChanger,
                 Input = input,
-                CoroutineRunner = coroutineRunner
+                CoroutineRunner = coroutineRunner,
+                DefaultStyle = _defaultStyleProfile
             };
 
             var facade = new TextBoxFacade(facadeData);
@@ -79,7 +83,7 @@ namespace TextBox
         }
 
         private ITextBoxCommand[] CreateCommands(TextCommandEntry[] entries,
-            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextChanger textChanger)
+            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextFormChanger textFormChanger)
         {
             var commands = new ITextBoxCommand[entries.Length];
 
@@ -91,7 +95,7 @@ namespace TextBox
                     TextBoxCommandType.Speed => new SpeedCommand(typeRunner, entries[i].DefaultValue),
                     TextBoxCommandType.Wave or
                     TextBoxCommandType.Shake or
-                    TextBoxCommandType.Distortion => new EffectCommand(entries[i].Type, textChanger),
+                    TextBoxCommandType.Distortion => new EffectCommand(entries[i].Type, textFormChanger),
                     _ => null
                 };
             }

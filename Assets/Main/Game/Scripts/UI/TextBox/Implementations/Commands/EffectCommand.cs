@@ -3,14 +3,14 @@ namespace TextBox
     public class EffectCommand : ITextBoxCommand
     {
         private readonly TextBoxCommandType _type;
-        private readonly ITextChanger _textChanger;
+        private readonly ITextFormChanger _textFormChanger;
 
         public TextBoxCommandType Type => _type;
 
-        public EffectCommand(TextBoxCommandType type, ITextChanger textChanger)
+        public EffectCommand(TextBoxCommandType type, ITextFormChanger textFormChanger)
         {
             _type = type;
-            _textChanger = textChanger;
+            _textFormChanger = textFormChanger;
         }
 
         public void Execute(TextBoxCommandContext context)
@@ -23,7 +23,7 @@ namespace TextBox
                 Params = context.Params
             };
 
-            _textChanger.AddEffect(effectData);
+            _textFormChanger.AddEffect(effectData);
         }
     }
 }

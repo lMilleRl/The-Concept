@@ -2,9 +2,9 @@ using TMPro;
 
 namespace TextBox
 {
-    public interface ITextChanger
+    public interface ITextFormChanger
     {
-        void SetText(TMP_Text text);
+        void SetText(ITextBoxUI ui);
         void AddEffect(TextEffectData effectData);
         void RemoveEffect(TextEffectData effectData);
         void ClearAll();
