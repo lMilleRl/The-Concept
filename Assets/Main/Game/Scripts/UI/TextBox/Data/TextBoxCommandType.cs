@@ -10,6 +10,8 @@ namespace TextBox
         Wave,
         Shake,
         Distortion,
-        Event
+        Event,
+        EaseSpeed,
+        Progressive
     }
 }

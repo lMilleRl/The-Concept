@@ -1,0 +1,24 @@
+using UnityEngine;
+
+namespace TextBox
+{
+    public abstract class ProgressiveTargetBase : MonoBehaviour, IProgressiveTarget
+    {
+        [SerializeField] private ProgressiveTargetId _id;
+
+        public ProgressiveTargetId Id => _id;
+
+        public void SetProgress(float progress)
+        {
+            bool wasActive = gameObject.activeSelf;
+            bool shouldBeActive = progress > 0f && progress < 1f;
+
+            if (wasActive != shouldBeActive)
+                gameObject.SetActive(shouldBeActive);
+
+            OnProgress(progress);
+        }
+
+        protected abstract void OnProgress(float progress);
+    }
+}

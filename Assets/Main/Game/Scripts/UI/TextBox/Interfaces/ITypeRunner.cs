@@ -11,6 +11,7 @@ namespace TextBox
         void Run(ITextBoxUI ui);
         void Stop();
         void SetSpeed(float charsPerSecond);
+        void SetSpeedEase(float targetCharsPerSecond, int startCharIndex, int charLength, EaseType ease);
         void SetPause(float seconds);
         void TurnToNextPage();
         int GetCurrentVisibleChars();

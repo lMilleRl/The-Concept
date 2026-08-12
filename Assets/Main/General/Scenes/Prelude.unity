@@ -393,7 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: <link="pause=0.5"> </link>I'm sorry, Eva.<link="pause=0.4"> </link> I can't
+      do this anymore.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -581,7 +582,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: I took this frame from another reality.<link="pause=0.3"> </link> Gave
+      it to her.<page> She smiled.<link="pause=0.3"> </link> Said it was the most
+      romantic thing I'd ever done.<page> Then she put our photo in it.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -1780,6 +1783,14 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6150850587562683563, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150850587562683563, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.692627
+      objectReference: {fileID: 0}
     - target: {fileID: 6178040654102946146, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_Name
       value: Player Base
@@ -2776,7 +2787,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: World #47:<link="pause=0.2"> </link> red trees, weaker gravity.<page> World
+      #103:<link="pause=0.2"> </link> eternal sunset, the smell of vanilla.<page>
+      World #201:<link="pause=0.2"> </link> silence.<link="pause=0.3"> </link> Absolute.<page>
+      I was looking for something.<link="pause=0.3"> </link> I don't know what.<link="pause=0.4">
+      </link> But not here.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -2812,7 +2827,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: I stole it today.<link="pause=0.3"> </link> Used my access.<page> They
+      won't notice until morning.<page> Better put the suit on first.<page> Otherwise
+      my entire being will disintegrate.<link="pause=0.4"> </link> ...Hah.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -2848,7 +2865,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: A blanket on the chair.<link="pause=0.3"> </link> She knitted it for three
+      months.<page> Said I always came back cold from other worlds.<page> I never
+      told her<link="pause=0.3"> </link> I was only warm next to her.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -2884,11 +2903,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: I didn't sleep again.<link="pause=0.4"> </link> Sat at the desk all night.<page>
-      She'd wake up alone.<link="pause=0.6"> </link> Every morning.<link="pause=1.0">
-      </link> ...<page> She'd ask:<link="pause=0.3"> </link> <i>'You didn't sleep
-      again?'</i> I would nod.<page> <link="pause=0.8"> </link>She would say nothing.<link="event=1">
-      </link>
+    Text: I didn't sleep again.<link="pause=0.4"> </link> Sat at the desk all night.<link="pause=0.3">
+      </link> The coffee went cold.<page> She'd wake up alone.<link="pause=0.6">
+      </link> Every morning.<page> She'd ask:<link="pause=0.3"> </link> <i><color=#F200FF>"You
+      didn't sleep again?"</color></i><link="pause=0.4"> </link> I would nod.<page>
+      <link="pause=0.8"> </link>She would say nothing.<link="event=1"> </link>
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -2924,7 +2943,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: 
+    Text: '<link="speed=16"> </link>Report #89: Location unstable.<link="pause=0.2">
+      </link> Report #90: Anomaly in sector 12...<page> <link="speed=12"> </link>How
+      many hours did I spend on these?<page> <link="pause=0.6"> </link>She was in
+      the next room.<link="pause=0.4"> </link> Waiting.'
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0
@@ -2960,8 +2982,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: test akjdslkfj;lkjdslk jflk;asdklfjlkaj.<page> akldjsflkjsaddlkfj <page>
-      kjadsflk;jl;kjdslkajflk;jldasfjl kajds f;j askljdlk jasl;kjds l;kjak sljd
+    Text: She tended to it every morning.<link="pause=0.3"> </link> Said it mattered.<page>
+      <i><color=#F200FF>"If you care for something living, it stays."</color></i><page>
+      I water it now.<link="pause=0.3"> </link> Every day.<link="pause=0.5"> </link>
+      I don't know why.
     Voice: {fileID: 0}
     AutoPlay: 0
     AutoPagePause: 0

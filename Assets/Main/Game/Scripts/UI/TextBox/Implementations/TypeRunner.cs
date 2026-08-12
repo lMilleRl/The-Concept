@@ -13,6 +13,7 @@ namespace TextBox
         private TMP_TextInfo _currentTextInfo;
         private Coroutine _turnPagesCoroutine;
         private Coroutine _typePageCoroutine;
+        private Coroutine _easeSpeedCoroutine;
 
         private float _perCharPause;
         private float _currentPause;
@@ -53,11 +54,60 @@ namespace TextBox
                 _coroutineRunner.StopCoroutine(_turnPagesCoroutine);
                 _turnPagesCoroutine = null;
             }
+
+            if (_easeSpeedCoroutine != null)
+            {
+                _coroutineRunner.StopCoroutine(_easeSpeedCoroutine);
+                _easeSpeedCoroutine = null;
+            }
         }
 
         public void SetSpeed(float charsPerSecond)
         {
             _perCharPause = 1f / charsPerSecond;
+        }
+
+        public void SetSpeedEase(float targetCharsPerSecond, int startCharIndex, int charLength, EaseType ease)
+        {
+            if (charLength <= 0)
+            {
+                SetSpeed(targetCharsPerSecond);
+                return;
+            }
+
+            if (_easeSpeedCoroutine != null)
+            {
+                _coroutineRunner.StopCoroutine(_easeSpeedCoroutine);
+            }
+
+            _easeSpeedCoroutine = _coroutineRunner.StartCoroutine(
+                EaseSpeedByChars(targetCharsPerSecond, startCharIndex, startCharIndex + charLength, ease));
+        }
+
+        private IEnumerator EaseSpeedByChars(float targetCharsPerSecond, int startCharIndex, int endCharIndex, EaseType ease)
+        {
+            float targetPause = 1f / targetCharsPerSecond;
+            float startPause = _perCharPause;
+            int length = endCharIndex - startCharIndex;
+
+            while (_currentVisibleChars < endCharIndex)
+            {
+                float t = Mathf.Clamp01((float)(_currentVisibleChars - startCharIndex) / length);
+                _perCharPause = Mathf.Lerp(startPause, targetPause, ApplyEase(t, ease));
+                yield return null;
+            }
+
+            _perCharPause = targetPause;
+            _easeSpeedCoroutine = null;
+        }
+
+        private float ApplyEase(float t, EaseType ease)
+        {
+            return ease switch
+            {
+                EaseType.Linear => t,
+                _ => t
+            };
         }
 
         public void SetPause(float seconds)

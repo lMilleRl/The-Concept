@@ -23,6 +23,9 @@ namespace TextBox
         [Header("Registry")]
         [SerializeField] private TextBoxRegistry _registry;
 
+        [Header("Progressive Targets")]
+        [SerializeField] private ProgressiveTargetBase[] _progressiveTargets;
+
         [Header("Style")]
         [SerializeField] private TextStyleProfile _defaultStyleProfile;
 
@@ -44,7 +47,8 @@ namespace TextBox
             ICoroutineRunner coroutineRunner = _facadeMono;
             var typeRunner = new TypeRunner(coroutineRunner);
 
-            var commands = CreateCommands(_registry.Commands, typeRunner, voiceSpeaker, textChanger);
+            var progressiveTargetService = new ProgressiveTargetService(_progressiveTargets);
+            var commands = CreateCommands(_registry.Commands, typeRunner, voiceSpeaker, textChanger, progressiveTargetService);
             var coordinator = new CommandCoordinator(commands);
             var commandParser = new CommandParser(coordinator, typeRunner);
 
@@ -83,7 +87,8 @@ namespace TextBox
         }
 
         private ITextBoxCommand[] CreateCommands(TextCommandEntry[] entries,
-            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextFormChanger textFormChanger)
+            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextFormChanger textFormChanger,
+            IProgressiveTargetService progressiveTargetService)
         {
             var commands = new ITextBoxCommand[entries.Length];
 
@@ -93,6 +98,8 @@ namespace TextBox
                 {
                     TextBoxCommandType.Pause => new PauseCommand(typeRunner, entries[i].DefaultValue),
                     TextBoxCommandType.Speed => new SpeedCommand(typeRunner, entries[i].DefaultValue),
+                    TextBoxCommandType.EaseSpeed => new EaseSpeedCommand(typeRunner, entries[i].DefaultValue),
+                    TextBoxCommandType.Progressive => new ProgressiveCommand(typeRunner, progressiveTargetService, (ProgressiveTargetId)(int)entries[i].DefaultValue),
                     TextBoxCommandType.Wave or
                     TextBoxCommandType.Shake or
                     TextBoxCommandType.Distortion => new EffectCommand(entries[i].Type, textFormChanger),
