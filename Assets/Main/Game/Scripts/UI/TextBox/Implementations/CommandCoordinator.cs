@@ -14,6 +14,11 @@ namespace TextBox
                 _commands.TryAdd(command.Type, command);
         }
 
+        public void Register(ITextBoxCommand command)
+        {
+            _commands.TryAdd(command.Type, command);
+        }
+
         public void ExecuteCommand(TextBoxCommandType type, TextBoxCommandContext context)
         {
             if (_commands.TryGetValue(type, out ITextBoxCommand command))

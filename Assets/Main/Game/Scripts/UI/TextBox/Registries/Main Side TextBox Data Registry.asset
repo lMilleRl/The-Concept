@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57d00e1e1da82a4a933d44e3c001384, type: 3}
+  m_Name: Main Side TextBox Data Registry
+  m_EditorClassIdentifier: 
+  Effects:
+  - Type: 5
+    Params:
+      Amplitude: 30
+      Frequency: 0.1
+      Speed: 1
+      NoiseScale: 0
+  - Type: 6
+    Params:
+      Amplitude: 0
+      Frequency: 0
+      Speed: 0
+      NoiseScale: 0
+  - Type: 7
+    Params:
+      Amplitude: 0
+      Frequency: 0
+      Speed: 0
+      NoiseScale: 0
+  Commands:
+  - Type: 1
+    DefaultValue: 0
+  - Type: 2
+    DefaultValue: 0
+  - Type: 5
+    DefaultValue: 0
+  - Type: 6
+    DefaultValue: 0
+  - Type: 7
+    DefaultValue: 0
+  - Type: 8
+    DefaultValue: 0
+  - Type: 9
+    DefaultValue: 0
+  - Type: 10
+    DefaultValue: 0
+  - Type: 11
+    DefaultValue: 0
+  Transitions: []

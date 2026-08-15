@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace TextBox
 {
     public class PauseCommand : ITextBoxCommand

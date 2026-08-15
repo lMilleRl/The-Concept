@@ -1,10 +1,8 @@
-using TMPro;
-
 namespace TextBox
 {
     public interface ICommandParser
     {
-        void Init(TMP_TextInfo textInfo);
+        ParseResult Init(string rawText);
         void CheckCommands(int currentVisibleChars);
     }
 }

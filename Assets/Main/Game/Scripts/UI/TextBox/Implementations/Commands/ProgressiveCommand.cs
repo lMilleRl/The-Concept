@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace TextBox
 {
-    public class ProgressiveCommand : ITextBoxCommand
+    public class ProgressiveCommand : ITextBoxCommand, IDisposable
     {
         private readonly ITypeRunner _typeRunner;
+        private readonly ITextBoxFacade _facade;
         private readonly IProgressiveTargetService _targetService;
+        private readonly IDebugWriter _debugWriter;
         private readonly ProgressiveTargetId _defaultTargetId;
 
         private readonly List<IProgressiveTarget> _activeTargets = new();
@@ -15,10 +17,12 @@ namespace TextBox
 
         public TextBoxCommandType Type => TextBoxCommandType.Progressive;
 
-        public ProgressiveCommand(ITypeRunner typeRunner, IProgressiveTargetService targetService, ProgressiveTargetId defaultTargetId)
+        public ProgressiveCommand(ITypeRunner typeRunner, ITextBoxFacade facade, IProgressiveTargetService targetService, IDebugWriter debugWriter, ProgressiveTargetId defaultTargetId)
         {
             _typeRunner = typeRunner;
+            _facade = facade;
             _targetService = targetService;
+            _debugWriter = debugWriter;
             _defaultTargetId = defaultTargetId;
         }
 
@@ -29,13 +33,13 @@ namespace TextBox
 
             if (_activeTargets.Count == 0)
             {
-                UnityEngine.Debug.LogWarning($"[{nameof(ProgressiveCommand)}] No progressive targets found.");
+                _debugWriter.LogWarning($"[{nameof(ProgressiveCommand)}] No progressive targets found.");
                 return;
             }
 
             _activeContext = context;
             _typeRunner.OnCharRevealed += HandleCharRevealed;
-            _typeRunner.OnTextFinished += HandleTextFinished;
+            _facade.OnCurrentTextEnded += HandleCurrentTextEnded;
 
             SetProgress(0f);
         }
@@ -60,7 +64,7 @@ namespace TextBox
 
             if (target == null)
             {
-                UnityEngine.Debug.LogWarning($"[{nameof(ProgressiveCommand)}] No target found for ID {id}.");
+                _debugWriter.LogWarning($"[{nameof(ProgressiveCommand)}] No target found for ID {id}.");
                 return;
             }
 
@@ -81,7 +85,7 @@ namespace TextBox
                 Unsubscribe();
         }
 
-        private void HandleTextFinished()
+        private void HandleCurrentTextEnded()
         {
             SetProgress(1f);
             Unsubscribe();
@@ -93,10 +97,15 @@ namespace TextBox
                 _activeTargets[i].SetProgress(progress);
         }
 
+        public void Dispose()
+        {
+            Unsubscribe();
+        }
+
         private void Unsubscribe()
         {
             _typeRunner.OnCharRevealed -= HandleCharRevealed;
-            _typeRunner.OnTextFinished -= HandleTextFinished;
+            _facade.OnCurrentTextEnded -= HandleCurrentTextEnded;
             _activeTargets.Clear();
         }
     }

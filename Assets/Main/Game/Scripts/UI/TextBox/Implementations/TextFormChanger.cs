@@ -9,18 +9,22 @@ namespace TextBox
     {
         private readonly List<TextEffectData> _activeEffects = new List<TextEffectData>();
         private readonly Dictionary<TextBoxCommandType, ITextEffect> _effects;
+        private readonly IDebugWriter _debugWriter;
 
         private ITextBoxUI _ui;
         private TMP_Text _text;
         private TMP_MeshInfo[] _cachedMeshInfo;
         private float _canvasScale = 1f;
 
-        public TextFormChanger(ITextEffect[] effects)
+        public TextFormChanger(ITextEffect[] effects, IDebugWriter debugWriter, ITextBoxUI _textMeshSource)
         {
             _effects = new Dictionary<TextBoxCommandType, ITextEffect>(effects.Length);
+            _debugWriter = debugWriter;
 
             foreach (var effect in effects)
                 _effects.TryAdd(effect.EffectType, effect);
+
+            _textMeshSource.OnTextMeshUpdated += InitCashedMesh;
         }
 
         public void SetText(ITextBoxUI ui)
@@ -33,21 +37,16 @@ namespace TextBox
             _ui = ui;
             _text = ui.ContentText;
 
-            Canvas canvas = _text.GetComponentInParent<Canvas>();
+            Canvas canvas = ui.Canvas;
             float scaleFactor = canvas != null ? canvas.scaleFactor : 1f;
             _canvasScale = scaleFactor > 0f ? 1f / scaleFactor : 1f;
 
             _text.OnPreRenderText += OnPreRenderText;
-            InitCashedMesh();
         }
 
-        private void InitCashedMesh()
+        private void InitCashedMesh(TMP_TextInfo textInfo)
         {
-            int savedMaxVisible = _text.maxVisibleCharacters;
-            _text.maxVisibleCharacters = _text.textInfo.characterCount;
-            _text.ForceMeshUpdate();
-            _cachedMeshInfo = _text.textInfo.CopyMeshInfoVertexData();
-            _text.maxVisibleCharacters = savedMaxVisible;
+            _cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
         }
 
         public void AddEffect(TextEffectData effectData)
@@ -63,7 +62,6 @@ namespace TextBox
         public void ClearAll()
         {
             _activeEffects.Clear();
-            _text?.ForceMeshUpdate(false, false);
         }
 
         public void Tick()
@@ -71,16 +69,16 @@ namespace TextBox
             if (_text == null || _activeEffects.Count == 0)
                 return;
 
-            _isMeshFromTick = true;
-            _text.ForceMeshUpdate(false, false);
-            _isMeshFromTick = false;
+            _isFromTick = true;
+            _text.ForceMeshUpdate();
+            _isFromTick = false;
         }
 
-        private bool _isMeshFromTick;
+        private bool _isFromTick;
 
         private void OnPreRenderText(TMP_TextInfo textInfo)
         {
-            if (_cachedMeshInfo == null || !_isMeshFromTick)
+            if (_cachedMeshInfo == null || !_isFromTick)
                 return;
 
             RestoreVertices(textInfo);
@@ -91,11 +89,11 @@ namespace TextBox
                     continue;
 
                 int end = effectData.StartCharIndex + effectData.CharLength;
-
+                
                 for (int i = effectData.StartCharIndex; i < end && i < textInfo.characterCount; i++)
                 {
                     TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-                    if (!charInfo.isVisible) continue;
+                    if (!charInfo.isVisible && i >= _text.maxVisibleCharacters) continue;
 
                     int materialIndex = charInfo.materialReferenceIndex;
                     int vertexIndex = charInfo.vertexIndex;
@@ -112,6 +110,8 @@ namespace TextBox
                     }
                 }
             }
+
+            _text.UpdateVertexData();
         }
 
         private void RestoreVertices(TMP_TextInfo textInfo)

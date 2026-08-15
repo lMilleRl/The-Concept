@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace TextBox
 {
-    public class TypeRunner : ITypeRunner
+    public class TypeRunner : ITypeRunner, IDisposable
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IDebugWriter _debugWriter;
 
         private ITextBoxUI _currentTextBoxUI;
         private TMP_TextInfo _currentTextInfo;
@@ -19,26 +20,76 @@ namespace TextBox
         private float _currentPause;
         private bool _canTurnPage;
         private int _currentVisibleChars;
+        private int _startPosition;
 
         public event Action OnPageFinished;
         public event Action OnTextFinished;
         public event Action<int> OnCharRevealed;
 
-        public TypeRunner(ICoroutineRunner coroutineRunner)
+        public TypeRunner(ICoroutineRunner coroutineRunner, IDebugWriter debugWriter)
         {
             _coroutineRunner = coroutineRunner;
+            _debugWriter = debugWriter;
 
-            OnPageFinished += () => _isPageFinished = true;
+            OnPageFinished += HandlePageFinished;
         }
+
+        public void Dispose()
+        {
+            Stop();
+            OnPageFinished -= HandlePageFinished;
+        }
+
+        private void HandlePageFinished() => _isPageFinished = true;
 
         public void Run(ITextBoxUI ui)
         {
+            Stop();
             _currentTextBoxUI = ui;
             _currentTextInfo = _currentTextBoxUI.GetTextInfo();
-            _currentVisibleChars = 0;
-            _currentTextBoxUI.ContentText.maxVisibleCharacters = 0;
-            Stop();
+
+            if (_currentTextInfo == null)
+            {
+                _debugWriter.LogWarning($"[{nameof(TypeRunner)}] textInfo is null on Run.");
+                return;
+            }
+
+            int maxChars = _currentTextInfo.characterCount;
+            if (_startPosition > maxChars)
+            {
+                _debugWriter.LogWarning(
+                    $"[{nameof(TypeRunner)}] Start position {_startPosition} exceeds character count {maxChars}. Clamping.");
+                _startPosition = maxChars;
+            }
+
+            _currentVisibleChars = _startPosition;
+
             _turnPagesCoroutine = _coroutineRunner.StartCoroutine(TurnPages());
+        }
+
+        public void SetPosition(ITextBoxUI ui, int charIndex)
+        {
+            _startPosition = Mathf.Max(0, charIndex);
+
+            if (ui == null)
+                return;
+
+            _currentTextBoxUI = ui;
+            _currentTextInfo = ui.GetTextInfo();
+
+            if (_currentTextInfo == null)
+            {
+                _debugWriter.LogWarning($"[{nameof(TypeRunner)}] textInfo is null on SetPosition.");
+                return;
+            }
+
+            int maxChars = _currentTextInfo.characterCount;
+            if (_startPosition > maxChars)
+            {
+                _debugWriter.LogWarning(
+                    $"[{nameof(TypeRunner)}] Start position {_startPosition} exceeds character count {maxChars}. Clamping.");
+                _startPosition = maxChars;
+            }
         }
 
         public void Stop()
@@ -84,7 +135,8 @@ namespace TextBox
                 EaseSpeedByChars(targetCharsPerSecond, startCharIndex, startCharIndex + charLength, ease));
         }
 
-        private IEnumerator EaseSpeedByChars(float targetCharsPerSecond, int startCharIndex, int endCharIndex, EaseType ease)
+        private IEnumerator EaseSpeedByChars(float targetCharsPerSecond, int startCharIndex, int endCharIndex,
+            EaseType ease)
         {
             float targetPause = 1f / targetCharsPerSecond;
             float startPause = _perCharPause;
@@ -92,7 +144,7 @@ namespace TextBox
 
             while (_currentVisibleChars < endCharIndex)
             {
-                float t = Mathf.Clamp01((float)(_currentVisibleChars - startCharIndex) / length);
+                float t = Mathf.Clamp01((float)(_currentVisibleChars - 1 - startCharIndex) / length);
                 _perCharPause = Mathf.Lerp(startPause, targetPause, ApplyEase(t, ease));
                 yield return null;
             }
@@ -134,12 +186,28 @@ namespace TextBox
 
         private IEnumerator TurnPages()
         {
-            int pageCount = _currentTextBoxUI.GetPageCount();
+            yield return new WaitUntil(() => _currentTextBoxUI.IsTextInitialized);
 
-            for (int page = 0; page < pageCount; page++)
+            _currentTextInfo = _currentTextBoxUI.GetTextInfo();
+            if (_currentTextInfo == null)
             {
-                _currentTextBoxUI.SetPage(page + 1);
-                _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page));
+                _debugWriter.LogWarning($"[{nameof(TypeRunner)}] textInfo is null in TurnPages after WaitUntil.");
+                yield break;
+            }
+
+            int pageCount = _currentTextBoxUI.GetPageCount();
+            int startPage = _currentTextBoxUI.GetPageIndexForChar(_startPosition);
+
+            for (int page = startPage; page < pageCount; page++)
+            {
+                if (page != startPage)
+                {
+                    int firstChar = _currentTextInfo.pageInfo[page].firstCharacterIndex;
+                    _currentTextBoxUI.ContentText.maxVisibleCharacters = firstChar;
+                    _currentTextBoxUI.ContentText.pageToDisplay = page + 1;
+                }
+
+                _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page, page == startPage));
                 yield return _typePageCoroutine;
 
                 OnPageFinished?.Invoke();
@@ -151,11 +219,14 @@ namespace TextBox
             OnTextFinished?.Invoke();
         }
 
-        private IEnumerator TypePage(int pageIndex)
+        private IEnumerator TypePage(int pageIndex, bool isStartPage)
         {
             TMP_PageInfo pageInfo = _currentTextInfo.pageInfo[pageIndex];
             int firstChar = pageInfo.firstCharacterIndex;
             int lastChar = pageInfo.lastCharacterIndex;
+
+            if (isStartPage)
+                firstChar = Mathf.Max(firstChar, _startPosition);
 
             for (int i = firstChar; i <= lastChar; i++)
             {
@@ -170,6 +241,9 @@ namespace TextBox
                 if (totalPause > 0f)
                     yield return new WaitForSeconds(totalPause);
             }
+
+            if (pageIndex == _currentTextInfo.pageCount - 1)
+                OnCharRevealed?.Invoke(_currentTextInfo.characterCount);
         }
     }
 }

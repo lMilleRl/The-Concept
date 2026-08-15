@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace TextBox
 {
-    public class TextBoxFacade : ITextBoxFacade
+    public class TextBoxFacade : ITextBoxFacade, IDisposable
     {
+        public event Action OnCurrentTextEnded;
         public event Action OnHidden;
 
         private readonly ITextBoxUI _ui;
@@ -22,7 +23,7 @@ namespace TextBox
         private float _autoPagePause;
         private Coroutine _autoTurnCoroutine;
         private BoardTransitionContext _hideTransition;
-        
+
         public TextBoxFacade(TextBoxFacadeData data)
         {
             _ui = data.UI;
@@ -38,28 +39,54 @@ namespace TextBox
             _typeRunner.OnPageFinished += ResumeTurningPage;
             _input.OnTurnPagePressed += TryTurnPage;
         }
+
+        public void Dispose()
+        {
+            _typeRunner.OnTextFinished -= Hide;
+            _typeRunner.OnPageFinished -= ResumeTurningPage;
+            _input.OnTurnPagePressed -= TryTurnPage;
+            StopAutoTurn();
+            _ui.Dispose();
+        }
         
         public void Show(TextBoxData data)
+        {
+            PrepareText(data, 0);
+            _ui.ShowBoard(data.ShowTransition);
+            _input.Enable();
+
+            StartTyping(data);
+        }
+
+        public void ReplaceText(TextBoxData data, int startCharIndex)
+        {
+            OnCurrentTextEnded?.Invoke();
+            PrepareText(data, startCharIndex);
+            StartTyping(data);
+        }
+
+        private void PrepareText(TextBoxData data, int startCharIndex)
         {
             _typeRunner.Stop();
             StopAutoTurn();
 
             _autoPlay = data.AutoPlay;
             _autoPagePause = data.AutoPagePause;
-
             _hideTransition = data.HideTransition;
 
-            InitUI(data);
-            _ui.ShowBoard(data.ShowTransition);
+            var parseResult = _commandParser.Init(data.Text);
+            InitUI(data, parseResult.CleanText, startCharIndex);
 
             _textFormChanger.SetText(_ui);
             _textFormChanger.ClearAll();
-            _commandParser.Init(_ui.GetTextInfo());
             _voiceSpeaker.SetProfile(data.Voice);
             _voiceSpeaker.Resume();
-            _input.Enable();
-            
-            
+
+            _typeRunner.SetPosition(_ui, startCharIndex);
+        }
+
+        private void StartTyping(TextBoxData data)
+        {
             var style = data.Style != null ? data.Style : _defaultStyle;
             _typeRunner.SetSpeed(style.DefaultSpeed);
             _typeRunner.Run(_ui);
@@ -74,6 +101,7 @@ namespace TextBox
             _ui.HideBoard(_hideTransition);
             _input.Disable();
             _canTurnPage = false;
+            OnCurrentTextEnded?.Invoke();
             OnHidden?.Invoke();
         }
 
@@ -101,7 +129,7 @@ namespace TextBox
             TryTurnPage();
         }
 
-        private void InitUI(TextBoxData data)
+        private void InitUI(TextBoxData data, string cleanText, int startCharIndex)
         {
             var style = data.Style != null ? data.Style : _defaultStyle;
 
@@ -111,7 +139,7 @@ namespace TextBox
             if (style.DefaultFont != null)
                 _ui.ContentText.font = style.DefaultFont;
 
-            _ui.SetText(data.Text);
+            _ui.InitText(cleanText, startCharIndex);
         }
 
         private void StopAutoTurn()

@@ -12,6 +12,7 @@ namespace TextBox
         Distortion,
         Event,
         EaseSpeed,
-        Progressive
+        Progressive,
+        ReplaceText
     }
 }

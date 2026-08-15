@@ -1,15 +1,20 @@
+using System;
 using TMPro;
+using UnityEngine;
 
 namespace TextBox
 {
-    public interface ITextBoxUI
+    public interface ITextBoxUI : IDisposable
     {
         TMP_Text ContentText { get; }
+        Canvas Canvas { get; }
+        event Action<TMP_TextInfo> OnTextMeshUpdated;
+        bool IsTextInitialized { get; }
         void ShowBoard(BoardTransitionContext context);
         void HideBoard(BoardTransitionContext context);
-        void SetText(string richText);
+        void InitText(string richText, int startPosition);
+        int GetPageIndexForChar(int charIndex);
         TMP_TextInfo GetTextInfo();
         int GetPageCount();
-        void SetPage(int pageIndex);
     }
 }

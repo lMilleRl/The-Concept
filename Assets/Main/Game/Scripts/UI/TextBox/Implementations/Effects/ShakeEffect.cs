@@ -18,9 +18,8 @@ namespace TextBox
         {
             float amplitude = GetParam(effectParams, 0, Params.Amplitude, DefaultAmplitude);
             float speed = GetParam(effectParams, 1, Params.Speed, DefaultSpeed);
-
             float time = Time.time * speed;
-
+            
             float x = Mathf.Sin((charIndex * XSeed + time) * TwoPi) * amplitude;
             float y = Mathf.Cos((charIndex * YSeed + time) * TwoPi) * amplitude;
 

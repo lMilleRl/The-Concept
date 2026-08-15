@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0148651eedf488f44bfd768556fc2f2f, type: 3}
+  m_Name: Texts for Replace
+  m_EditorClassIdentifier: 
+  _entries:
+  - Id: 1
+    Data:
+      Text: A mailbox.[pause=0.3] There's a letter inside.[page] <i><color=#FFFFFF>"[progressive=1:2][easespeed=3]Darling,[pause=0.3]
+        come home soon.[pause=0.3] I'm waiting for you.[pause=0.4] With love,[pause=0.3]
+        <color=#F200FF>[shake=2:10]Ev[event=0][replacetext=LetterB:0][\shake][\easespeed][\progressive]</color></color></i>
+      Voice: {fileID: 0}
+      AutoPlay: 0
+      AutoPagePause: 0
+      Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
+      ShowTransition:
+        Type: 0
+        Duration: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 0
+          m_PostInfinity: 0
+          m_RotationOrder: 0
+      HideTransition:
+        Type: 0
+        Duration: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 0
+          m_PostInfinity: 0
+          m_RotationOrder: 0
+  - Id: 2
+    Data:
+      Text: "<i><color=#FFFFFF>\"Darling,[pause=0.3] come home soon.[pause=0.3] I'm
+        waiting for you.[pause=0.4] With love,[pause=0.3] \u2588\u2588\u2588\u2588\u2588\"</color></i>[page]
+        The name is torn off."
+      Voice: {fileID: 0}
+      AutoPlay: 0
+      AutoPagePause: 0
+      Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
+      ShowTransition:
+        Type: 0
+        Duration: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 0
+          m_PostInfinity: 0
+          m_RotationOrder: 0
+      HideTransition:
+        Type: 0
+        Duration: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 0
+          m_PostInfinity: 0
+          m_RotationOrder: 0
