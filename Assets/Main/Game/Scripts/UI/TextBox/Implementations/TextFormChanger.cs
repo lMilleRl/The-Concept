@@ -16,15 +16,13 @@ namespace TextBox
         private TMP_MeshInfo[] _cachedMeshInfo;
         private float _canvasScale = 1f;
 
-        public TextFormChanger(ITextEffect[] effects, IDebugWriter debugWriter, ITextBoxUI _textMeshSource)
+        public TextFormChanger(ITextEffect[] effects, IDebugWriter debugWriter)
         {
             _effects = new Dictionary<TextBoxCommandType, ITextEffect>(effects.Length);
             _debugWriter = debugWriter;
 
             foreach (var effect in effects)
                 _effects.TryAdd(effect.EffectType, effect);
-
-            _textMeshSource.OnTextMeshUpdated += InitCashedMesh;
         }
 
         public void SetText(ITextBoxUI ui)
@@ -44,11 +42,6 @@ namespace TextBox
             _text.OnPreRenderText += OnPreRenderText;
         }
 
-        private void InitCashedMesh(TMP_TextInfo textInfo)
-        {
-            _cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
-        }
-
         public void AddEffect(TextEffectData effectData)
         {
             _activeEffects.Add(effectData);
@@ -56,7 +49,15 @@ namespace TextBox
 
         public void RemoveEffect(TextEffectData effectData)
         {
-            _activeEffects.Remove(effectData);
+            for (int i = 0; i < _activeEffects.Count; i++)
+            {
+                if (_activeEffects[i].EffectType == effectData.EffectType
+                    && _activeEffects[i].StartCharIndex == effectData.StartCharIndex)
+                {
+                    _activeEffects.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public void ClearAll()
@@ -78,10 +79,8 @@ namespace TextBox
 
         private void OnPreRenderText(TMP_TextInfo textInfo)
         {
-            if (_cachedMeshInfo == null || !_isFromTick)
+            if (!_isFromTick)
                 return;
-
-            RestoreVertices(textInfo);
 
             foreach (var effectData in _activeEffects)
             {
@@ -98,13 +97,12 @@ namespace TextBox
                     int materialIndex = charInfo.materialReferenceIndex;
                     int vertexIndex = charInfo.vertexIndex;
 
-                    Vector3[] sourceVertices = _cachedMeshInfo[materialIndex].vertices;
                     Vector3[] destVertices = textInfo.meshInfo[materialIndex].vertices;
 
                     for (int v = 0; v < 4; v++)
                     {
-                        Vector3 original = sourceVertices[vertexIndex + v];
-                        Vector3 modified = effect.Apply(i, original, effectData.Params);
+                        Vector3 original = destVertices[vertexIndex + v];
+                        Vector3 modified = effect.Apply(i, original, effectData.Params, effectData.StartCharIndex, effectData.CharLength);
                         Vector3 offset = modified - original;
                         destVertices[vertexIndex + v] = original + offset * _canvasScale;
                     }
@@ -114,32 +112,5 @@ namespace TextBox
             _text.UpdateVertexData();
         }
 
-        private void RestoreVertices(TMP_TextInfo textInfo)
-        {
-            int maxVisible = _text.maxVisibleCharacters;
-
-            for (int i = 0; i < textInfo.characterCount; i++)
-            {
-                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-                if (i >= maxVisible)
-                    continue;
-
-                int materialIndex = charInfo.materialReferenceIndex;
-                if (materialIndex >= _cachedMeshInfo.Length)
-                    continue;
-
-                int vertexIndex = charInfo.vertexIndex;
-                Vector3[] source = _cachedMeshInfo[materialIndex].vertices;
-                Vector3[] dest = textInfo.meshInfo[materialIndex].vertices;
-
-                if (source == null || dest == null || vertexIndex + 3 >= source.Length)
-                    continue;
-
-                dest[vertexIndex] = source[vertexIndex];
-                dest[vertexIndex + 1] = source[vertexIndex + 1];
-                dest[vertexIndex + 2] = source[vertexIndex + 2];
-                dest[vertexIndex + 3] = source[vertexIndex + 3];
-            }
-        }
     }
 }

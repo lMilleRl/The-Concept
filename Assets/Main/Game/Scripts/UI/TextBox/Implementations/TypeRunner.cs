@@ -144,7 +144,7 @@ namespace TextBox
 
             while (_currentVisibleChars < endCharIndex)
             {
-                float t = Mathf.Clamp01((float)(_currentVisibleChars - 1 - startCharIndex) / length);
+                float t = Mathf.Clamp01((float)(_currentVisibleChars - startCharIndex) / length);
                 _perCharPause = Mathf.Lerp(startPause, targetPause, ApplyEase(t, ease));
                 yield return null;
             }
@@ -153,11 +153,13 @@ namespace TextBox
             _easeSpeedCoroutine = null;
         }
 
-        private float ApplyEase(float t, EaseType ease)
+        private static float ApplyEase(float t, EaseType ease)
         {
             return ease switch
             {
+                EaseType.None => 1f,
                 EaseType.Linear => t,
+                EaseType.EaseInQuad => t * t,
                 _ => t
             };
         }
@@ -182,6 +184,17 @@ namespace TextBox
         public int GetCurrentVisibleChars()
         {
             return _currentVisibleChars;
+        }
+
+        public float GetProgress(int charIndex, int startCharIndex, int charLength, EaseType ease)
+        {
+            if (charLength <= 0)
+                return 1f;
+
+            float t = Mathf.Clamp01(
+                (float)(charIndex - startCharIndex  + 1) / charLength);
+
+            return ApplyEase(t, ease);
         }
 
         private IEnumerator TurnPages()
@@ -230,20 +243,28 @@ namespace TextBox
 
             for (int i = firstChar; i <= lastChar; i++)
             {
-                _currentVisibleChars = i + 1;
-                _currentTextBoxUI.ContentText.maxVisibleCharacters = _currentVisibleChars;
-
                 OnCharRevealed?.Invoke(i);
 
                 float totalPause = _perCharPause + _currentPause;
                 _currentPause = 0f;
+
+                _currentVisibleChars = i + 1;
+                _currentTextBoxUI.ContentText.maxVisibleCharacters = _currentVisibleChars;
 
                 if (totalPause > 0f)
                     yield return new WaitForSeconds(totalPause);
             }
 
             if (pageIndex == _currentTextInfo.pageCount - 1)
+            {
                 OnCharRevealed?.Invoke(_currentTextInfo.characterCount);
+
+                if (_currentPause > 0f)
+                {
+                    yield return new WaitForSeconds(_currentPause);
+                    _currentPause = 0f;
+                }
+            }
         }
     }
 }

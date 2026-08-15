@@ -18,12 +18,15 @@ namespace TextBox
         public TMP_Text ContentText => _text;
         public Canvas Canvas => _text.GetComponentInParent<Canvas>();
 
-        public event Action<TMP_TextInfo> OnTextMeshUpdated;
-
         public bool IsTextInitialized => _isTextInitialized;
 
         public TextBoxUI(TMP_Text text, ITextBoxBoard board)
         {
+            if (text == null)
+                Debug.LogError("[TextBoxUI] TMP_Text is null.");
+            if (board == null)
+                Debug.LogError("[TextBoxUI] ITextBoxBoard is null.");
+
             _text = text;
             _board = board;
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTMPSystemTextChanged);
@@ -51,11 +54,18 @@ namespace TextBox
 
         public void InitText(string richText, int startPosition)
         {
+            if (string.IsNullOrEmpty(richText))
+            {
+                Debug.LogWarning("[TextBoxUI] InitText called with null or empty text.");
+                richText = string.Empty;
+            }
+
             _isTextInitialized = false;
             _pendingCharIndex = Mathf.Max(0, startPosition);
             _text.maxVisibleCharacters = 0;
             _text.overflowMode = TextOverflowModes.Page;
             _text.text = richText;
+            _text.ForceMeshUpdate();
         }
 
         public int GetPageIndexForChar(int charIndex)
@@ -63,6 +73,19 @@ namespace TextBox
             TMP_TextInfo textInfo = _text.textInfo;
             if (textInfo == null || textInfo.pageCount == 0)
                 return 0;
+
+            if (charIndex < 0)
+            {
+                Debug.LogWarning($"[TextBoxUI] GetPageIndexForChar called with negative index {charIndex}, clamping to 0.");
+                charIndex = 0;
+            }
+
+            int maxChar = textInfo.characterCount - 1;
+            if (charIndex > maxChar)
+            {
+                Debug.LogWarning($"[TextBoxUI] GetPageIndexForChar: index {charIndex} exceeds characterCount {textInfo.characterCount}, clamping to last page.");
+                return Mathf.Max(0, textInfo.pageCount - 1);
+            }
 
             for (int i = 0; i < textInfo.pageCount; i++)
             {
@@ -77,10 +100,25 @@ namespace TextBox
         private void SetPosition(int charIndex)
         {
             int clamped = Mathf.Max(0, charIndex);
-            _text.maxVisibleCharacters = clamped;
 
             TMP_TextInfo textInfo = _text.textInfo;
-            if (textInfo == null || textInfo.pageCount == 0)
+            if (textInfo == null)
+            {
+                Debug.LogWarning("[TextBoxUI] SetPosition: textInfo is null, setting maxVisibleCharacters without page info.");
+                _text.maxVisibleCharacters = clamped;
+                _text.pageToDisplay = 1;
+                return;
+            }
+
+            if (textInfo.characterCount > 0 && clamped > textInfo.characterCount)
+            {
+                Debug.LogWarning($"[TextBoxUI] SetPosition: charIndex {clamped} exceeds characterCount {textInfo.characterCount}, clamping.");
+                clamped = textInfo.characterCount;
+            }
+
+            _text.maxVisibleCharacters = clamped;
+
+            if (textInfo.pageCount == 0)
             {
                 _text.pageToDisplay = 1;
                 return;
@@ -107,8 +145,6 @@ namespace TextBox
             TMP_TextInfo textInfo = _text.textInfo;
             if (textInfo == null)
                 return;
-
-            OnTextMeshUpdated?.Invoke(textInfo);
 
             if (_pendingCharIndex < 0)
                 return;

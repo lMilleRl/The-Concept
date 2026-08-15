@@ -14,6 +14,7 @@ namespace TextBox
 
         private readonly List<IProgressiveTarget> _activeTargets = new();
         private TextBoxCommandContext _activeContext;
+        private EaseType _ease;
 
         public TextBoxCommandType Type => TextBoxCommandType.Progressive;
 
@@ -29,6 +30,7 @@ namespace TextBox
         public void Execute(TextBoxCommandContext context)
         {
             _activeTargets.Clear();
+            _ease = ExtractEase(context.Params);
             CollectTargets(context);
 
             if (_activeTargets.Count == 0)
@@ -44,6 +46,14 @@ namespace TextBox
             SetProgress(0f);
         }
 
+        private static EaseType ExtractEase(float[] allParams)
+        {
+            if (allParams.Length < 2)
+                return EaseType.None;
+
+            return (EaseType)(int)allParams[^1];
+        }
+
         private void CollectTargets(TextBoxCommandContext context)
         {
             if (context.Params.Length == 0)
@@ -52,10 +62,10 @@ namespace TextBox
                 return;
             }
 
-            for (int i = 0; i < context.Params.Length; i++)
-            {
+            AddTarget((ProgressiveTargetId)(int)context.Params[0]);
+
+            for (int i = 1; i < context.Params.Length - 1; i++)
                 AddTarget((ProgressiveTargetId)(int)context.Params[i]);
-            }
         }
 
         private void AddTarget(ProgressiveTargetId id)
@@ -76,18 +86,21 @@ namespace TextBox
             if (charIndex < _activeContext.StartCharIndex)
                 return;
 
-            float progress = Mathf.Clamp01(
-                (float)(charIndex - _activeContext.StartCharIndex + 1) / _activeContext.CharLength);
+            float progress = _typeRunner.GetProgress(
+                charIndex, _activeContext.StartCharIndex, _activeContext.CharLength, _ease);
 
             SetProgress(progress);
 
-            if (progress >= 1f)
+            if (charIndex >= _activeContext.StartCharIndex + _activeContext.CharLength)
+            {
+                SetProgress(0f);
                 Unsubscribe();
+            }
         }
 
         private void HandleCurrentTextEnded()
         {
-            SetProgress(1f);
+            SetProgress(0f);
             Unsubscribe();
         }
 

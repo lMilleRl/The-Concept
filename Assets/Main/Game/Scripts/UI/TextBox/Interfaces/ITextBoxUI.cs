@@ -8,7 +8,6 @@ namespace TextBox
     {
         TMP_Text ContentText { get; }
         Canvas Canvas { get; }
-        event Action<TMP_TextInfo> OnTextMeshUpdated;
         bool IsTextInitialized { get; }
         void ShowBoard(BoardTransitionContext context);
         void HideBoard(BoardTransitionContext context);

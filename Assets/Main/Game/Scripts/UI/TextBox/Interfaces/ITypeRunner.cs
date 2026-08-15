@@ -2,7 +2,7 @@ using System;
 
 namespace TextBox
 {
-    public interface ITypeRunner
+    public interface ITypeRunner : ICharProgressProvider
     {
         event Action OnPageFinished;
         event Action OnTextFinished;

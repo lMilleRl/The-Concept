@@ -2,6 +2,8 @@ namespace TextBox
 {
     public enum EaseType
     {
-        Linear = 0
+        None = 0,
+        Linear = 1,
+        EaseInQuad = 2
     }
 }

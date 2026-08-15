@@ -5,6 +5,6 @@ namespace TextBox
     public interface ITextEffect
     {
         TextBoxCommandType EffectType { get; }
-        Vector3 Apply(int charIndex, Vector3 originalVertex, float[] effectParams);
+        Vector3 Apply(int charIndex, Vector3 originalVertex, float[] effectParams, int startCharIndex, int charLength);
     }
 }

@@ -50,17 +50,17 @@ namespace TextBox
             var boardTransitions = CreateTransitions(_registry.Transitions);
             _board.Init(boardTransitions);
 
-            var textEffects = CreateEffects(_registry.Effects);
+            ICoroutineRunner coroutineRunner = _facadeMono;
+            _typeRunner = new TypeRunner(coroutineRunner, debugWriter);
+
+            var textEffects = CreateEffects(_registry.Effects, _typeRunner);
 
             var ui = new TextBoxUI(_contentText, _board);
             
-            var textFormChanger = new TextFormChanger(textEffects, debugWriter, ui);
+            var textFormChanger = new TextFormChanger(textEffects, debugWriter);
             _textChangerMono.Init(textFormChanger);
             
             var voiceSpeaker = new TextBoxVoiceSpeaker(_voiceAudioSource);
-
-            ICoroutineRunner coroutineRunner = _facadeMono;
-            _typeRunner = new TypeRunner(coroutineRunner, debugWriter);
 
             var progressiveTargetService = new ProgressiveTargetService(_progressiveTargets);
             var eventRegistry = (IEventRegistry)_eventRegistry;
@@ -108,7 +108,7 @@ namespace TextBox
             coordinator.Register(new ReplaceTextCommand(facade, _textRegistry, debugWriter));
         }
 
-        private ITextEffect[] CreateEffects(TextEffectEntry[] entries)
+        private ITextEffect[] CreateEffects(TextEffectEntry[] entries, ICharProgressProvider progressProvider)
         {
             var effects = new ITextEffect[entries.Length];
 
@@ -116,9 +116,9 @@ namespace TextBox
             {
                 effects[i] = entries[i].Type switch
                 {
-                    TextBoxCommandType.Wave => new WaveEffect(entries[i].Params),
-                    TextBoxCommandType.Shake => new ShakeEffect(entries[i].Params),
-                    TextBoxCommandType.Distortion => new DistortionEffect(entries[i].Params),
+                    TextBoxCommandType.Wave => new WaveEffect(entries[i].Params, progressProvider),
+                    TextBoxCommandType.Shake => new ShakeEffect(entries[i].Params, progressProvider),
+                    TextBoxCommandType.Distortion => new DistortionEffect(entries[i].Params, progressProvider),
                     _ => null
                 };
             }

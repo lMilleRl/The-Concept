@@ -2,6 +2,8 @@ namespace TextBox
 {
     public class EaseSpeedCommand : ITextBoxCommand
     {
+        private const int BaseParamCount = 1;
+
         private readonly ITypeRunner _typeRunner;
         private readonly IDebugWriter _debugWriter;
         private readonly float _defaultTargetSpeed;
@@ -17,12 +19,17 @@ namespace TextBox
 
         public void Execute(TextBoxCommandContext context)
         {
-            float targetSpeed = context.Params.Length > 0 ? context.Params[0] : _defaultTargetSpeed;
-            EaseType ease = context.Params.Length > 1
-                ? (EaseType)(int)context.Params[1]
+            if (context.Params.Length == 0)
+            {
+                _typeRunner.SetSpeedEase(_defaultTargetSpeed, context.StartCharIndex, context.CharLength, EaseType.None);
+                return;
+            }
+
+            float targetSpeed = context.Params[0];
+            EaseType ease = context.Params.Length > BaseParamCount
+                ? (EaseType)(int)context.Params[^1]
                 : EaseType.Linear;
 
-            _debugWriter.Log($"[EaseSpeed] Execute at {context.StartCharIndex}, len {context.CharLength}, target {targetSpeed}, ease {ease}");
             _typeRunner.SetSpeedEase(targetSpeed, context.StartCharIndex, context.CharLength, ease);
         }
     }

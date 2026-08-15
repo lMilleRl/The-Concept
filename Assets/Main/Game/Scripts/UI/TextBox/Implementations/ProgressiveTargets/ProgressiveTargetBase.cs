@@ -10,13 +10,17 @@ namespace TextBox
 
         public void SetProgress(float progress)
         {
+            UpdateActiveState(progress);
+            OnProgress(progress);
+        }
+
+        protected virtual void UpdateActiveState(float progress)
+        {
             bool wasActive = gameObject.activeSelf;
             bool shouldBeActive = progress > 0f && progress < 1f;
 
             if (wasActive != shouldBeActive)
                 gameObject.SetActive(shouldBeActive);
-
-            OnProgress(progress);
         }
 
         protected abstract void OnProgress(float progress);
