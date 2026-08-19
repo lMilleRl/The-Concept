@@ -25,6 +25,7 @@ namespace TextBox
         public event Action OnPageFinished;
         public event Action OnTextFinished;
         public event Action<int> OnCharRevealed;
+        public event Action<char> OnCharPrinted;
 
         public TypeRunner(ICoroutineRunner coroutineRunner, IDebugWriter debugWriter)
         {
@@ -244,6 +245,11 @@ namespace TextBox
             for (int i = firstChar; i <= lastChar; i++)
             {
                 OnCharRevealed?.Invoke(i);
+
+                char c = i < _currentTextInfo.characterCount
+                    ? _currentTextInfo.characterInfo[i].character
+                    : '\0';
+                OnCharPrinted?.Invoke(c);
 
                 float totalPause = _perCharPause + _currentPause;
                 _currentPause = 0f;

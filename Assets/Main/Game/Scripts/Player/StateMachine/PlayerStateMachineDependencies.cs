@@ -3,25 +3,27 @@ public struct PlayerStateMachineDependencies
     public IMoveInput PlayerMoveInput;
     public IMoveInput PlayerClimbingInput;
     public IMoveInput CutsceneCommandInput;
-    public PlayerMovement Movement;
+    public IPlayerMovement Movement;
     public IInteractionPlayerInput InteractionInput;
-    public PlayerInteraction Interaction;
+    public IPlayerInteraction Interaction;
     public ClimbingPlayerStateData ClimbingStateData;
     public IToggleable[] GameplayStateAttachedBehaviours;
     public IMovementStateListener[] MovementStateListeners;
     public IStepEffectsProfileController StepEffectsProfileController;
+    public IPlayerMovementStateReceiver MovementStateReceiver;
 
     public PlayerStateMachineDependencies(
         IMoveInput playerMoveInput,
         IMoveInput playerClimbingInput,
         IMoveInput cutsceneCommandInput,
-        PlayerMovement movement,
+        IPlayerMovement movement,
         IInteractionPlayerInput interactionInput,
-        PlayerInteraction interaction,
+        IPlayerInteraction interaction,
         ClimbingPlayerStateData climbingStateData,
         IToggleable[] gameplayStateAttachedBehaviours,
         IMovementStateListener[] movementStateListeners,
-        IStepEffectsProfileController stepEffectsProfileController)
+        IStepEffectsProfileController stepEffectsProfileController,
+        IPlayerMovementStateReceiver movementStateReceiver)
     {
         PlayerMoveInput = playerMoveInput;
         PlayerClimbingInput = playerClimbingInput;
@@ -33,5 +35,6 @@ public struct PlayerStateMachineDependencies
         GameplayStateAttachedBehaviours = gameplayStateAttachedBehaviours;
         MovementStateListeners = movementStateListeners;
         StepEffectsProfileController = stepEffectsProfileController;
+        MovementStateReceiver = movementStateReceiver;
     }
 }

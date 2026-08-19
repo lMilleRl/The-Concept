@@ -7,6 +7,7 @@ namespace TextBox
         event Action OnPageFinished;
         event Action OnTextFinished;
         event Action<int> OnCharRevealed;
+        event Action<char> OnCharPrinted;
 
         void Run(ITextBoxUI ui);
         void Stop();

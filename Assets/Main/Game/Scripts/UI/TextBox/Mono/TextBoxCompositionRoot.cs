@@ -39,6 +39,7 @@ namespace TextBox
         private CommandParser _commandParser;
         private TextBoxFacade _facade;
         private ProgressiveCommand _progressiveCommand;
+        private TextBoxVoiceSpeaker _voiceSpeaker;
 
         private void Awake()
         {
@@ -61,6 +62,8 @@ namespace TextBox
             _textChangerMono.Init(textFormChanger);
             
             var voiceSpeaker = new TextBoxVoiceSpeaker(_voiceAudioSource);
+            _voiceSpeaker = voiceSpeaker;
+            _typeRunner.OnCharPrinted += voiceSpeaker.OnCharPrinted;
 
             var progressiveTargetService = new ProgressiveTargetService(_progressiveTargets);
             var eventRegistry = (IEventRegistry)_eventRegistry;
@@ -89,6 +92,8 @@ namespace TextBox
 
         private void OnDestroy()
         {
+            if (_typeRunner != null && _voiceSpeaker != null)
+                _typeRunner.OnCharPrinted -= _voiceSpeaker.OnCharPrinted;
             _progressiveCommand?.Dispose();
             _commandParser?.Dispose();
             _facade?.Dispose();

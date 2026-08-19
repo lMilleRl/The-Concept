@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TextBox
 {
-    public class TextBoxVoiceSpeaker : ITextBoxVoiceSpeaker
+    public class TextBoxVoiceSpeaker : ITextBoxVoiceSpeaker, ICharPrintedListener
     {
         private readonly AudioSource _audioSource;
 
@@ -23,12 +23,10 @@ namespace TextBox
 
         public void PlayChar(char c)
         {
-            if (_muted || _profile == null || _profile.Clips.Length == 0 || char.IsLetterOrDigit(c))
+            if (_muted || _profile == null || _profile.Clips.Length == 0 || !char.IsLetterOrDigit(c))
                 return;
 
-            _charCounter++;
-
-            if (_charCounter < _profile.CharsPerSound)
+            if (_charCounter++ < _profile.CharsPerSound)
                 return;
 
             _charCounter = 0;
@@ -37,6 +35,8 @@ namespace TextBox
             _audioSource.pitch = _profile.Pitch + Random.Range(-_profile.PitchVariation, _profile.PitchVariation);
             _audioSource.PlayOneShot(clip);
         }
+
+        public void OnCharPrinted(char c) => PlayChar(c);
 
         public void Mute()
         {

@@ -2,15 +2,32 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(IMoveInput))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IAnimationMovementSource, IPlayerMovement
 {
+    private const float MovementThreshold = 0.05f;
+
     [Range(0f, float.MaxValue)] [SerializeField]
     private float _moveSpeed;
 
     [SerializeField] private Rigidbody2D _rigidbody2D;
     private IMoveInput _input;
+    private Vector2 _intendedDirection;
 
-    public Vector2 Velocity => _rigidbody2D.velocity;
+    public Vector2 Velocity => ActualVelocity;
+
+    public Vector2 IntendedDirection => _intendedDirection;
+    public Vector2 ActualVelocity => _rigidbody2D.velocity;
+
+    public bool IsMovingByInput => IsMovingByIntent();
+
+    private bool IsMovingByIntent()
+    {
+        if (_intendedDirection == Vector2.zero)
+            return false;
+
+        float movementAlongIntent = Vector2.Dot(_rigidbody2D.velocity, _intendedDirection);
+        return movementAlongIntent > MovementThreshold;
+    }
 
     public void Init(IMoveInput input)
     {
@@ -20,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         _rigidbody2D.velocity = Vector2.zero;
+        _intendedDirection = Vector2.zero;
     }
 
     private void FixedUpdate()
@@ -36,10 +54,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_input == null)
         {
-            _rigidbody2D.velocity = Vector2.zero;    
+            _rigidbody2D.velocity = Vector2.zero;
+            _intendedDirection = Vector2.zero;
             return;
         }
-        
-        _rigidbody2D.velocity = _input.GetMovementInput() * _moveSpeed;
+
+        _intendedDirection = _input.GetMovementInput().normalized;
+        _rigidbody2D.velocity = _intendedDirection * _moveSpeed;
     }
 }

@@ -70,7 +70,8 @@ public class
             _dependencies.Interaction,
             _dependencies.InteractionInput,
             _dependencies.PlayerMoveInput,
-            walkingMovementStateData);
+            walkingMovementStateData,
+            _dependencies.MovementStateReceiver);
         var baseState = new GameplayPlayerState(baseStateData);
 
         var passiveStateData = new GameplayPlayerStateData(
@@ -78,7 +79,8 @@ public class
             _dependencies.Interaction,
             null,
             null,
-            walkingMovementStateData);
+            walkingMovementStateData,
+            _dependencies.MovementStateReceiver);
         var passiveState = new GameplayPlayerState(passiveStateData);
 
         var climbingState = new ClimbingPlayerState(_dependencies.ClimbingStateData);
@@ -88,7 +90,8 @@ public class
             _dependencies.Interaction,
             null,
             _dependencies.CutsceneCommandInput,
-            walkingMovementStateData);
+            walkingMovementStateData,
+            _dependencies.MovementStateReceiver);
         var movementCutsceneState = new GameplayPlayerState(movementCutsceneStateData);
         return new IState[] { baseState, passiveState, climbingState, movementCutsceneState };
     }

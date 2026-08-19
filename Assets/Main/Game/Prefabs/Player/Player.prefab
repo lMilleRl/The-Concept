@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 531389778206059703}
   - component: {fileID: 2105792017220896377}
   - component: {fileID: 2333606582417353744}
+  - component: {fileID: 4664434332964502206}
   m_Layer: 0
   m_Name: Visual Body
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -511146295
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 201a0e38f94679b48bfe77757fbe0afe, type: 3}
+  m_Sprite: {fileID: 621227738, guid: 90a3d5e8f7a6d83499e1d793c20a7b40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 2310244310921724204}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6db32951b18e58147ad4d770e43dba71, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -106,6 +107,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4664434332964502206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310244310921724204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c08508fa4f952b4aa074a1cd04a2161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2333606582417353744}
 --- !u!1 &2667942366604925445
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,8 +189,8 @@ MonoBehaviour:
   _stateMachineBootstrap: {fileID: 6159629223776993770}
   _walkingFootstepAudioData: {fileID: 11400000, guid: 509eafc0e63b5dc46ac77886e1663e9e, type: 2}
   _walkingFootstepSoundsPlayer: {fileID: 5480227649986259852}
-  _walkingDistanceBetweenSteps: 2.5
-  _climbingDistanceBetweenSteps: 2.5
+  _walkingDistanceBetweenSteps: 2
+  _climbingDistanceBetweenSteps: 2
   _climbingSoundsPlayer: {fileID: 5480227649986259852}
   _climbingAudioClips:
   - {fileID: 8300000, guid: b03d748d5852b6044b1f73b69930be1e, type: 3}
@@ -190,6 +204,7 @@ MonoBehaviour:
   _animator: {fileID: 2333606582417353744}
   _playerSpriteRenderer: {fileID: 2105792017220896377}
   _ignoreGroundLayer: 6
+  _playerAnimationController: {fileID: 4664434332964502206}
 --- !u!50 &2652660683418197161
 Rigidbody2D:
   serializedVersion: 4
@@ -229,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce594dcf1f2fc9e4395b10f69eb943a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 4
   _rigidbody2D: {fileID: 2652660683418197161}
 --- !u!114 &4622378683949098399
 MonoBehaviour:

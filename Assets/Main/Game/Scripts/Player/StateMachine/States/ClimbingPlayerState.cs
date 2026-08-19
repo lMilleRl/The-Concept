@@ -11,12 +11,15 @@ public class ClimbingPlayerState : MovementState
     private Transform _playerTransform;
     private SpriteRenderer _playerSpriteRenderer;
     private int _playerInitialOrder;
-    private PlayerMovement _movement;
+    private IPlayerMovement _movement;
     private Rigidbody2D _playerRigidBody;
     private Collider2D _playerCollider;
     private IMoveInput _climbingInput;
     private SpriteRenderer _ladderSpriteRenderer;
     private Animator _animator;
+    private IPlayerMovementStateReceiver _movementStateReceiver;
+
+    private static readonly int ClimbSpeedParam = Animator.StringToHash("ClimbSpeed");
 
     public ClimbingPlayerState(ClimbingPlayerStateData data) : base(data.MovementStateData)
     {
@@ -31,6 +34,7 @@ public class ClimbingPlayerState : MovementState
         _animator = data.PlayerAnimator;
         _playerRigidBody = data.PlayerRigidBody;
         _playerCollider = data.PlayerCollider;
+        _movementStateReceiver = data.MovementStateReceiver;
     }
 
     public override void Enter()
@@ -41,7 +45,7 @@ public class ClimbingPlayerState : MovementState
         _playerCollider.enabled = false;
         _playerCollisionsDetectorInitialLayer = _playerCollisionsDetector.layer;
         _playerCollisionsDetector.layer = _ignoreGroundLayer;
-        _animator.SetBool("IsClimbing", true);
+        _movementStateReceiver.SetMovementState(PlayerMovementStateType.Climbing);
         SetPlayerOrderAboveLadder();
         
         EnterMovementEffects();
@@ -49,7 +53,7 @@ public class ClimbingPlayerState : MovementState
 
     public override void Update()
     {
-        _animator.SetFloat("ClimbSpeed", _climbingInput.GetMovementInput().y);
+        _animator.SetFloat(ClimbSpeedParam, _climbingInput.GetMovementInput().y);
         UpdateMovementEffects();
     }
 
@@ -64,7 +68,7 @@ public class ClimbingPlayerState : MovementState
         _playerCollider.enabled = true;
         _playerCollisionsDetector.layer = _playerCollisionsDetectorInitialLayer;
         _movement.SetInput(null);
-        _animator.SetBool("IsClimbing", false);
+        _movementStateReceiver.SetMovementState(PlayerMovementStateType.Idle);
         RestorePlayerOrder();
         
         ExitMovementEffects();
@@ -103,7 +107,7 @@ public class ClimbingPlayerState : MovementState
 
     protected override bool IsMoving()
     {
-        return _climbingInput != null && _movement.Velocity.sqrMagnitude > 0.001f;
+        return _climbingInput != null && _movement.IsMovingByInput;
     }
     
     ~ClimbingPlayerState()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
 {
     [SerializeField] [Range(0f, float.MaxValue)]
     private float _interactionDelay = 1f;

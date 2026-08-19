@@ -1,22 +1,25 @@
 public readonly struct GameplayPlayerStateData
 {
-    public readonly PlayerMovement PlayerMovement;
-    public readonly PlayerInteraction PlayerInteraction;
+    public readonly IPlayerMovement PlayerMovement;
+    public readonly IPlayerInteraction PlayerInteraction;
     public readonly IInteractionPlayerInput InteractionInput;
     public readonly IMoveInput MoveInput;
     public readonly MovementStateData MovementStateData;
+    public readonly IPlayerMovementStateReceiver MovementStateReceiver;
 
     public GameplayPlayerStateData(
-        PlayerMovement playerMovement,
-        PlayerInteraction playerInteraction,
+        IPlayerMovement playerMovement,
+        IPlayerInteraction playerInteraction,
         IInteractionPlayerInput interactionInput,
         IMoveInput moveInput,
-        MovementStateData movementStateData)
+        MovementStateData movementStateData,
+        IPlayerMovementStateReceiver movementStateReceiver)
     {
         PlayerMovement = playerMovement;
         PlayerInteraction = playerInteraction;
         InteractionInput = interactionInput;
         MoveInput = moveInput;
         MovementStateData = movementStateData;
+        MovementStateReceiver = movementStateReceiver;
     }
 }

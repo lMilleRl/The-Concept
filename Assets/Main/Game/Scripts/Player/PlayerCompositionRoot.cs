@@ -37,12 +37,16 @@ public class PlayerCompositionRoot : MonoBehaviour
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private int _ignoreGroundLayer;
 
+    [Header("Animation")]
+    [SerializeField] private PlayerAnimationController _playerAnimationController;
+
     private void Start()
     {
         _movement.Init(_movementInput);
         _interaction.Init(_interactionInput);
         _interactionActivator.Init(_movementInput);
-        
+        _playerAnimationController.Init(_movement);
+
         InitBootstrapStateMachine();
     }
 
@@ -67,7 +71,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             _rigidbody2D,
             _playerBody,
             _playerSpriteRenderer,
-            climbingMovementStateData);
+            climbingMovementStateData,
+            _playerAnimationController);
 
         var stateMachineDependencies = new PlayerStateMachineDependencies(
             _movementInput,
@@ -79,7 +84,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             climbingStateData,
             movementStateBehaviours,
             movementStateListeners,
-            footStepControllerHandler);
+            footStepControllerHandler,
+            _playerAnimationController);
 
         _stateMachineBootstrap.Init(stateMachineDependencies);
     }

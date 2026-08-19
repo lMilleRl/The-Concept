@@ -6,26 +6,28 @@ public struct ClimbingPlayerStateData
     public GameObject PlayerCollisionsDetector;
     public int IgnoreGroundLayer;
     public Transform PlayerTransform;
-    public PlayerMovement PlayerMovement;
+    public IPlayerMovement PlayerMovement;
     public IMoveInput ClimbingMoveInput;
     public Animator PlayerAnimator;
     public Rigidbody2D PlayerRigidBody;
     public Collider2D PlayerCollider;
     public SpriteRenderer PlayerSpriteRenderer;
     public MovementStateData MovementStateData;
+    public IPlayerMovementStateReceiver MovementStateReceiver;
 
     public ClimbingPlayerStateData(
         ITriggerDetector ladderDetector,
         GameObject playerCollisionsDetector,
         int ignoreGroundLayer,
         Transform playerTransform,
-        PlayerMovement playerMovement,
+        IPlayerMovement playerMovement,
         IMoveInput climbingMoveInput,
         Animator playerAnimator,
         Rigidbody2D playerRigidBody,
         Collider2D playerCollider,
         SpriteRenderer playerSpriteRenderer,
-        MovementStateData movementStateData)
+        MovementStateData movementStateData,
+        IPlayerMovementStateReceiver movementStateReceiver)
     {
         LadderDetector = ladderDetector;
         PlayerCollisionsDetector = playerCollisionsDetector;
@@ -38,5 +40,6 @@ public struct ClimbingPlayerStateData
         PlayerCollider = playerCollider;
         PlayerSpriteRenderer = playerSpriteRenderer;
         MovementStateData = movementStateData;
+        MovementStateReceiver = movementStateReceiver;
     }
 }
