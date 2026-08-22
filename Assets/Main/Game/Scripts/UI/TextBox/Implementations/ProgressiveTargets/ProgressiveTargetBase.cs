@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TextBox
@@ -8,8 +9,14 @@ namespace TextBox
 
         public ProgressiveTargetId Id => _id;
 
+        public float CurrentProgress { get; private set; }
+
+        public event Action<float> ProgressChanged;
+
         public void SetProgress(float progress)
         {
+            CurrentProgress = progress;
+            ProgressChanged?.Invoke(progress);
             UpdateActiveState(progress);
             OnProgress(progress);
         }

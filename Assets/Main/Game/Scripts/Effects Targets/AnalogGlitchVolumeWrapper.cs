@@ -21,11 +21,11 @@ public class AnalogGlitchVolumeWrapper : AnalogGlitchBase
 
     public override bool Enabled
     {
-        get => _volume != null && _volume.enabled;
+        get => GlitchVolume != null && GlitchVolume.active;
         set
         {
-            if (_volume != null)
-                _volume.enabled = value;
+            if (GlitchVolume != null)
+                GlitchVolume.active = value;
         }
     }
 

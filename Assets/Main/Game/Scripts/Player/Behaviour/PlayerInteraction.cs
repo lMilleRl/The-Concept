@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
+public class PlayerInteraction : InteractionBase
 {
     [SerializeField] [Range(0f, float.MaxValue)]
     private float _interactionDelay = 1f;
@@ -12,7 +12,31 @@ public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
     private WaitForSeconds _interactionDelayWait;
     private IInteractionPlayerInput _input;
 
-    private List<GameObject> _interactableObjects;
+    private readonly List<IInteractable[]> _interactableComponents = new();
+
+    public override bool CanInteract => HasAnyInteractableAvailable() && !_isInteractionDelay && _input != null;
+
+    private bool HasAnyInteractableAvailable()
+    {
+        for (int i = 0; i < _interactableComponents.Count; i++)
+        {
+            if (HasAnyEnabledInteractable(_interactableComponents[i]))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool HasAnyEnabledInteractable(IInteractable[] interactables)
+    {
+        for (int i = 0; i < interactables.Length; i++)
+        {
+            if (interactables[i] is MonoBehaviour mono && mono.enabled)
+                return true;
+        }
+
+        return false;
+    }
 
     public void Init(IInteractionPlayerInput input)
     {
@@ -21,7 +45,6 @@ public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
     
     private void Awake()
     {
-        _interactableObjects = new List<GameObject>();
         _interactionDelayWait = new WaitForSeconds(_interactionDelay);
     }
 
@@ -35,46 +58,56 @@ public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
     }
     
 
-    public void SetInput(IInteractionPlayerInput input)
+    public override void SetInput(IInteractionPlayerInput input)
     {
         _input = input;
     }
     
-    public void LaunchDelay()
+    public override void LaunchDelay()
     {
         StartCoroutine(SetInteractionDelay());
     }
     
-    public void OnInteractionTriggerEnter(Collider2D other)
+    public override void OnInteractionTriggerEnter(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent(out IInteractable interactableObject))
+        var interactables = other.gameObject.GetComponents<IInteractable>();
+        if (interactables.Length > 0)
+            _interactableComponents.Add(interactables);
+    }
+
+    public override void OnInteractionTriggerExit(Collider2D other)
+    {
+        var interactables = other.gameObject.GetComponents<IInteractable>();
+        for (int i = 0; i < _interactableComponents.Count; i++)
         {
-            _interactableObjects.Add(other.gameObject);
+            if (ReferenceEquals(((MonoBehaviour)_interactableComponents[i][0]).transform, other.transform))
+            {
+                _interactableComponents.RemoveAt(i);
+                return;
+            }
         }
     }
 
-    public void OnInteractionTriggerExit(Collider2D other)
+    private bool TryGetInteractablesByMinDistance(out IInteractable[] closestInteractables)
     {
-        _interactableObjects.Remove(other.gameObject);
-    }
+        closestInteractables = null;
+        if (_interactableComponents.Count == 0) return false;
 
-    private bool TryGetInteractableObjByMinDistance(out GameObject minDistanceObj)
-    {
-        minDistanceObj = null;
-        if (_interactableObjects.Count == 0) return false;
-
-        minDistanceObj = _interactableObjects[0];
-        var minSqrDistance = (minDistanceObj.transform.position - transform.position).sqrMagnitude;
-        for (int i = 1; i < _interactableObjects.Count; i++)
+        int closestIndex = 0;
+        var firstTransform = ((MonoBehaviour)_interactableComponents[0][0]).transform;
+        var minSqrDistance = (firstTransform.position - transform.position).sqrMagnitude;
+        for (int i = 1; i < _interactableComponents.Count; i++)
         {
-            var nextObjSqrDistance = (_interactableObjects[i].transform.position - transform.position).sqrMagnitude;
-            if (minSqrDistance > nextObjSqrDistance)
+            var nextTransform = ((MonoBehaviour)_interactableComponents[i][0]).transform;
+            var nextSqrDistance = (nextTransform.position - transform.position).sqrMagnitude;
+            if (minSqrDistance > nextSqrDistance)
             {
-                minDistanceObj = _interactableObjects[i];
-                minSqrDistance = nextObjSqrDistance;
+                closestIndex = i;
+                minSqrDistance = nextSqrDistance;
             }
         }
 
+        closestInteractables = _interactableComponents[closestIndex];
         return true;
     }
 
@@ -82,19 +115,15 @@ public class PlayerInteraction : MonoBehaviour, IPlayerInteraction
     {
         if (_input != null && _input.IsInteractionButtonPressed())
         {
-            if (TryGetInteractableObjByMinDistance(out GameObject objToInteract))
-                if (objToInteract.TryGetComponent(out IInteractable interaction))
+            if (TryGetInteractablesByMinDistance(out var interactables) &&
+                HasAnyEnabledInteractable(interactables))
+            {
+                for (int i = 0; i < interactables.Length; i++)
                 {
-                    var interactions = objToInteract.GetComponents<IInteractable>();
-                    foreach (var i in interactions)
-                    {
-                        if (i is MonoBehaviour interactionComponent)
-                        {
-                            if (interactionComponent.enabled)
-                                i.Activate();
-                        }
-                    }
+                    if (interactables[i] is MonoBehaviour mono && mono.enabled)
+                        interactables[i].Activate();
                 }
+            }
         }
     }
 

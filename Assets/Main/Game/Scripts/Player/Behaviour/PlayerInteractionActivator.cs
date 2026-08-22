@@ -4,8 +4,8 @@ using UnityEngine.Events;
 
 public class PlayerInteractionActivator : MonoBehaviour
 {
-    [SerializeField] private PlayerInteraction _playerInteraction;
-    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private InteractionBase _playerInteraction;
+    private IPlayerMovement _playerMovement;
 
     [Range(0f, float.MaxValue)] [SerializeField] private float _distanceFromPlayer;
 
@@ -19,9 +19,10 @@ public class PlayerInteractionActivator : MonoBehaviour
         transform.localPosition = new Vector3(_distanceFromPlayer, 0, 0);
     }
 
-    public void Init(IMoveInput moveInput)
+    public void Init(IMoveInput moveInput, IPlayerMovement playerMovement)
     {
         _moveInput = moveInput;
+        _playerMovement = playerMovement;
     }
     
     private void Awake()
@@ -48,13 +49,17 @@ public class PlayerInteractionActivator : MonoBehaviour
 
     private void TurnToPlayerMove()
     {
+        if (_moveInput == null)
+            return;
+
         var rawMoveInput = _moveInput.GetRawMovementInput();
         bool isPlayerInputMovingKeys = rawMoveInput.x != 0 || rawMoveInput.y != 0;
         if (isPlayerInputMovingKeys)
         {
-            float angleToTurn = Mathf.Atan2(_playerMovement.Velocity.y, _playerMovement.Velocity.x) * Mathf.Rad2Deg;
+            Vector2 intendedDirection = _playerMovement.IntendedDirection;
+            float angleToTurn = Mathf.Atan2(intendedDirection.y, intendedDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angleToTurn);
-            transform.localPosition = _playerMovement.Velocity.normalized * _distanceFromPlayer;
+            transform.localPosition = intendedDirection * _distanceFromPlayer;
         }
     }
 

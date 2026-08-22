@@ -44,7 +44,7 @@ public class PlayerCompositionRoot : MonoBehaviour
     {
         _movement.Init(_movementInput);
         _interaction.Init(_interactionInput);
-        _interactionActivator.Init(_movementInput);
+        _interactionActivator.Init(_movementInput, _movement);
         _playerAnimationController.Init(_movement);
 
         InitBootstrapStateMachine();
