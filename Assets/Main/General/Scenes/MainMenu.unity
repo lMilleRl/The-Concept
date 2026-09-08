@@ -537,7 +537,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4999740462423257902, guid: dc5adf44f86e4a9429c037c0070873ff, type: 3}
+    - {fileID: 5602094296982233030, guid: dc5adf44f86e4a9429c037c0070873ff, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc5adf44f86e4a9429c037c0070873ff, type: 3}
@@ -1265,8 +1267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649f8ceb482328946b09d6cfebf5cc47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panel: {fileID: 690091358}
-  _toPanel: {fileID: 1496786830}
+  fadeCanvasGroupAnimator: {fileID: 0}
+  toFadeCanvasGroupAnimator: {fileID: 0}
 --- !u!114 &690091358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,7 +1282,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isHiddenOnStart: 0
+  _easeFading: 6
   _fadingDuration: 0.1
+  _easeAppearence: 5
   _appearanceDuration: 0.1
 --- !u!225 &690091359
 CanvasGroup:
@@ -1770,7 +1774,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isHiddenOnStart: 1
+  _easeFading: 6
   _fadingDuration: 0.1
+  _easeAppearence: 5
   _appearanceDuration: 0.1
 --- !u!225 &1496786831
 CanvasGroup:
@@ -1796,8 +1802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649f8ceb482328946b09d6cfebf5cc47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panel: {fileID: 1496786830}
-  _toPanel: {fileID: 690091358}
+  fadeCanvasGroupAnimator: {fileID: 0}
+  toFadeCanvasGroupAnimator: {fileID: 0}
 --- !u!1 &1519206967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,7 +1840,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1764.68}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1519206970
 MonoBehaviour:

@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: ToPrelude
   m_EditorClassIdentifier: 
   _sceneName: Prelude
-  _transitionPanelEase: 0
-  _fadePanelColorInFadeIn: {r: 0, g: 0, b: 0, a: 1}
-  _fadePanelColorInFadeOut: {r: 0, g: 0, b: 0, a: 1}
+  _transitionPanelEase: 2
   _fadeInPanelDurationInSec: 1
-  _fadeOutPanelDurationInSec: 3
+  _fadeOutPanelDurationInSec: 5
   _pauseBeforeLoadInSec: 0
   ownCutscenesData: []

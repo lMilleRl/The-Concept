@@ -49,8 +49,8 @@ Material:
     - _Speed1: 1
     - _Speed2: 1.7
     - _WindDirection: 1
-    - _WindStrength: 0.549165
-    - _WindTime: 306.85794
+    - _WindStrength: 1.4987358
+    - _WindTime: 98.540344
     - _YWeight: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
