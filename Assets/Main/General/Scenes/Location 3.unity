@@ -702169,7 +702169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: <i><color=#FFFFFF>"You know why she left."</color></i>
+    Text: '[mute]<i><color=#FFFFFF>"You know why she left."</color></i>[\mute]'
     Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0

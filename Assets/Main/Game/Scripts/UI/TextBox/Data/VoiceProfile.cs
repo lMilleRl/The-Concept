@@ -9,5 +9,6 @@ namespace TextBox
         public float Pitch = 1f;
         public float PitchVariation = 0.1f;
         public int CharsPerSound = 1;
+        public bool PlayAllCharacters;
     }
 }

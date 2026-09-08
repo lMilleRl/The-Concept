@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,5 +7,5 @@ using UnityEngine;
 // и принимает любого наследника (видео, спрайтовая анимация, Timeline и т.д.).
 public abstract class CutscenePlayer : MonoBehaviour
 {
-    public abstract IEnumerator PlayCutscene(CutsceneData cutscene);
+    public abstract IEnumerator PlayCutscene(CutsceneData cutscene, Action onStarted, Action onFadeOut);
 }

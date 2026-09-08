@@ -285,7 +285,6 @@ Transform:
   m_Children:
   - {fileID: 531389778206059703}
   - {fileID: 690091856119926441}
-  - {fileID: 2778103967811336352}
   - {fileID: 8620250776541614690}
   - {fileID: 5987267446686555579}
   - {fileID: 3702071899733480352}
@@ -548,12 +547,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6626903267487761785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3125, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1302888604682626072}
+  m_Father: {fileID: 690091856119926441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1586198576302522503
 CircleCollider2D:
@@ -584,10 +583,10 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0043965727}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1526285
 --- !u!114 &3810645051866797858
@@ -904,6 +903,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8072726712007017317}
+  - {fileID: 2778103967811336352}
   m_Father: {fileID: 1302888604682626072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &7140324045091413740
@@ -938,6 +938,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0043965727}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1526285

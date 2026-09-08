@@ -23,7 +23,8 @@ namespace TextBox
 
         public void PlayChar(char c)
         {
-            if (_muted || _profile == null || _profile.Clips.Length == 0 || !char.IsLetterOrDigit(c))
+            if (_muted || _profile == null || _profile.Clips.Length == 0 ||
+                (!_profile.PlayAllCharacters && !char.IsLetterOrDigit(c)))
                 return;
 
             if (_charCounter++ < _profile.CharsPerSound)

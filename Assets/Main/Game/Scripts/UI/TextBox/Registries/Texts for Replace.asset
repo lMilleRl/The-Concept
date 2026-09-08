@@ -15,11 +15,11 @@ MonoBehaviour:
   _entries:
   - Id: 1
     Data:
-      Text: A mailbox.[pause=0.3] There's a letter inside.<page> <i><color=#FFFFFF>"Darling,[pause=0.3]
-        come home soon.[pause=0.3] [shake=2:10:1][easespeed=10]I'm waiting for you.[pause=0.4]
-        [progressive=1:2:2]With love,[pause=0.3] <color=#F200FF>Ev</color>[\shake][pause=0.3] 
-        [event=0][replacetext=2:48][\easespeed][\progressive]</color></i>
-      Voice: {fileID: 0}
+      Text: A mailbox.[pause=0.3] There's a letter inside.<page> [mute]<i><color=#FFFFFF>"Darling,[pause=0.3]
+        come home soon.[pause=0.3] I'm waiting [shake=2:10:1]for you.[pause=0.4]
+        [progressive=1:2:2][easespeed=12]With love,[pause=0.15] <color=#F200FF>Ev</color>[\shake][pause=0.2] 
+        [event=0][replacetext=2:48][\easespeed][\progressive]</color></i>[\mute]
+      Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
       AutoPlay: 0
       AutoPagePause: 0
       Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -43,10 +43,10 @@ MonoBehaviour:
           m_RotationOrder: 0
   - Id: 2
     Data:
-      Text: "<i><color=#FFFFFF>\"Darling, come home soon. I'm waiting for you. With
-        love, \u2588\u2588\u2588\u2588\u2588\"</color></i><page> The name is torn
-        off."
-      Voice: {fileID: 0}
+      Text: "[mute]<i><color=#FFFFFF>\"Darling, come home soon. I'm waiting for you.
+        With love, \u2588\u2588\u2588\u2588\u2588\"</color></i>[\\mute]<page> The
+        name is torn off."
+      Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
       AutoPlay: 0
       AutoPagePause: 0
       Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}

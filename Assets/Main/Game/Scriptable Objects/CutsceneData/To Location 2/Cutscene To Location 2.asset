@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac42f40c2565e542aedcc9f62ccf21e, type: 3}
   m_Name: Cutscene To Location 2
   m_EditorClassIdentifier: 
-  _clip: {fileID: 0}
+  _clip: {fileID: 32900000, guid: 7c7033cf5d2a9cf48891b410f4e09f5b, type: 3}
   _uiFadeInDurationInSec: 2
   _uiFadeOutDurationInSec: 3
   _pauseBeforeCutsceneInSec: 2

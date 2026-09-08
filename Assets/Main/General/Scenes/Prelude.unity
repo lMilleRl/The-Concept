@@ -521,7 +521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: '[pause=0.35]I''m sorry, Eva...[pause=0.4] I can''t do this anymore...'
+    Text: '[pause=0.35]I''m sorry, <color=#F200FF>Eva</color>...[pause=0.4] I can''t
+      do this anymore...'
     Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 1
     AutoPagePause: 1.5
@@ -754,13 +755,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: I took this frame from another reality.<link="pause=0.3"> </link> Gave
-      it to her.<page> She smiled.<link="pause=0.3"> </link> Said it was the most
-      romantic thing I'd ever done.<page> Then she put our photo in it.
-    Voice: {fileID: 0}
+    Text: I took this frame from another reality.[pause=0.3] Gave it to her.<page>
+      She smiled.[pause=0.3] Said it was the most romantic thing I'd ever done.<page>
+      Then she put our photo in it.
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
-    Style: {fileID: 0}
+    Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
     ShowTransition:
       Type: 0
       Duration: 0
@@ -2931,7 +2932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7012581442365084458, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1875
       objectReference: {fileID: 0}
     - target: {fileID: 7012581442365084458, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5363,7 +5364,7 @@ MonoBehaviour:
   _textBoxData:
     Text: Matching cups.[pause=0.3] Two halves of a heart.<page> Her half has been
       empty for two weeks now.
-    Voice: {fileID: 0}
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -5402,7 +5403,7 @@ MonoBehaviour:
       eternal sunset, the smell of vanilla.<page> World #201:[pause=0.2] silence.[pause=0.3]
       [speed=10]Absolute.[\speed]<page> I was looking for something.[pause=0.3] I
       don't know what.[pause=0.4] But not here.
-    Voice: {fileID: 0}
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -5478,7 +5479,7 @@ MonoBehaviour:
     Text: A blanket on the chair.[pause=0.3] She knitted it for three months.<page>
       Said I always came back cold from other worlds.<page> I never told her[pause=0.5]
       I was only warm next to her.
-    Voice: {fileID: 0}
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -5515,9 +5516,9 @@ MonoBehaviour:
   _textBoxData:
     Text: I didn't sleep again.[pause=0.4] Sat at the desk all night.[pause=0.3]
       The coffee went cold.<page> She'd wake up alone.[pause=0.6] Every morning.<page>
-      She'd ask:[pause=0.3] <i><color=#F200FF>"You didn't sleep again?"</color></i>[pause=0.4]
+      She'd ask:[pause=0.3] [mute]<i><color=#F200FF>"You didn't sleep again?"</color></i>[\mute][pause=0.4]
       I would nod.<page> [pause=0.8][speed=10]She would say nothing.[\speed]
-    Voice: {fileID: 0}
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -5555,7 +5556,7 @@ MonoBehaviour:
     Text: '[speed=16]Report #89: Location unstable.[pause=0.2] Report #90: Anomaly
       in sector 12...<page> [speed=12]How many hours did I spend on these?<page>
       [pause=0.6]She was in the next room.[pause=0.4] Waiting.'
-    Voice: {fileID: 0}
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}
@@ -5590,10 +5591,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBoxData:
-    Text: She tended to it every morning.[pause=0.3] Said it mattered.<page> <i><color=#F200FF>"If
-      you care for something living, it stays."</color></i><page> I water it now.[pause=0.3]
-      Every day.[pause=0.5] I don't know why.[pause=0.4]
-    Voice: {fileID: 0}
+    Text: She tended to it every morning.[pause=0.3] Said it mattered.<page> [mute]<i><color=#F200FF>"If
+      you care for something living, it stays."</color></i>[\mute]<page> I water
+      it now.[pause=0.3] Every day.[pause=0.5] I don't know why.[pause=0.4]
+    Voice: {fileID: 11400000, guid: c6e76e72aaacfcc4b8bb5c25bf58a8d5, type: 2}
     AutoPlay: 0
     AutoPagePause: 0
     Style: {fileID: 11400000, guid: 39e9afd6f8691114e97bda939ce8d311, type: 2}

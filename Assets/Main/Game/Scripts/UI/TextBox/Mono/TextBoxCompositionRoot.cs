@@ -39,6 +39,7 @@ namespace TextBox
         private CommandParser _commandParser;
         private TextBoxFacade _facade;
         private ProgressiveCommand _progressiveCommand;
+        private MuteCommand _muteCommand;
         private TextBoxVoiceSpeaker _voiceSpeaker;
 
         private void Awake()
@@ -95,6 +96,7 @@ namespace TextBox
             if (_typeRunner != null && _voiceSpeaker != null)
                 _typeRunner.OnCharPrinted -= _voiceSpeaker.OnCharPrinted;
             _progressiveCommand?.Dispose();
+            _muteCommand?.Dispose();
             _commandParser?.Dispose();
             _facade?.Dispose();
             _typeRunner?.Dispose();
@@ -111,6 +113,9 @@ namespace TextBox
             _progressiveCommand = new ProgressiveCommand(typeRunner, facade, progressiveTargetService, debugWriter, progressiveDefaultId);
             coordinator.Register(_progressiveCommand);
             coordinator.Register(new ReplaceTextCommand(facade, _textRegistry, debugWriter));
+
+            _muteCommand = new MuteCommand(typeRunner, _voiceSpeaker, facade);
+            coordinator.Register(_muteCommand);
         }
 
         private ITextEffect[] CreateEffects(TextEffectEntry[] entries, ICharProgressProvider progressProvider)
@@ -144,6 +149,8 @@ namespace TextBox
                     case TextBoxCommandType.Progressive:
                         continue;
                     case TextBoxCommandType.ReplaceText:
+                        continue;
+                    case TextBoxCommandType.Mute:
                         continue;
                 }
                 ITextBoxCommand commandToAdd = entries[i].Type switch

@@ -43,6 +43,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         if (!string.IsNullOrEmpty(transitionData.SceneName))
         {
             SceneManager.LoadScene(transitionData.SceneName);
+            GameStateManager.Instance.SetState(GameState.PassiveShow);
             VolumeAudioManager.Instance.MuteGameplay();
         }
 
@@ -91,14 +92,37 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         {
             yield return new WaitForSeconds(cutscene.PauseBeforeCutsceneInSec);
 
-            var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
-            _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
+            var fadeEase = DOTween.defaultEaseType;
+            Tween fadeInAnim = null;
+            Tween fadeOutAnim = null;
 
-            yield return _cutscenesHandler.PlayCutscene(cutscene);
+            void StartFadeIn()
+            {
+                if (fadeInAnim != null)
+                    return;
 
-            var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
-            var fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
+                var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
+                fadeInAnim = _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
+                VolumeAudioManager.Instance.FadeInCutscene(uiCutsceneFadeInDuration, fadeEase);
+            }
+
+            void StartFadeOut()
+            {
+                if (fadeOutAnim != null)
+                    return;
+
+                fadeInAnim?.Kill();
+                var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
+                fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
+                VolumeAudioManager.Instance.FadeOutCutscene(uiCutsceneFadeOutDuration, fadeEase);
+            }
+
+            VolumeAudioManager.Instance.MuteCutscene();
+            yield return _cutscenesHandler.PlayCutscene(cutscene, StartFadeIn, StartFadeOut);
+
+            StartFadeOut();
             yield return fadeOutAnim.WaitForCompletion();
+            VolumeAudioManager.Instance.MuteCutscene();
 
             yield return new WaitForSeconds(cutscene.PauseAfterCutsceneInSec);
         }

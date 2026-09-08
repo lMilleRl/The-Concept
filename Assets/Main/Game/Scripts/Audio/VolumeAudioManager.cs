@@ -78,10 +78,12 @@ public class VolumeAudioManager : MonoBehaviour, IVolumeAudioManager
     // Анимируем значение 0-1, конвертируя в децибелы на каждом шаге
     private void FadeVolume(string paramName, float targetLinear, float duration, Ease ease)
     {
+        DOTween.Kill(paramName);
         var currentLinear = GetVolume(paramName);
         DOVirtual.Float(currentLinear, targetLinear, duration, 
             value => SetVolume(paramName, value))
-            .SetEase(ease);
+            .SetEase(ease)
+            .SetId(paramName);
     }
 
     public void FadeInGameplay(float durationInSec, Ease easeType)
@@ -116,11 +118,13 @@ public class VolumeAudioManager : MonoBehaviour, IVolumeAudioManager
 
     public void MuteCutscene()
     {
+        DOTween.Kill(_cutsceneVolumeParam);
         SetVolume(_cutsceneVolumeParam, 0f);
     }
 
     public void ResumeCutscene()
     {
+        DOTween.Kill(_cutsceneVolumeParam);
         SetVolume(_cutsceneVolumeParam, 1f);
     }
 }
