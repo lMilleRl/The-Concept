@@ -671,6 +671,10 @@ PrefabInstance:
       propertyPath: _volume
       value: 
       objectReference: {fileID: 4562800922273715803}
+    - target: {fileID: 7000000000000000012, guid: 74649ddba560fe7489b14630d1c0209b, type: 3}
+      propertyPath: _volume
+      value:
+      objectReference: {fileID: 4562800922273715803}
     - target: {fileID: 6527945410137477523, guid: 74649ddba560fe7489b14630d1c0209b, type: 3}
       propertyPath: m_Name
       value: Fullscreen Effects Provider

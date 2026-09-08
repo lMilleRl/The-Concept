@@ -10,6 +10,7 @@ namespace TextBox
 
         private TextBoxCommandContext[] _commands;
         private int _currentCommandIndex;
+        private bool _wasReinitialized;
 
         public CommandParser(ICommandCoordinator coordinator, ITypeRunner typeRunner, ITagParser tagParser)
         {
@@ -30,17 +31,28 @@ namespace TextBox
             var result = _tagParser.Parse(rawText);
             _commands = result.Commands;
             _currentCommandIndex = 0;
+            _wasReinitialized = true;
             return result;
         }
 
         public void CheckCommands(int charIndex)
         {
-            while (_currentCommandIndex < _commands.Length
-                   && charIndex >= _commands[_currentCommandIndex].StartCharIndex)
+            _wasReinitialized = false;
+
+            try
             {
-                TextBoxCommandContext cmd = _commands[_currentCommandIndex];
-                _coordinator.ExecuteCommand(cmd.CommandType, cmd);
-                _currentCommandIndex++;
+                while (_currentCommandIndex < _commands.Length
+                       && charIndex >= _commands[_currentCommandIndex].StartCharIndex)
+                {
+                    TextBoxCommandContext cmd = _commands[_currentCommandIndex++];
+                    _coordinator.ExecuteCommand(cmd.CommandType, cmd);
+                    if (_wasReinitialized)
+                        return;
+                }
+            }
+            finally
+            {
+                _wasReinitialized = false;
             }
         }
     }

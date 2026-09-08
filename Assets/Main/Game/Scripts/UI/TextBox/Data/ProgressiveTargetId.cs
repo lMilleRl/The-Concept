@@ -4,6 +4,7 @@ namespace TextBox
     {
         None = 0,
         ScreenGlitch,
-        WhiteNoise
+        WhiteNoise,
+        Pixelation
     }
 }

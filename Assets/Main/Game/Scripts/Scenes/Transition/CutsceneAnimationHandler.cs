@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class CutsceneAnimationHandler : CutscenePlayer
+public class 
+    CutsceneAnimationHandler : CutscenePlayer
 {
     [SerializeField] private VideoPlayer _clipsPlayer;
     [SerializeField] private AudioSource _audioSource;

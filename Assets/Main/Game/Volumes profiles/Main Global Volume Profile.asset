@@ -41,6 +41,7 @@ MonoBehaviour:
   - {fileID: 6751903240621688270}
   - {fileID: -1836604318237000936}
   - {fileID: 2071745464648533124}
+  - {fileID: 7000000000000000002}
 --- !u!114 &2071745464648533124
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -63,6 +64,25 @@ MonoBehaviour:
   flashColor:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &7000000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec3ea01b19fe00439202a44f9c5026f, type: 3}
+  m_Name: PixelationVolume
+  m_EditorClassIdentifier:
+  active: 1
+  progress:
+    m_OverrideState: 1
+    m_Value: 0
+  maxPixelSize:
+    m_OverrideState: 1
+    m_Value: 32
 --- !u!114 &6751903240621688270
 MonoBehaviour:
   m_ObjectHideFlags: 3

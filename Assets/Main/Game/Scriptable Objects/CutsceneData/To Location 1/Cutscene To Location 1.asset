@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cutscene To Location 1
   m_EditorClassIdentifier: 
   _clip: {fileID: 32900000, guid: ed8a72d01da35664bb7ae51ca32bcc32, type: 3}
-  _uiFadeInDurationInSec: 0
-  _uiFadeOutDurationInSec: 0
-  _pauseBeforeCutsceneInSec: 0
-  _pauseAfterCutsceneInSec: 0
+  _uiFadeInDurationInSec: 1.56
+  _uiFadeOutDurationInSec: 1.56
+  _pauseBeforeCutsceneInSec: 3
+  _pauseAfterCutsceneInSec: 2

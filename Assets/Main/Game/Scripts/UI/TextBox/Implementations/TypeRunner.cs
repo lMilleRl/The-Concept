@@ -7,6 +7,13 @@ namespace TextBox
 {
     public class TypeRunner : ITypeRunner, IDisposable
     {
+        private sealed class TypingSession
+        {
+            public bool IsCancelled { get; private set; }
+
+            public void Cancel() => IsCancelled = true;
+        }
+
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IDebugWriter _debugWriter;
 
@@ -15,6 +22,7 @@ namespace TextBox
         private Coroutine _turnPagesCoroutine;
         private Coroutine _typePageCoroutine;
         private Coroutine _easeSpeedCoroutine;
+        private TypingSession _currentSession;
 
         private float _perCharPause;
         private float _currentPause;
@@ -65,7 +73,8 @@ namespace TextBox
 
             _currentVisibleChars = _startPosition;
 
-            _turnPagesCoroutine = _coroutineRunner.StartCoroutine(TurnPages());
+            _currentSession = new TypingSession();
+            _turnPagesCoroutine = _coroutineRunner.StartCoroutine(TurnPages(_currentSession));
         }
 
         public void SetPosition(ITextBoxUI ui, int charIndex)
@@ -95,6 +104,9 @@ namespace TextBox
 
         public void Stop()
         {
+            _currentSession?.Cancel();
+            _currentSession = null;
+
             if (_typePageCoroutine != null)
             {
                 _coroutineRunner.StopCoroutine(_typePageCoroutine);
@@ -198,9 +210,11 @@ namespace TextBox
             return ApplyEase(t, ease);
         }
 
-        private IEnumerator TurnPages()
+        private IEnumerator TurnPages(TypingSession session)
         {
-            yield return new WaitUntil(() => _currentTextBoxUI.IsTextInitialized);
+            yield return new WaitUntil(() => session.IsCancelled || _currentTextBoxUI.IsTextInitialized);
+            if (session.IsCancelled)
+                yield break;
 
             _currentTextInfo = _currentTextBoxUI.GetTextInfo();
             if (_currentTextInfo == null)
@@ -214,6 +228,9 @@ namespace TextBox
 
             for (int page = startPage; page < pageCount; page++)
             {
+                if (session.IsCancelled)
+                    yield break;
+
                 if (page != startPage)
                 {
                     int firstChar = _currentTextInfo.pageInfo[page].firstCharacterIndex;
@@ -221,19 +238,26 @@ namespace TextBox
                     _currentTextBoxUI.ContentText.pageToDisplay = page + 1;
                 }
 
-                _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page, page == startPage));
+                _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page, page == startPage, session));
                 yield return _typePageCoroutine;
+                if (session.IsCancelled)
+                    yield break;
 
                 OnPageFinished?.Invoke();
+                if (session.IsCancelled)
+                    yield break;
 
-                yield return new WaitUntil(() => _canTurnPage);
+                yield return new WaitUntil(() => session.IsCancelled || _canTurnPage);
+                if (session.IsCancelled)
+                    yield break;
+
                 _canTurnPage = false;
             }
 
             OnTextFinished?.Invoke();
         }
 
-        private IEnumerator TypePage(int pageIndex, bool isStartPage)
+        private IEnumerator TypePage(int pageIndex, bool isStartPage, TypingSession session)
         {
             TMP_PageInfo pageInfo = _currentTextInfo.pageInfo[pageIndex];
             int firstChar = pageInfo.firstCharacterIndex;
@@ -244,12 +268,19 @@ namespace TextBox
 
             for (int i = firstChar; i <= lastChar; i++)
             {
+                if (session.IsCancelled)
+                    yield break;
+
                 OnCharRevealed?.Invoke(i);
+                if (session.IsCancelled)
+                    yield break;
 
                 char c = i < _currentTextInfo.characterCount
                     ? _currentTextInfo.characterInfo[i].character
                     : '\0';
                 OnCharPrinted?.Invoke(c);
+                if (session.IsCancelled)
+                    yield break;
 
                 float totalPause = _perCharPause + _currentPause;
                 _currentPause = 0f;
@@ -264,6 +295,8 @@ namespace TextBox
             if (pageIndex == _currentTextInfo.pageCount - 1)
             {
                 OnCharRevealed?.Invoke(_currentTextInfo.characterCount);
+                if (session.IsCancelled)
+                    yield break;
 
                 if (_currentPause > 0f)
                 {
