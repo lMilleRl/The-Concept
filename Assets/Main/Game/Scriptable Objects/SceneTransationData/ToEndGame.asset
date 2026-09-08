@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneName: MainMenu
   _transitionPanelEase: 1
-  _fadeInPanelDurationInSec: 1
-  _fadeOutPanelDurationInSec: 3
-  _pauseBeforeLoadInSec: 0
+  _fadeInPanelDurationInSec: 1.57
+  _fadeOutPanelDurationInSec: 0
+  _pauseBeforeLoadInSec: 0.22
   ownCutscenesData:
   - {fileID: 11400000, guid: b1bd44b73b26de34dbe4cfac494269fa, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ending
   m_EditorClassIdentifier: 
   _clip: {fileID: 32900000, guid: 59b49810d2673554d8007f0d7663336b, type: 3}
-  _uiFadeInDurationInSec: 0.5
+  _uiFadeInDurationInSec: 1.86
   _uiFadeOutDurationInSec: 0
   _pauseBeforeCutsceneInSec: 1
   _pauseAfterCutsceneInSec: 0
