@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour, IAnimationMovementSource, IPlayerMo
 
     public Vector2 IntendedDirection => _intendedDirection;
     public Vector2 ActualVelocity => _rigidbody2D.velocity;
+    public float NormalizedSpeed => _moveSpeed > 0f
+        ? Mathf.Clamp01(ActualVelocity.magnitude / _moveSpeed)
+        : 0f;
 
     public bool IsMovingByInput => IsMovingByIntent();
 
@@ -60,6 +63,9 @@ public class PlayerMovement : MonoBehaviour, IAnimationMovementSource, IPlayerMo
         }
 
         _intendedDirection = _input.GetMovementInput().normalized;
-        _rigidbody2D.velocity = _intendedDirection * _moveSpeed;
+        float speedMultiplier = _input is IMovementSpeedSource speedSource
+            ? Mathf.Clamp01(speedSource.SpeedMultiplier)
+            : 1f;
+        _rigidbody2D.velocity = _intendedDirection * _moveSpeed * speedMultiplier;
     }
 }

@@ -4,6 +4,7 @@ public class PlayerAnimationController : MonoBehaviour, IPlayerMovementStateRece
 {
     private static readonly int MoveXParam = Animator.StringToHash("MoveX");
     private static readonly int MoveYParam = Animator.StringToHash("MoveY");
+    private static readonly int NormalizedSpeedParam = Animator.StringToHash("NormalizedSpeed");
     private static readonly int LastDirectionParam = Animator.StringToHash("LastDirection");
     private static readonly int IsMovingParam = Animator.StringToHash("IsMoving");
     private static readonly int IsClimbingParam = Animator.StringToHash("IsClimbing");
@@ -30,6 +31,7 @@ public class PlayerAnimationController : MonoBehaviour, IPlayerMovementStateRece
         {
             _animator.SetFloat(MoveXParam, 0f);
             _animator.SetFloat(MoveYParam, 0f);
+            _animator.SetFloat(NormalizedSpeedParam, 0f);
         }
     }
 
@@ -70,6 +72,7 @@ public class PlayerAnimationController : MonoBehaviour, IPlayerMovementStateRece
             _animator.SetFloat(MoveYParam, 0f);
         }
 
+        _animator.SetFloat(NormalizedSpeedParam, isMoving ? _movement.NormalizedSpeed : 0f);
         _animator.SetBool(IsMovingParam, isMoving);
     }
 

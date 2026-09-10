@@ -70,13 +70,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 9c333672f29314a41998b098ce9f2cdf, type: 2}
   m_Tag: 
-  m_SpeedParameter: MoveX
+  m_SpeedParameter: NormalizedSpeed
   m_MirrorParameter: IsMoving
   m_CycleOffsetParameter: MoveX
   m_TimeParameter: MoveX
@@ -250,13 +250,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: d8cb68bdf403c634f86150dd4cd5604c, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: NormalizedSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -276,13 +276,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: f5791c59718aaab41add3d7394db761b, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: NormalizedSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -411,6 +411,12 @@ AnimatorController:
   - m_Name: ClimbSpeed
     m_Type: 1
     m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: NormalizedSpeed
+    m_Type: 1
+    m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
@@ -551,13 +557,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: f394f415d39a9654f8b54edcf564a4a0, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: NormalizedSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

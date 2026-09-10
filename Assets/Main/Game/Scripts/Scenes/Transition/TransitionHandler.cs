@@ -29,9 +29,23 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         StartCoroutine(Translate(transitionData));
     }
 
+    private void SwitchToPassiveGameState()
+    {
+        switch (GameStateManager.Instance.CurrentState)
+        {
+            case GameState.PassiveShow:
+                return;
+            case GameState.MovementCutscene:
+                return;
+            default:
+                GameStateManager.Instance.SetState(GameState.PassiveShow);
+                return;
+        }
+    }
+    
     private IEnumerator Translate(TransitionData transitionData)
     {
-        GameStateManager.Instance.SetState(GameState.PassiveShow);
+        SwitchToPassiveGameState();
 
         FadeOutSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
         yield return FadeInTransitionPanel
