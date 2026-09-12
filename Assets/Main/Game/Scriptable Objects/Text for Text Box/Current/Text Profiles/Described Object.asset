@@ -15,4 +15,4 @@ MonoBehaviour:
   _defaultSpeed: 14
   _defaultColor: {r: 1, g: 0.7717321, b: 0, a: 1}
   _defaultFontSize: 78
-  _defaultFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  _defaultFont: {fileID: 11400000, guid: 56211fe2930f3664e8987c52a38e58de, type: 2}

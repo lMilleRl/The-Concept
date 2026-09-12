@@ -4,6 +4,8 @@ namespace TextBox
 {
     public interface ITextBoxFacade
     {
+        event Action OnPageStarted;
+        event Action OnPageFinished;
         event Action OnCurrentTextEnded;
         event Action OnHidden;
 

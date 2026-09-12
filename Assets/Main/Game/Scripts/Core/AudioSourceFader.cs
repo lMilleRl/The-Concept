@@ -5,6 +5,8 @@ public class AudioSourceFader : MonoBehaviour
 {
     [SerializeField] [Range(0f, float.MaxValue)] private float _fadeDuration = 1f;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private bool _isToTargetFade;
+    [SerializeField] [Range(0f, float.MaxValue)] private float _targetVolume = 1f;
 
     private float _originalVolume;
     private Tweener _activeFade;
@@ -16,7 +18,8 @@ public class AudioSourceFader : MonoBehaviour
 
     public void FadeIn()
     {
-        StartFade(_originalVolume);
+        var targetVolume = _isToTargetFade ? _targetVolume : _originalVolume; 
+        StartFade(targetVolume);
     }
 
     public void FadeOut()

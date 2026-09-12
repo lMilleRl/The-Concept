@@ -6,6 +6,8 @@ namespace TextBox
 {
     public class TextBoxFacade : ITextBoxFacade, IDisposable
     {
+        public event Action OnPageStarted;
+        public event Action OnPageFinished;
         public event Action OnCurrentTextEnded;
         public event Action OnHidden;
 
@@ -36,6 +38,7 @@ namespace TextBox
             _defaultStyle = data.DefaultStyle;
 
             _typeRunner.OnTextFinished += Hide;
+            _typeRunner.OnPageStarted += HandlePageStarted;
             _typeRunner.OnPageFinished += ResumeTurningPage;
             _input.OnTurnPagePressed += TryTurnPage;
         }
@@ -43,6 +46,7 @@ namespace TextBox
         public void Dispose()
         {
             _typeRunner.OnTextFinished -= Hide;
+            _typeRunner.OnPageStarted -= HandlePageStarted;
             _typeRunner.OnPageFinished -= ResumeTurningPage;
             _input.OnTurnPagePressed -= TryTurnPage;
             StopAutoTurn();
@@ -115,9 +119,12 @@ namespace TextBox
             }
         }
 
+        private void HandlePageStarted() => OnPageStarted?.Invoke();
+
         private void ResumeTurningPage()
         {
             _canTurnPage = true;
+            OnPageFinished?.Invoke();
 
             if (_autoPlay)
                 _autoTurnCoroutine = _coroutineRunner.StartCoroutine(AutoTurnPage());

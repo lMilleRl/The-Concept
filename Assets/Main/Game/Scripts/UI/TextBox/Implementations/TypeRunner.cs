@@ -30,6 +30,7 @@ namespace TextBox
         private int _currentVisibleChars;
         private int _startPosition;
 
+        public event Action OnPageStarted;
         public event Action OnPageFinished;
         public event Action OnTextFinished;
         public event Action<int> OnCharRevealed;
@@ -237,6 +238,10 @@ namespace TextBox
                     _currentTextBoxUI.ContentText.maxVisibleCharacters = firstChar;
                     _currentTextBoxUI.ContentText.pageToDisplay = page + 1;
                 }
+
+                OnPageStarted?.Invoke();
+                if (session.IsCancelled)
+                    yield break;
 
                 _typePageCoroutine = _coroutineRunner.StartCoroutine(TypePage(page, page == startPage, session));
                 yield return _typePageCoroutine;

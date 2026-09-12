@@ -4,6 +4,7 @@ namespace TextBox
 {
     public interface ITypeRunner : ICharProgressProvider
     {
+        event Action OnPageStarted;
         event Action OnPageFinished;
         event Action OnTextFinished;
         event Action<int> OnCharRevealed;
