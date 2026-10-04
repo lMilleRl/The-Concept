@@ -1,13 +1,14 @@
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(CanvasGroup), typeof(UIButtonMotionChannels))]
 public sealed class UIButtonAlphaEffect : UIButtonHoverEffectBase
 {
     [Range(0f, 1f)] [SerializeField] private float _idleAlpha = 0.65f;
     [Min(0f)] [SerializeField] private float _duration = 0.12f;
 
     private CanvasGroup _canvasGroup;
+    private UIButtonMotionChannels _motionChannels;
     private float _progress;
     private Tween _tween;
 
@@ -15,6 +16,7 @@ public sealed class UIButtonAlphaEffect : UIButtonHoverEffectBase
     {
         base.Awake();
         _canvasGroup = GetComponent<CanvasGroup>();
+        _motionChannels = GetComponent<UIButtonMotionChannels>();
         _canvasGroup.alpha = _idleAlpha;
     }
 
@@ -37,6 +39,8 @@ public sealed class UIButtonAlphaEffect : UIButtonHoverEffectBase
 
     private void Update()
     {
+        if (!_motionChannels.EffectsActive) return;
+
         _canvasGroup.alpha = Mathf.Lerp(_idleAlpha, 1f, _progress);
     }
 

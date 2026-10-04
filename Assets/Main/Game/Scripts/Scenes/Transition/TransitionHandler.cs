@@ -7,11 +7,15 @@ using UnityEngine.UI;
 public class TransitionHandler : MonoBehaviour, ITransitionHandler
 {
     public static ITransitionHandler Instance;
-    
+
     [SerializeField] private GameObject _root;
     [SerializeField] private Image _fadePanel;
     [SerializeField] private CanvasGroup _fadeCutsceneGroup;
     [SerializeField] private CutscenePlayer _cutscenesHandler;
+
+    private Coroutine _currentTransition;
+    private Coroutine _currentCutscenePlaying;
+    private Coroutine _currentClipPlaying;
 
     private void Awake()
     {
@@ -20,13 +24,15 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             Destroy(_root);
             return;
         }
-        
+
         Instance = this;
     }
 
     public void StartTransition(TransitionData transitionData)
     {
-        StartCoroutine(Translate(transitionData));
+        _cutscenesHandler.StopCurrentCutscene();
+        StopAllCoroutines();
+        _currentTransition = StartCoroutine(Translate(transitionData));
     }
 
     private void SwitchToPassiveGameState()
@@ -42,7 +48,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
                 return;
         }
     }
-    
+
     private IEnumerator Translate(TransitionData transitionData)
     {
         SwitchToPassiveGameState();
@@ -64,7 +70,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         yield return PlayCutscenes(transitionData.OwnCutscenesData);
 
         GameStateManager.Instance.SetState(GameState.Gameplay);
-        
+
         FadeInSound(transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
         yield return FadeOutTransitionPanel
             (transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
@@ -73,6 +79,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = true;
+        
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }
@@ -97,7 +104,10 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     private IEnumerator PlayCutscenes(CutsceneData[] cutscenes)
     {
         foreach (var cutsceneData in cutscenes)
-            yield return PlayCutscene(cutsceneData);
+        {
+            _currentCutscenePlaying = StartCoroutine(PlayCutscene(cutsceneData));
+            yield return _currentCutscenePlaying;
+        }
     }
 
     private IEnumerator PlayCutscene(CutsceneData cutscene)
@@ -132,7 +142,9 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             }
 
             VolumeAudioManager.Instance.MuteCutscene();
-            yield return _cutscenesHandler.PlayCutscene(cutscene, StartFadeIn, StartFadeOut);
+
+            _currentClipPlaying = StartCoroutine(_cutscenesHandler.PlayCutscene(cutscene, StartFadeIn, StartFadeOut));
+            yield return _currentClipPlaying;
 
             StartFadeOut();
             yield return fadeOutAnim.WaitForCompletion();

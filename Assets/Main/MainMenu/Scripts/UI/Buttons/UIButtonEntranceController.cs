@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public enum ButtonEntranceSide
 {
     Left,
-    Right
+    Right,
+    Top,
+    Bottom
 }
 
 [Serializable]
@@ -39,7 +41,7 @@ public sealed class UIButtonEntranceController : MonoBehaviour
             item.Button.GetComponent<UIButtonMotionChannels>().PlayEntrance(
                 viewport,
                 item.Destination.position,
-                item.FromSide == ButtonEntranceSide.Right,
+                item.FromSide,
                 item.Delay,
                 _duration,
                 _overshoot,

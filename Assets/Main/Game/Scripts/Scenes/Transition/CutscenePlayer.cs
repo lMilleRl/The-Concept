@@ -8,4 +8,5 @@ using UnityEngine;
 public abstract class CutscenePlayer : MonoBehaviour
 {
     public abstract IEnumerator PlayCutscene(CutsceneData cutscene, Action onStarted, Action onFadeOut);
+    public abstract void StopCurrentCutscene();
 }

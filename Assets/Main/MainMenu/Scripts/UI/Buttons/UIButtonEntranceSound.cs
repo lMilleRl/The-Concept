@@ -19,7 +19,7 @@ public sealed class UIButtonEntranceSound : MonoBehaviour
         _motionChannels.EntranceStarted -= PlayEntranceSound;
     }
 
-    private void PlayEntranceSound()
+    private void PlayEntranceSound(float _)
     {
         _audioSource.pitch = Random.Range(_minimumPitch, _maximumPitch);
         _audioSource.PlayOneShot(_clip);

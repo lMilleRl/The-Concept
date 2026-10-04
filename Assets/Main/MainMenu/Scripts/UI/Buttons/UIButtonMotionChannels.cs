@@ -19,7 +19,8 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
     private Vector3[] _buttonCorners;
     private Tween _entranceTween;
 
-    public event Action EntranceStarted;
+    public event Action<float> EntranceStarted;
+    public bool EffectsActive => _effectsActive;
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
     public void PlayEntrance(
         RectTransform viewport,
         Vector3 destination,
-        bool fromRight,
+        ButtonEntranceSide direction,
         float delay,
         float duration,
         float overshoot,
@@ -61,7 +62,7 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
     {
         _entranceTween?.Kill();
         ResetMotionChannels();
-        Vector2 startPosition = GetEntranceStartPosition(viewport, destination, fromRight, edgePadding);
+        Vector2 startPosition = GetEntranceStartPosition(viewport, destination, direction, edgePadding);
         Vector2 destinationPosition = GetParentLocalPosition(destination);
 
         _baseAnchoredPosition = startPosition;
@@ -86,32 +87,56 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
     private Vector2 GetEntranceStartPosition(
         RectTransform viewport,
         Vector3 destination,
-        bool fromRight,
+        ButtonEntranceSide direction,
         float edgePadding)
     {
         Vector3 destinationLocal = viewport.InverseTransformPoint(destination);
-        float halfWidth = GetButtonHalfWidth(viewport, destinationLocal.x);
-        float startX = fromRight
-            ? viewport.rect.xMax + halfWidth + edgePadding
-            : viewport.rect.xMin - halfWidth - edgePadding;
-        Vector3 startWorld = viewport.TransformPoint(
-            new Vector3(startX, destinationLocal.y, destinationLocal.z));
+        Vector2 halfSize = GetButtonHalfSize(viewport, destinationLocal.x, destinationLocal.y);
 
-        return GetParentLocalPosition(startWorld);
+        return direction switch
+        {
+            ButtonEntranceSide.Left => GetStartPosition(viewport, destinationLocal, halfSize, Vector2.left, edgePadding),
+            ButtonEntranceSide.Right => GetStartPosition(viewport, destinationLocal, halfSize, Vector2.right, edgePadding),
+            ButtonEntranceSide.Top => GetStartPosition(viewport, destinationLocal, halfSize, Vector2.up, edgePadding),
+            ButtonEntranceSide.Bottom => GetStartPosition(viewport, destinationLocal, halfSize, Vector2.down, edgePadding)
+        };
     }
 
-    private float GetButtonHalfWidth(RectTransform viewport, float centerX)
+    private Vector2 GetButtonHalfSize(RectTransform viewport, float centerX, float centerY)
     {
         _rectTransform.GetWorldCorners(_buttonCorners);
         float halfWidth = 0f;
+        float halfHeight = 0f;
 
         for (int i = 0; i < _buttonCorners.Length; i++)
         {
-            float cornerX = viewport.InverseTransformPoint(_buttonCorners[i]).x;
-            halfWidth = Mathf.Max(halfWidth, Mathf.Abs(cornerX - centerX));
+            Vector3 corner = viewport.InverseTransformPoint(_buttonCorners[i]);
+            halfWidth = Mathf.Max(halfWidth, Mathf.Abs(corner.x - centerX));
+            halfHeight = Mathf.Max(halfHeight, Mathf.Abs(corner.y - centerY));
         }
 
-        return halfWidth;
+        return new Vector2(halfWidth, halfHeight);
+    }
+
+    private Vector2 GetStartPosition(
+        RectTransform viewport,
+        Vector3 destinationLocal,
+        Vector2 buttonHalfSize,
+        Vector2 direction,
+        float edgePadding)
+    {
+        Vector2 viewportCenter = viewport.rect.center;
+        Vector2 viewportHalfSize = viewport.rect.size * 0.5f;
+        Vector2 startAtEdge = viewportCenter + Vector2.Scale(
+            direction,
+            viewportHalfSize + buttonHalfSize + Vector2.one * edgePadding);
+        Vector2 startLocal = new Vector2(
+            Mathf.Lerp(destinationLocal.x, startAtEdge.x, Mathf.Abs(direction.x)),
+            Mathf.Lerp(destinationLocal.y, startAtEdge.y, Mathf.Abs(direction.y)));
+
+        Vector3 startWorld = viewport.TransformPoint(
+            new Vector3(startLocal.x, startLocal.y, destinationLocal.z));
+        return GetParentLocalPosition(startWorld);
     }
 
     private Vector2 GetParentLocalPosition(Vector3 worldPosition)
@@ -140,7 +165,7 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
                 duration)
             .SetDelay(delay)
             .SetEase(Ease.OutBack, overshoot)
-            .OnStart(() => EntranceStarted?.Invoke())
+            .OnStart(() => EntranceStarted?.Invoke(duration))
             .OnComplete(() =>
             {
                 _baseAnchoredPosition = destinationPosition;
@@ -166,6 +191,7 @@ public sealed class UIButtonMotionChannels : MonoBehaviour
         return _effectsActive
             ? _hoverOffset + new Vector2(0f, _waveOffset)
             : Vector2.zero;
+            
     }
 
     private static Vector2 SmoothLerp(Vector2 current, Vector2 target, float deltaTime)

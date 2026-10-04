@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a73b360008d5464da1c14ab2b245352, type: 3}
   m_Name: ToEndGame
   m_EditorClassIdentifier: 
-  _sceneName: MainMenu
+  _sceneName: Final MainMenu
   _transitionPanelEase: 1
   _fadeInPanelDurationInSec: 1.57
   _fadeOutPanelDurationInSec: 0
