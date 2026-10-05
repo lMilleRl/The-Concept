@@ -107,6 +107,15 @@ public class FootStepEffectsController : IStepEffectsProfileController
 
     public void SetProfile(StepEffectsProfileType profileType)
     {
+        var hadProfile = _activeProfileData.StepEffectStrategies != null;
+        var isChanged = hadProfile && _activeProfileData.ProfileType != profileType;
+
         _activeProfileData = _profilesData[profileType];
+
+        if (isChanged)
+        {
+            _lastFoot = Opposite(_lastFoot);
+            ExecuteStep(_lastFoot, isStop: false);
+        }
     }
 }

@@ -20,6 +20,7 @@ public class ClimbingPlayerState : MovementState
     private IPlayerMovementStateReceiver _movementStateReceiver;
 
     private static readonly int ClimbSpeedParam = Animator.StringToHash("ClimbSpeed");
+    private const float ClimbSpeedDeadZone = 0.01f;
 
     public ClimbingPlayerState(ClimbingPlayerStateData data) : base(data.MovementStateData)
     {
@@ -53,7 +54,9 @@ public class ClimbingPlayerState : MovementState
 
     public override void Update()
     {
-        _animator.SetFloat(ClimbSpeedParam, _climbingInput.GetMovementInput().y);
+        var climbInput = _climbingInput.GetMovementInput().y;
+        var climbSpeed = Mathf.Abs(climbInput) > ClimbSpeedDeadZone ? Mathf.Sign(climbInput) : 0f;
+        _animator.SetFloat(ClimbSpeedParam, climbSpeed);
         UpdateMovementEffects();
     }
 
