@@ -14,6 +14,7 @@ public struct ClimbingPlayerStateData
     public SpriteRenderer PlayerSpriteRenderer;
     public MovementStateData MovementStateData;
     public IPlayerMovementStateReceiver MovementStateReceiver;
+    public float ClimbUnitsPerCycle;
 
     public ClimbingPlayerStateData(
         ITriggerDetector ladderDetector,
@@ -27,7 +28,8 @@ public struct ClimbingPlayerStateData
         Collider2D playerCollider,
         SpriteRenderer playerSpriteRenderer,
         MovementStateData movementStateData,
-        IPlayerMovementStateReceiver movementStateReceiver)
+        IPlayerMovementStateReceiver movementStateReceiver,
+        float climbUnitsPerCycle)
     {
         LadderDetector = ladderDetector;
         PlayerCollisionsDetector = playerCollisionsDetector;
@@ -41,5 +43,6 @@ public struct ClimbingPlayerStateData
         PlayerSpriteRenderer = playerSpriteRenderer;
         MovementStateData = movementStateData;
         MovementStateReceiver = movementStateReceiver;
+        ClimbUnitsPerCycle = climbUnitsPerCycle;
     }
 }
