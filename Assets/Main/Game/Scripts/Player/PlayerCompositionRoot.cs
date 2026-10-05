@@ -22,6 +22,8 @@ public class PlayerCompositionRoot : MonoBehaviour
     [Header("Climbing audio strategy")]
     [SerializeField] private AudioSource _climbingSoundsPlayer;
     [SerializeField] private AudioClip[] _climbingAudioClips;
+    [Tooltip("Минимальный интервал между звуками взбирания (сек)")]
+    [SerializeField, Min(0f)] private float _climbingSoundMinInterval = 0.25f;
 
     [Header("Footprint strategy")]
     [SerializeField] private FootprintData _footprintData;
@@ -98,7 +100,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             _footprintPrefab);
         var climbingAudioStrategy = new ClimbingAudioStrategy(
             _climbingSoundsPlayer,
-            _climbingAudioClips);
+            _climbingAudioClips,
+            _climbingSoundMinInterval);
 
         var walkingProfile = new StepEffectsProfileData(
             StepEffectsProfileType.Walking,
