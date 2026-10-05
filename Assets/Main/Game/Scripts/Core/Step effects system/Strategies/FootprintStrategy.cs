@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class FootprintStrategy : IStepEffectStrategy
 {
@@ -15,27 +14,35 @@ public class FootprintStrategy : IStepEffectStrategy
 
     public void Execute(StepEffectContext context)
     {
-        var footprintSprites = _footprintData.GetFootprintSprites(context.SurfaceType);
-        if (footprintSprites != null)
-        {
-            var footprint = _footprintPool.Get();
-            footprint.transform.position = context.Position;
-            footprint.transform.rotation = GetFootprintRotation(context.VelocityDirection);
+        var direction = context.VelocityDirection;
+        if (direction.sqrMagnitude < 1e-8f)
+            direction = Vector2.down;
 
-            var randomSprite = footprintSprites[Random.Range(0, footprintSprites.Length)];
-            footprint.SetSprite(randomSprite);
+        if (context.IsStop)
+        {
+            Place(Foot.Left, context, direction);
+            Place(Foot.Right, context, direction);
+        }
+        else
+        {
+            Place(context.Foot, context, direction);
         }
     }
 
-    private Quaternion GetFootprintRotation(Vector2 direction)
+    private void Place(Foot foot, StepEffectContext context, Vector2 direction)
     {
-        const float DefaultAngle = -90f;
-        
-        var angle = DefaultAngle;
+        if (!_footprintData.TryGetFootprintSprite(context.SurfaceType, foot, out var sprite, out var isMirrored))
+            return;
 
-        if (!Mathf.Approximately(direction.x, 0f) || !Mathf.Approximately(direction.y, 0f))
-            angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        var perpendicular = new Vector2(-direction.y, direction.x);
+        var side = foot == Foot.Left ? 1f : -1f;
+        var position = context.Position + (Vector3)(perpendicular * side * _footprintData.FeetSpacing);
+        var rotation = Quaternion.Euler(0f, 0f,
+            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - _footprintData.SpriteForwardAngle);
 
-        return Quaternion.Euler(0f, 0f, angle);
+        var footprint = _footprintPool.Get();
+        footprint.transform.position = position;
+        footprint.transform.rotation = rotation;
+        footprint.SetSprite(sprite, isMirrored);
     }
 }

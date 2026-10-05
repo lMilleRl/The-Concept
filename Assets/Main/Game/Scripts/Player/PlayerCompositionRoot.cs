@@ -18,8 +18,6 @@ public class PlayerCompositionRoot : MonoBehaviour
     [Header("Walking footstep audio strategy")] 
     [SerializeField] private FootStepAudioData _walkingFootstepAudioData;
     [SerializeField] private AudioSource _walkingFootstepSoundsPlayer;
-    [SerializeField] private float _walkingDistanceBetweenSteps = 0.5f;
-    [SerializeField] private float _climbingDistanceBetweenSteps = 0.5f;
 
     [Header("Climbing audio strategy")]
     [SerializeField] private AudioSource _climbingSoundsPlayer;
@@ -104,12 +102,10 @@ public class PlayerCompositionRoot : MonoBehaviour
 
         var walkingProfile = new StepEffectsProfileData(
             StepEffectsProfileType.Walking,
-            new IStepEffectStrategy[] { walkingFootstepAudioStrategy, snowFootprintStrategy },
-            _walkingDistanceBetweenSteps);
+            new IStepEffectStrategy[] { walkingFootstepAudioStrategy, snowFootprintStrategy });
         var climbingProfile = new StepEffectsProfileData(
             StepEffectsProfileType.Climbing,
-            new IStepEffectStrategy[] { climbingAudioStrategy },
-            _climbingDistanceBetweenSteps);
+            new IStepEffectStrategy[] { climbingAudioStrategy });
 
         return new[] { walkingProfile, climbingProfile };
     }

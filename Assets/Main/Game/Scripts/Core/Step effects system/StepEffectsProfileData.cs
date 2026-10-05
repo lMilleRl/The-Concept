@@ -1,13 +1,11 @@
 public readonly struct StepEffectsProfileData
 {
-    public readonly float DistanceBetweenSteps;
     public readonly StepEffectsProfileType ProfileType;
     public readonly IStepEffectStrategy[] StepEffectStrategies;
 
-    public StepEffectsProfileData(StepEffectsProfileType profileType, IStepEffectStrategy[] stepEffectStrategies, float distanceBetweenSteps)
+    public StepEffectsProfileData(StepEffectsProfileType profileType, IStepEffectStrategy[] stepEffectStrategies)
     {
         ProfileType = profileType;
         StepEffectStrategies = stepEffectStrategies;
-        DistanceBetweenSteps = distanceBetweenSteps;
     }
 }

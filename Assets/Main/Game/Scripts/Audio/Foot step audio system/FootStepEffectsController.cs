@@ -1,25 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class 
-    FootStepEffectsController : IStepEffectsProfileController
+public class FootStepEffectsController : IStepEffectsProfileController
 {
     private Transform _stepsSource;
     private ISurfaceDetector _surfaceDetector;
-    private float _distanceBetweenSteps;
+    private IStepEventSource _stepEventSource;
+    private Vector2 _feetOffset;
+
     private Vector2 _prevStepsSourcePos;
-    private float _currentDistance;
-    private Vector2 _lastMovementDirection;
+    private Vector2 _lastMovementDirection = Vector2.down;
+    private Foot _lastFoot = Foot.Right;
 
     private bool _isSourceMoving;
-    
+
     private Dictionary<StepEffectsProfileType, StepEffectsProfileData> _profilesData;
     private StepEffectsProfileData _activeProfileData;
-    
+
     public FootStepEffectsController(FootStepDependencies dependencies, StepEffectsProfileData[] profilesData)
     {
         _stepsSource = dependencies.StepsSource;
         _surfaceDetector = dependencies.SurfaceDetector;
+        _stepEventSource = dependencies.StepEventSource;
+        _feetOffset = dependencies.FeetOffset;
 
         _prevStepsSourcePos = _stepsSource.position;
 
@@ -28,49 +31,77 @@ public class
         {
             _profilesData.TryAdd(p.ProfileType, p);
         }
+
+        if (_stepEventSource != null)
+            _stepEventSource.StepPerformed += OnStepPerformed;
+        else
+            Debug.LogWarning($"{nameof(FootStepEffectsController)}: {nameof(IStepEventSource)} is not set, animation step events will be ignored");
+    }
+
+    public void Dispose()
+    {
+        if (_stepEventSource != null)
+            _stepEventSource.StepPerformed -= OnStepPerformed;
     }
 
     public void Tick()
     {
         if (!_isSourceMoving) return;
-        
+
         var movementDelta = (Vector2)_stepsSource.position - _prevStepsSourcePos;
-        if (movementDelta.sqrMagnitude > 0f)
+        if (movementDelta.sqrMagnitude > 1e-8f)
             _lastMovementDirection = movementDelta.normalized;
 
-        if (_currentDistance >= _distanceBetweenSteps)
-        {
-            ExecuteActiveStrategy();
-        }
-
-        _currentDistance += movementDelta.magnitude;
         _prevStepsSourcePos = _stepsSource.position;
     }
 
     public void SetMovementActive(bool isActive)
     {
+        bool wasMoving = _isSourceMoving;
         _isSourceMoving = isActive;
 
-        if (_isSourceMoving == false)
+        if (isActive)
         {
-            ExecuteActiveStrategy();
+            _prevStepsSourcePos = _stepsSource.position;
+        }
+        else if (wasMoving)
+        {
+            ExecuteStep(Opposite(_lastFoot), isStop: true);
         }
     }
 
-    private void ExecuteActiveStrategy()
+    private void OnStepPerformed(StepEvent stepEvent)
     {
+        if (!_isSourceMoving) return;
+
+        ExecuteStep(stepEvent.Foot, false);
+        _lastFoot = stepEvent.Foot;
+    }
+
+    private void ExecuteStep(Foot foot, bool isStop)
+    {
+        if (_activeProfileData.StepEffectStrategies == null)
+            return;
+
+        var position = _stepsSource.position + (Vector3)_feetOffset;
         var context = new StepEffectContext(
-            _surfaceDetector.GetSurface(_stepsSource.position),
-            _stepsSource.position,
-            _lastMovementDirection);
+            _surfaceDetector.GetSurface(position),
+            position,
+            _lastMovementDirection,
+            foot,
+            isStop);
+
         foreach (var s in _activeProfileData.StepEffectStrategies)
             s.Execute(context);
-        _currentDistance = 0f;
+    }
+
+    private static Foot Opposite(Foot foot)
+    {
+        return foot == Foot.Left ? Foot.Right : Foot.Left;
     }
 
     public void SetProfile(StepEffectsProfileType profileType)
     {
         _activeProfileData = _profilesData[profileType];
-        _distanceBetweenSteps = _profilesData[profileType].DistanceBetweenSteps;
     }
 }
