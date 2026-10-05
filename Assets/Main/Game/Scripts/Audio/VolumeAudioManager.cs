@@ -83,6 +83,7 @@ public class VolumeAudioManager : MonoBehaviour, IVolumeAudioManager
         DOVirtual.Float(currentLinear, targetLinear, duration, 
             value => SetVolume(paramName, value))
             .SetEase(ease)
+            .SetUpdate(true)
             .SetId(paramName);
     }
 

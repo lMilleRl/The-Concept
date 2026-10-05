@@ -59,7 +59,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             (transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
 
         // Пауза после затухания экрана: даём доиграть звукам триггера (дверь, шаги) до уничтожения сцены
-        yield return new WaitForSeconds(transitionData.PauseBeforeLoadInSec);
+        yield return new WaitForSecondsRealtime(transitionData.PauseBeforeLoadInSec);
 
         if (!string.IsNullOrEmpty(transitionData.SceneName))
         {
@@ -86,14 +86,14 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         _fadePanel.raycastTarget = true;
 
         yield return _fadePanel.DOFade(1f, durationInSec)
-            .SetEase(easeType).WaitForCompletion();
+            .SetEase(easeType).SetUpdate(true).WaitForCompletion();
     }
 
     private IEnumerator FadeOutTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = false;
         yield return _fadePanel.DOFade(0f, durationInSec)
-            .SetEase(easeType).WaitForCompletion();
+            .SetEase(easeType).SetUpdate(true).WaitForCompletion();
     }
 
     private void FadeOutSound(float durationInSec, Ease easeType)
@@ -119,7 +119,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     {
         if (cutscene != null)
         {
-            yield return new WaitForSeconds(cutscene.PauseBeforeCutsceneInSec);
+            yield return new WaitForSecondsRealtime(cutscene.PauseBeforeCutsceneInSec);
 
             var fadeEase = DOTween.defaultEaseType;
             Tween fadeInAnim = null;
@@ -131,7 +131,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
                     return;
 
                 var uiCutsceneFadeInDuration = cutscene.UIFadeInDurationInSec;
-                fadeInAnim = _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration);
+                fadeInAnim = _fadeCutsceneGroup.DOFade(1f, uiCutsceneFadeInDuration).SetUpdate(true);
                 VolumeAudioManager.Instance.FadeInCutscene(uiCutsceneFadeInDuration, fadeEase);
             }
 
@@ -142,7 +142,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
 
                 fadeInAnim?.Kill();
                 var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
-                fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration);
+                fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration).SetUpdate(true);
                 VolumeAudioManager.Instance.FadeOutCutscene(uiCutsceneFadeOutDuration, fadeEase);
             }
 
@@ -155,7 +155,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             yield return fadeOutAnim.WaitForCompletion();
             VolumeAudioManager.Instance.MuteCutscene();
 
-            yield return new WaitForSeconds(cutscene.PauseAfterCutsceneInSec);
+            yield return new WaitForSecondsRealtime(cutscene.PauseAfterCutsceneInSec);
         }
     }
 }
