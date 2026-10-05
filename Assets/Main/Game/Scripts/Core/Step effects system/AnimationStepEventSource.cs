@@ -1,30 +1,40 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class AnimationStepEventSource : MonoBehaviour, IStepEventSource
 {
-    [SerializeField, Range(0f, 1f)] private float _minClipWeight = 0.5f;
+    [Tooltip("Минимальный интервал между шагами (сек). Отсекает двойные шаги при смене направления")]
+    [SerializeField, Min(0f)] private float _minStepInterval = 0.15f;
 
-    private Foot _lastEmittedFoot;
-    private int _lastEmittedFrame = -1;
-    private bool _hasEmitted;
+    private Animator _animator;
+    private float _lastStepTime = float.NegativeInfinity;
 
     public event Action<StepEvent> StepPerformed;
 
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     public void OnStep(AnimationEvent animationEvent)
     {
-        if (animationEvent.animatorClipInfo.weight < _minClipWeight)
+        if (!IsFromDominantState(animationEvent))
             return;
 
-        var foot = (Foot)animationEvent.intParameter;
-
-        if (_hasEmitted && foot == _lastEmittedFoot && Time.frameCount == _lastEmittedFrame)
+        if (Time.time - _lastStepTime < _minStepInterval)
             return;
 
-        _lastEmittedFoot = foot;
-        _lastEmittedFrame = Time.frameCount;
-        _hasEmitted = true;
+        _lastStepTime = Time.time;
+        StepPerformed?.Invoke(new StepEvent((Foot)animationEvent.intParameter));
+    }
 
-        StepPerformed?.Invoke(new StepEvent(foot));
+    private bool IsFromDominantState(AnimationEvent animationEvent)
+    {
+        var dominantState = _animator.IsInTransition(0)
+            ? _animator.GetNextAnimatorStateInfo(0)
+            : _animator.GetCurrentAnimatorStateInfo(0);
+
+        return dominantState.fullPathHash == animationEvent.animatorStateInfo.fullPathHash;
     }
 }
