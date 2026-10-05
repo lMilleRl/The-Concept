@@ -13,6 +13,7 @@ public class ClimbingAudioStrategy : IStepEffectStrategy
 
     public void Execute(StepEffectContext context)
     {
+        if (context.IsStop) return;
         if (_climbingClips == null || _climbingClips.Length == 0) return;
 
         _sourceClimbingSound.PlayOneShot(_climbingClips[Random.Range(0, _climbingClips.Length)]);
