@@ -36,6 +36,8 @@ public class PlayerCompositionRoot : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private int _ignoreGroundLayer;
+    [Tooltip("Высота в юнитах на один полный цикл анимации взбирания")]
+    [SerializeField, Min(0.01f)] private float _climbUnitsPerCycle = 1f;
 
     [Header("Animation")]
     [SerializeField] private PlayerAnimationController _playerAnimationController;
@@ -72,7 +74,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             _playerBody,
             _playerSpriteRenderer,
             climbingMovementStateData,
-            _playerAnimationController);
+            _playerAnimationController,
+            _climbUnitsPerCycle);
 
         var stateMachineDependencies = new PlayerStateMachineDependencies(
             _movementInput,

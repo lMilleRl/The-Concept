@@ -19,8 +19,13 @@ public class ClimbingPlayerState : MovementState
     private Animator _animator;
     private IPlayerMovementStateReceiver _movementStateReceiver;
 
-    private static readonly int ClimbSpeedParam = Animator.StringToHash("ClimbSpeed");
-    private const float ClimbSpeedDeadZone = 0.01f;
+    private static readonly int ClimbProgressParam = Animator.StringToHash("ClimbProgress");
+    private const float ClimbInputDeadZone = 0.01f;
+
+    private float _climbUnitsPerCycle;
+    private float _climbPhase;
+    private float _lastClimbY;
+    private bool _hadClimbInput;
 
     public ClimbingPlayerState(ClimbingPlayerStateData data) : base(data.MovementStateData)
     {
@@ -36,6 +41,7 @@ public class ClimbingPlayerState : MovementState
         _playerRigidBody = data.PlayerRigidBody;
         _playerCollider = data.PlayerCollider;
         _movementStateReceiver = data.MovementStateReceiver;
+        _climbUnitsPerCycle = Mathf.Max(0.01f, data.ClimbUnitsPerCycle);
     }
 
     public override void Enter()
@@ -48,15 +54,28 @@ public class ClimbingPlayerState : MovementState
         _playerCollisionsDetector.layer = _ignoreGroundLayer;
         _movementStateReceiver.SetMovementState(PlayerMovementStateType.Climbing);
         SetPlayerOrderAboveLadder();
+
+        _climbPhase = 0f;
+        _lastClimbY = _playerTransform.position.y;
+        _hadClimbInput = false;
+        _animator.SetFloat(ClimbProgressParam, 0f);
         
         EnterMovementEffects();
     }
 
     public override void Update()
     {
-        var climbInput = _climbingInput.GetMovementInput().y;
-        var climbSpeed = Mathf.Abs(climbInput) > ClimbSpeedDeadZone ? Mathf.Sign(climbInput) : 0f;
-        _animator.SetFloat(ClimbSpeedParam, climbSpeed);
+        var positionY = _playerTransform.position.y;
+        _climbPhase += Mathf.Abs(positionY - _lastClimbY) / _climbUnitsPerCycle;
+        _lastClimbY = positionY;
+
+        // при остановке переключаем хват на противоположный (позиции 0 и 0.5 цикла)
+        var hasClimbInput = Mathf.Abs(_climbingInput.GetMovementInput().y) > ClimbInputDeadZone;
+        if (!hasClimbInput && _hadClimbInput)
+            _climbPhase += 0.5f;
+        _hadClimbInput = hasClimbInput;
+
+        _animator.SetFloat(ClimbProgressParam, Mathf.Repeat(_climbPhase, 1f));
         UpdateMovementEffects();
     }
 
