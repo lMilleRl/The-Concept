@@ -37,10 +37,10 @@ public abstract class MovementState : State
 
     protected void ExitMovementEffects()
     {
-        NotifyMovementState(false);
-
         foreach (var behaviour in _stateBehaviours)
             behaviour.SetEnabled(false);
+
+        NotifyMovementState(false);
     }
 
     protected abstract bool IsMoving();

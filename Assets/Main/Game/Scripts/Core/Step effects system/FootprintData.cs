@@ -10,11 +10,16 @@ public class FootprintData : ScriptableObject
     [SerializeField] private float _spriteForwardAngle = 90f;
     [Tooltip("Боковое смещение каждого следа от центра, в юнитах")]
     [SerializeField] private float _feetSpacing = 0.125f;
+    [Tooltip("Округлять поворот следа до фиксированного числа направлений")]
+    [SerializeField] private bool _snapRotation;
+    [SerializeField, Min(1)] private int _rotationSnapDirections = 8;
 
     private Dictionary<SurfaceType, FootprintSurfaceData> _footprintSurfaceDictionary;
 
     public float SpriteForwardAngle => _spriteForwardAngle;
     public float FeetSpacing => _feetSpacing;
+    public bool SnapRotation => _snapRotation;
+    public int RotationSnapDirections => _rotationSnapDirections;
 
     private void OnValidate()
     {

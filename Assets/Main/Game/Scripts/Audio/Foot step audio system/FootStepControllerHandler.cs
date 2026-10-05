@@ -4,10 +4,10 @@ using UnityEngine;
 public class FootStepControllerHandler : MonoBehaviour, IToggleable, IMovementStateListener, IStepEffectsProfileController
 {
     [SerializeField] private Transform _stepsSource;
+    [Tooltip("Точка уровня ступней. Если не задана — используется Steps Source")]
+    [SerializeField] private Transform _feetPoint;
     [SerializeField] private MonoBehaviour _surfaceDetectorSource;
     [SerializeField] private MonoBehaviour _stepEventSource;
-    [Tooltip("Смещение от источника шагов до ступней")]
-    [SerializeField] private Vector2 _feetOffset = new(0f, -0.4375f);
     [SerializeField] private FootStepAudioData _audioData;
     [SerializeField] private AudioSource _soundsPlayer;
 
@@ -19,7 +19,7 @@ public class FootStepControllerHandler : MonoBehaviour, IToggleable, IMovementSt
             _stepsSource,
             _surfaceDetectorSource?.GetComponent<ISurfaceDetector>(),
             _stepEventSource?.GetComponent<IStepEventSource>(),
-            _feetOffset,
+            _feetPoint,
             _audioData,
             _soundsPlayer);
 
@@ -39,6 +39,8 @@ public class FootStepControllerHandler : MonoBehaviour, IToggleable, IMovementSt
     public void SetEnabled(bool isEnabled)
     {
         enabled = isEnabled;
+        if (!isEnabled)
+            _footStepEffectsController?.ResetMovement();
     }
 
     public void SetMovementActive(bool isActive)

@@ -6,7 +6,7 @@ public class FootStepEffectsController : IStepEffectsProfileController
     private Transform _stepsSource;
     private ISurfaceDetector _surfaceDetector;
     private IStepEventSource _stepEventSource;
-    private Vector2 _feetOffset;
+    private Transform _feetPoint;
 
     private Vector2 _prevStepsSourcePos;
     private Vector2 _lastMovementDirection = Vector2.down;
@@ -22,7 +22,7 @@ public class FootStepEffectsController : IStepEffectsProfileController
         _stepsSource = dependencies.StepsSource;
         _surfaceDetector = dependencies.SurfaceDetector;
         _stepEventSource = dependencies.StepEventSource;
-        _feetOffset = dependencies.FeetOffset;
+        _feetPoint = dependencies.FeetPoint != null ? dependencies.FeetPoint : _stepsSource;
 
         _prevStepsSourcePos = _stepsSource.position;
 
@@ -70,6 +70,11 @@ public class FootStepEffectsController : IStepEffectsProfileController
         }
     }
 
+    public void ResetMovement()
+    {
+        _isSourceMoving = false;
+    }
+
     private void OnStepPerformed(StepEvent stepEvent)
     {
         if (!_isSourceMoving) return;
@@ -83,7 +88,7 @@ public class FootStepEffectsController : IStepEffectsProfileController
         if (_activeProfileData.StepEffectStrategies == null)
             return;
 
-        var position = _stepsSource.position + (Vector3)_feetOffset;
+        var position = _feetPoint.position;
         var context = new StepEffectContext(
             _surfaceDetector.GetSurface(position),
             position,

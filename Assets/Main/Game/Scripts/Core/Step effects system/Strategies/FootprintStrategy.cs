@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class FootprintStrategy : IStepEffectStrategy
@@ -17,6 +16,13 @@ public class FootprintStrategy : IStepEffectStrategy
         var direction = context.VelocityDirection;
         if (direction.sqrMagnitude < 1e-8f)
             direction = Vector2.down;
+
+        if (_footprintData.SnapRotation)
+        {
+            var step = 360f / _footprintData.RotationSnapDirections;
+            var angle = Mathf.Round(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg / step) * step;
+            direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        }
 
         if (context.IsStop)
         {
