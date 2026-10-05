@@ -479,6 +479,7 @@ MonoBehaviour:
   _fadePanel: {fileID: 4228812467094109936}
   _fadeCutsceneGroup: {fileID: 3664538023647162406}
   _cutscenesHandler: {fileID: 3923092648866588249}
+  _isTimeStopOnTransition: 1
 --- !u!114 &3923092648866588249
 MonoBehaviour:
   m_ObjectHideFlags: 0

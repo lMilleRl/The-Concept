@@ -12,6 +12,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     [SerializeField] private Image _fadePanel;
     [SerializeField] private CanvasGroup _fadeCutsceneGroup;
     [SerializeField] private CutscenePlayer _cutscenesHandler;
+    [SerializeField] private bool _isTimeStopOnTransition = true;
 
     private Coroutine _currentTransition;
     private Coroutine _currentCutscenePlaying;
@@ -64,11 +65,15 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
         {
             SceneManager.LoadScene(transitionData.SceneName);
             GameStateManager.Instance.SetState(GameState.PassiveShow);
+            if (_isTimeStopOnTransition)
+                Time.timeScale = 0f;
             VolumeAudioManager.Instance.MuteGameplay();
         }
 
         yield return PlayCutscenes(transitionData.OwnCutscenesData);
 
+        if (_isTimeStopOnTransition)
+            Time.timeScale = 1f;
         GameStateManager.Instance.SetState(GameState.Gameplay);
 
         FadeInSound(transitionData.FadeOutPanelDurationInSec, transitionData.TransitionPanelEase);
@@ -79,7 +84,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     private IEnumerator FadeInTransitionPanel(float durationInSec, Ease easeType)
     {
         _fadePanel.raycastTarget = true;
-        
+
         yield return _fadePanel.DOFade(1f, durationInSec)
             .SetEase(easeType).WaitForCompletion();
     }

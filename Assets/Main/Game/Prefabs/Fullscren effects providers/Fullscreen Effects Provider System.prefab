@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8759594345921288018}
   - component: {fileID: 8909807192201052833}
   - component: {fileID: 2861068443833228019}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: WhiteNoise Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ AudioSource:
   m_GameObject: {fileID: 2521670240152397635}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7718492360668492265, guid: bf5e11fad988cf144afa2d4fb70876ae, type: 2}
   m_audioClip: {fileID: 8300000, guid: 369ca424936c84a42b1d29425e077530, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 2668838666430391120}
   - component: {fileID: 3070904728982135004}
   - component: {fileID: 8166428069497346415}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Effects Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,6 +631,39 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &6527945410137477523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2387245092807158671}
+  m_Layer: 0
+  m_Name: Fullscreen Effects Provider System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2387245092807158671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6527945410137477523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7341718668123913709}
+  - {fileID: 5848153629417607045}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7000000000000000010
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,41 +706,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6786041f483d4084a65164b5fe1163df, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _id: 3
   _volume: {fileID: 0}
   _maxPixelSize: 32
---- !u!1 &6527945410137477523
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2387245092807158671}
-  m_Layer: 0
-  m_Name: Fullscreen Effects Provider System
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2387245092807158671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6527945410137477523}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7341718668123913709}
-  - {fileID: 5848153629417607045}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

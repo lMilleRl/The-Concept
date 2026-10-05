@@ -3382,10 +3382,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 612788836699469154, guid: b9b566b682dc7394b9918310205eec42, type: 3}
-      propertyPath: m_VertexColorAlwaysGammaSpace
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7238584370407659715, guid: b9b566b682dc7394b9918310205eec42, type: 3}
       propertyPath: m_Pivot.x
       value: 0

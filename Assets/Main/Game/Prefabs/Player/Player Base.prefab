@@ -552,11 +552,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -66.88
+      value: 28.1875
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 79.35
+      value: 0.00000017881393
       objectReference: {fileID: 0}
     - target: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -600,11 +600,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
---- !u!20 &754649656121316396 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2898407457183258042, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
-  m_PrefabInstance: {fileID: 2468038450419007894}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &4697424913076402438 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7165403989860038800, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
@@ -613,6 +608,11 @@ Camera:
 --- !u!4 &7012581442365084458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4832795943286985404, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
+  m_PrefabInstance: {fileID: 2468038450419007894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &7227081414176610210 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5047404496169735732, guid: 6f116a86b3cfdfc49be923afe614d43e, type: 3}
   m_PrefabInstance: {fileID: 2468038450419007894}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3540332491258205294
@@ -728,7 +728,7 @@ PrefabInstance:
     - target: {fileID: 2668838666430391120, guid: 74649ddba560fe7489b14630d1c0209b, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 754649656121316396}
+      objectReference: {fileID: 7227081414176610210}
     - target: {fileID: 2668838666430391120, guid: 74649ddba560fe7489b14630d1c0209b, type: 3}
       propertyPath: m_RenderMode
       value: 1
@@ -761,10 +761,6 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: e50da91d9133e7a45af5d1d9c9495aed, type: 2}
-    - target: {fileID: 8909807192201052833, guid: 74649ddba560fe7489b14630d1c0209b, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
