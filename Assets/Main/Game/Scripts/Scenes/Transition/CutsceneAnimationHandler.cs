@@ -10,6 +10,7 @@ public class CutsceneAnimationHandler : CutscenePlayer
 
     private void Awake()
     {
+        _clipsPlayer.timeUpdateMode = VideoTimeUpdateMode.UnscaledGameTime;
         _clipsPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         _clipsPlayer.controlledAudioTrackCount = 1;
         _clipsPlayer.SetTargetAudioSource(0, _audioSource);
