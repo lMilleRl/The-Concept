@@ -24,7 +24,7 @@ public class ClimbingPlayerState : MovementState
 
     private float _climbUnitsPerCycle;
     private float _climbPhase;
-    private float _lastClimbY;
+    private Vector2 _lastClimbPosition;
     private bool _hadClimbInput;
 
     public ClimbingPlayerState(ClimbingPlayerStateData data) : base(data.MovementStateData)
@@ -56,7 +56,7 @@ public class ClimbingPlayerState : MovementState
         SetPlayerOrderAboveLadder();
 
         _climbPhase = 0f;
-        _lastClimbY = _playerTransform.position.y;
+        _lastClimbPosition = _playerTransform.position;
         _hadClimbInput = false;
         _animator.SetFloat(ClimbProgressParam, 0f);
         
@@ -65,9 +65,9 @@ public class ClimbingPlayerState : MovementState
 
     public override void Update()
     {
-        var positionY = _playerTransform.position.y;
-        _climbPhase += Mathf.Abs(positionY - _lastClimbY) / _climbUnitsPerCycle;
-        _lastClimbY = positionY;
+        var position = (Vector2)_playerTransform.position;
+        _climbPhase += (position - _lastClimbPosition).magnitude / _climbUnitsPerCycle;
+        _lastClimbPosition = position;
 
         // при остановке переключаем хват на противоположный (позиции 0 и 0.5 цикла)
         var hasClimbInput = Mathf.Abs(_climbingInput.GetMovementInput().y) > ClimbInputDeadZone;
