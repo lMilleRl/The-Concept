@@ -4,11 +4,13 @@ public class FootprintStrategy : IStepEffectStrategy
 {
     private FootprintData _footprintData;
     private GameObjectPool<Footprint> _footprintPool;
+    private readonly SpriteRenderer _playerSpriteRenderer;
 
-    public FootprintStrategy(FootprintData footprintData, Footprint prefab)
+    public FootprintStrategy(FootprintData footprintData, Footprint prefab, SpriteRenderer playerSpriteRenderer)
     {
         _footprintData = footprintData;
         _footprintPool = new GameObjectPool<Footprint>(prefab);
+        _playerSpriteRenderer = playerSpriteRenderer;
     }
 
     public void Execute(StepEffectContext context)
@@ -50,5 +52,6 @@ public class FootprintStrategy : IStepEffectStrategy
         footprint.transform.position = position;
         footprint.transform.rotation = rotation;
         footprint.SetSprite(sprite, isMirrored);
+        footprint.SetPlayerSpriteRenderer(_playerSpriteRenderer);
     }
 }

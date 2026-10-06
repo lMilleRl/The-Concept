@@ -36,8 +36,14 @@ public class PlayerCompositionRoot : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private int _ignoreGroundLayer;
-    [Tooltip("Высота в юнитах на один полный цикл анимации взбирания")]
-    [SerializeField, Min(0.01f)] private float _climbUnitsPerCycle = 1f;
+
+    [Header("Climbing Animation")]
+    [Tooltip("Если включено, скачок фазы ограничен длительностью удержания кнопки")]
+    [SerializeField] private bool _limitClimbPhaseAdvanceByDuration = false;
+    [Tooltip("Максимальная длительность клика (сек); применяется только при включённом ограничении")]
+    [SerializeField, Min(0f)] private float _climbMiniClickMaxDuration = 0.1f;
+    [Tooltip("Допуск вокруг normalizedTime 0.5, в долях цикла")]
+    [SerializeField, Range(0f, 0.5f)] private float _climbPhaseSnapTolerance = 0.15f;
 
     [Header("Animation")]
     [SerializeField] private PlayerAnimationController _playerAnimationController;
@@ -75,7 +81,9 @@ public class PlayerCompositionRoot : MonoBehaviour
             _playerSpriteRenderer,
             climbingMovementStateData,
             _playerAnimationController,
-            _climbUnitsPerCycle);
+            _limitClimbPhaseAdvanceByDuration,
+            _climbMiniClickMaxDuration,
+            _climbPhaseSnapTolerance);
 
         var stateMachineDependencies = new PlayerStateMachineDependencies(
             _movementInput,
@@ -100,7 +108,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             _walkingFootstepSoundsPlayer);
         var snowFootprintStrategy = new FootprintStrategy(
             _footprintData,
-            _footprintPrefab);
+            _footprintPrefab,
+            _playerSpriteRenderer);
         var climbingAudioStrategy = new ClimbingAudioStrategy(
             _climbingSoundsPlayer,
             _climbingAudioClips,

@@ -14,7 +14,9 @@ public struct ClimbingPlayerStateData
     public SpriteRenderer PlayerSpriteRenderer;
     public MovementStateData MovementStateData;
     public IPlayerMovementStateReceiver MovementStateReceiver;
-    public float ClimbUnitsPerCycle;
+    public bool LimitClimbPhaseAdvanceByDuration;
+    public float ClimbMiniClickMaxDuration;
+    public float ClimbPhaseSnapTolerance;
 
     public ClimbingPlayerStateData(
         ITriggerDetector ladderDetector,
@@ -29,7 +31,9 @@ public struct ClimbingPlayerStateData
         SpriteRenderer playerSpriteRenderer,
         MovementStateData movementStateData,
         IPlayerMovementStateReceiver movementStateReceiver,
-        float climbUnitsPerCycle)
+        bool limitClimbPhaseAdvanceByDuration,
+        float climbMiniClickMaxDuration,
+        float climbPhaseSnapTolerance)
     {
         LadderDetector = ladderDetector;
         PlayerCollisionsDetector = playerCollisionsDetector;
@@ -43,6 +47,8 @@ public struct ClimbingPlayerStateData
         PlayerSpriteRenderer = playerSpriteRenderer;
         MovementStateData = movementStateData;
         MovementStateReceiver = movementStateReceiver;
-        ClimbUnitsPerCycle = climbUnitsPerCycle;
+        LimitClimbPhaseAdvanceByDuration = limitClimbPhaseAdvanceByDuration;
+        ClimbMiniClickMaxDuration = climbMiniClickMaxDuration;
+        ClimbPhaseSnapTolerance = climbPhaseSnapTolerance;
     }
 }
