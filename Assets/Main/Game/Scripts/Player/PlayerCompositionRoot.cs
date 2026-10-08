@@ -51,6 +51,7 @@ public class PlayerCompositionRoot : MonoBehaviour
     private void Start()
     {
         _movement.Init(_movementInput);
+        _cutsceneCommandInput.Init(transform);
         _interaction.Init(_interactionInput);
         _interactionActivator.Init(_movementInput, _movement);
         _playerAnimationController.Init(_movement);

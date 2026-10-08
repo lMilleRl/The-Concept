@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultSpeed: 14
   _defaultColor: {r: 1, g: 0.7717321, b: 0, a: 1}
-  _defaultFontSize: 78
-  _defaultFont: {fileID: 11400000, guid: 4e623dab9be49154d90851c376551c12, type: 2}
+  _defaultFontSize: 81
+  _defaultFont: {fileID: 11400000, guid: d14e4106997095049b759bbc8aa3f810, type: 2}

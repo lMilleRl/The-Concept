@@ -10,6 +10,7 @@ public class PlayerAnimationController : MonoBehaviour, IPlayerMovementStateRece
     private static readonly int IsClimbingParam = Animator.StringToHash("IsClimbing");
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private SpriteRenderer _shadowSpriteRenderer;
 
     private IPlayerMovement _movement;
     private FacingDirection _facingDirection = FacingDirection.Down;
@@ -26,6 +27,9 @@ public class PlayerAnimationController : MonoBehaviour, IPlayerMovementStateRece
 
         _animator.SetBool(IsMovingParam, state == PlayerMovementStateType.Walking);
         _animator.SetBool(IsClimbingParam, state == PlayerMovementStateType.Climbing);
+
+        if (_shadowSpriteRenderer != null)
+            _shadowSpriteRenderer.enabled = state != PlayerMovementStateType.Climbing;
 
         if (state != PlayerMovementStateType.Walking)
         {

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CutsceneCommandInput : MonoBehaviour, IMoveInput, IMovementSpeedSource
+public class CutsceneCommandInput : MonoBehaviour, IMoveInput, IMovementSpeedSource, ICutsceneMovementCommandReceiver
 {
     private const float DefaultSpeedMultiplier = 1f;
 
@@ -10,6 +10,15 @@ public class CutsceneCommandInput : MonoBehaviour, IMoveInput, IMovementSpeedSou
 
     private Vector2 _currentInput;
     private Coroutine _currentResetCoroutine;
+    private Transform _playerTransform;
+    private Transform _targetTransform;
+    private float _targetStoppingDistance;
+    private bool _isMovingToTarget;
+
+    public void Init(Transform playerTransform)
+    {
+        _playerTransform = playerTransform;
+    }
 
     public void Execute(CutsceneMovementCommand command)
     {
@@ -19,31 +28,78 @@ public class CutsceneCommandInput : MonoBehaviour, IMoveInput, IMovementSpeedSou
         SetMove(command.Direction, command.DurationInSec, command.SpeedMultiplier);
     }
 
+    public void Execute(CutsceneMoveToTargetCommand command)
+    {
+        CancelResetCoroutine();
+        if (command.Target == null)
+        {
+            Reset();
+            return;
+        }
+
+        _currentInput = Vector2.zero;
+        _targetTransform = command.Target;
+        _targetStoppingDistance = Mathf.Max(0f, command.StoppingDistance);
+        _isMovingToTarget = true;
+        SpeedMultiplier = Mathf.Clamp01(command.SpeedMultiplier);
+    }
+
     public void SetMove(Vector2 direction, float movementTimeInSec, float speedMultiplier)
     {
+        CancelResetCoroutine();
+        _targetTransform = null;
+        _targetStoppingDistance = 0f;
+        _isMovingToTarget = false;
         direction.Normalize();
         _currentInput = direction;
         SpeedMultiplier = Mathf.Clamp01(speedMultiplier);
-
-        if (_currentResetCoroutine != null)
-            StopCoroutine(_currentResetCoroutine);
         _currentResetCoroutine = StartCoroutine(WaitForReset(movementTimeInSec));
     }
 
     public Vector2 GetMovementInput()
     {
+        if (!_isMovingToTarget)
+            return _currentInput;
+
+        if (_targetTransform == null)
+        {
+            Reset();
+            return Vector2.zero;
+        }
+
+        var playerPosition = _playerTransform != null
+            ? (Vector2)_playerTransform.position
+            : (Vector2)transform.position;
+        var targetDirection = (Vector2)_targetTransform.position - playerPosition;
+        if (targetDirection.sqrMagnitude <= _targetStoppingDistance * _targetStoppingDistance)
+        {
+            Reset();
+            return Vector2.zero;
+        }
+
+        _currentInput = targetDirection.normalized;
         return _currentInput;
     }
 
     public Vector2 GetRawMovementInput()
     {
-        return new Vector2(GetRawCoordinate(_currentInput.x), GetRawCoordinate(_currentInput.y));
+        var movementInput = GetMovementInput();
+        return new Vector2(GetRawCoordinate(movementInput.x), GetRawCoordinate(movementInput.y));
     }
 
     private IEnumerator WaitForReset(float timeInSec)
     {
         yield return new WaitForSeconds(timeInSec);
         Reset();
+        _currentResetCoroutine = null;
+    }
+
+    private void CancelResetCoroutine()
+    {
+        if (_currentResetCoroutine == null)
+            return;
+
+        StopCoroutine(_currentResetCoroutine);
         _currentResetCoroutine = null;
     }
 
@@ -59,18 +115,16 @@ public class CutsceneCommandInput : MonoBehaviour, IMoveInput, IMovementSpeedSou
 
     private void OnDisable()
     {
-        if (_currentResetCoroutine != null)
-        {
-            StopCoroutine(_currentResetCoroutine);
-            _currentResetCoroutine = null;
-        }
-
+        CancelResetCoroutine();
         Reset();
     }
 
     private void Reset()
     {
         _currentInput = Vector2.zero;
+        _targetTransform = null;
+        _targetStoppingDistance = 0f;
+        _isMovingToTarget = false;
         SpeedMultiplier = DefaultSpeedMultiplier;
     }
 }

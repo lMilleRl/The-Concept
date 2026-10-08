@@ -129,9 +129,9 @@ TextureImporter:
         x: 0
         y: 0
         width: 15
-        height: 23
+        height: 22
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.045454547}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -150,9 +150,9 @@ TextureImporter:
         x: 15
         y: 0
         width: 15
-        height: 23
+        height: 22
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.045454547}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -171,9 +171,9 @@ TextureImporter:
         x: 30
         y: 0
         width: 15
-        height: 23
+        height: 22
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.045454547}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -191,10 +191,10 @@ TextureImporter:
         serializedVersion: 2
         x: 45
         y: 0
-        width: 15
-        height: 23
+        width: 14
+        height: 22
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.53571427, y: 0.045454547}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -202,6 +202,27 @@ TextureImporter:
       bones: []
       spriteID: e6ca7ee9561142e439a93098485d5861
       internalID: 1815968752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WALK_down_black_0
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 14
+        height: 22
+      alignment: 9
+      pivot: {x: 0.53571427, y: 0.045454547}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3366ab722b64f754fa5d7fb9dda2eff2
+      internalID: 1510968619
       vertices: []
       indices: 
       edges: []
@@ -217,6 +238,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      WALK_down_black_0: 1510968619
       WALK_up_black_0: 621227738
       WALK_up_black_1: 161256921
       WALK_up_black_2: -1435157533

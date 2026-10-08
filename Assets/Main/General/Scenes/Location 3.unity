@@ -349260,6 +349260,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1474478998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6238751444926876591, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+  m_PrefabInstance: {fileID: 693244159}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1516342405
 GameObject:
   m_ObjectHideFlags: 0
@@ -703190,7 +703195,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.38
+  m_Radius: 6.48
 --- !u!114 &7540125522640460088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703198,7 +703203,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8763675792260679124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4df0c4a417a6f2041942f134cf3f7b99, type: 3}
   m_Name: 
@@ -703410,6 +703415,11 @@ GameObject:
   - component: {fileID: 7540125522640460088}
   - component: {fileID: 8763675792260679125}
   - component: {fileID: 8763675792260679126}
+  - component: {fileID: 8763675792260679130}
+  - component: {fileID: 8763675792260679129}
+  - component: {fileID: 8763675792260679128}
+  - component: {fileID: 8763675792260679127}
+  - component: {fileID: 8763675792260679131}
   m_Layer: 0
   m_Name: Teleportation device
   m_TagString: Untagged
@@ -703503,7 +703513,133 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.48
+--- !u!114 &8763675792260679127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763675792260679124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5fcbac4e247ff24c96795d8999129d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _commandReceiverObject: {fileID: 1474478998}
+  _targetTransform: {fileID: 2860807751075837897}
+  _speedMultiplier: 0.321
+  _stoppingDistance: 1
+--- !u!320 &8763675792260679128
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763675792260679124}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 7d954b4653a26444fbea13721cb48b88, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 5282583004945253529, guid: 7d954b4653a26444fbea13721cb48b88, type: 2}
+    value: {fileID: 8763675792260679131}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &8763675792260679129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763675792260679124}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ceda633d881f646bf6ff5f0b927d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _director: {fileID: 8763675792260679128}
+  _cutsceneStateToActivate: 4
+  _isReturningToGameplayInAnimationStopped: 0
+--- !u!114 &8763675792260679130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763675792260679124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d437e209f0bed0c4fb071df95ed9376e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTag: Player
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8763675792260679129}
+        m_TargetAssemblyTypeName: CutsceneActivator, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8763675792260679131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763675792260679124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 6dec642b03bc0264297826aa77968c5a, type: 2}
+    - {fileID: 11400000, guid: f06ed98fb36d025409a4056ca0515297, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8763675792260679127}
+          m_TargetAssemblyTypeName: CutsceneMovementSignalBridge, Assembly-CSharp
+          m_MethodName: MovePlayerToTarget
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7540125522640460088}
+          m_TargetAssemblyTypeName: SceneTransitionTrigger, Assembly-CSharp
+          m_MethodName: Activate
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &9115720249913883783
 MonoBehaviour:
   m_ObjectHideFlags: 0

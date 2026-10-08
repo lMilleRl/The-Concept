@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63905a327c4b0e6418f0b396c41be6dc
+guid: 8e2d78b230df9bf4e9d81edeedaea7fa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,9 +129,9 @@ TextureImporter:
         x: 0
         y: 0
         width: 15
-        height: 25
+        height: 24
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.041666668}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -150,9 +150,9 @@ TextureImporter:
         x: 15
         y: 0
         width: 15
-        height: 25
+        height: 24
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.041666668}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -171,9 +171,9 @@ TextureImporter:
         x: 30
         y: 0
         width: 15
-        height: 25
+        height: 24
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.041666668}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -192,9 +192,9 @@ TextureImporter:
         x: 45
         y: 0
         width: 15
-        height: 25
+        height: 24
       alignment: 9
-      pivot: {x: 0.5, y: 0.04}
+      pivot: {x: 0.5, y: 0.041666668}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

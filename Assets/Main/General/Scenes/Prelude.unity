@@ -1184,17 +1184,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &988939479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4562800922273715803, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-  m_PrefabInstance: {fileID: 1986642344}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1067907109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,7 +2400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb4985ebefadc646b3095e45014073e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _volume: {fileID: 988939479}
+  _volume: {fileID: 0}
 --- !u!1001 &1843364236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2855,9 +2844,17 @@ PrefabInstance:
       value: -1.7193604
       objectReference: {fileID: 0}
     - target: {fileID: 3177446812193002007, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3177446812193002007, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 431062159, guid: 63905a327c4b0e6418f0b396c41be6dc, type: 3}
+      objectReference: {fileID: 431062159, guid: 8e2d78b230df9bf4e9d81edeedaea7fa, type: 3}
+    - target: {fileID: 3789663215882543071, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3983089636480771733, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.06363119
@@ -2869,14 +2866,6 @@ PrefabInstance:
     - target: {fileID: 3983089636480771733, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0.10188681
-      objectReference: {fileID: 0}
-    - target: {fileID: 4560111470653113730, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-    - target: {fileID: 4560111470653113730, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4865652239488704858, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_Follow
@@ -2922,13 +2911,9 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.1875
       objectReference: {fileID: 0}
-    - target: {fileID: 6150850587562683563, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6150850587562683563, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+    - target: {fileID: 5543558960680635747, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.692627
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6178040654102946146, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_Name
@@ -3004,6 +2989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1332599812781250593, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+    - {fileID: 3789663215882543071, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6686993921743292629, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
     m_AddedGameObjects:
@@ -3828,6 +3814,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeDuration: 0.4
   _audioSource: {fileID: 2074844302}
+  _isToTargetFade: 0
+  _targetVolume: 1
 --- !u!320 &2080698628
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -5814,6 +5802,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeDuration: 3.465
   _audioSource: {fileID: 487813348084530268}
+  _isToTargetFade: 0
+  _targetVolume: 1
 --- !u!212 &5857568134744781393
 SpriteRenderer:
   m_ObjectHideFlags: 0

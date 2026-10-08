@@ -35282,6 +35282,10 @@ PrefabInstance:
       propertyPath: m_CustomBlends
       value: 
       objectReference: {fileID: 11400000, guid: 11c9e3d8ade4a124a806b4d736b8ecdd, type: 2}
+    - target: {fileID: 4808449470265840099, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: _climbUnitsPerCycle
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5309352928416517934, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.00000035762787
@@ -35385,6 +35389,10 @@ PrefabInstance:
     - target: {fileID: 7467303400231437831, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563378836152735142, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7654982824469954094, guid: d776ad9f3474ac340b7fc51a6febed5d, type: 3}
       propertyPath: m_RenderMode
