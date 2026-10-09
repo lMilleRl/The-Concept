@@ -48,9 +48,11 @@ Material:
     - _Frequency2: 2.3
     - _Speed1: 1
     - _Speed2: 1.7
+    - _StiffnessMax: 0.95
+    - _StiffnessMin: 0
     - _WindDirection: 1
-    - _WindStrength: 0.3031438
-    - _WindTime: 345.54593
+    - _WindStrength: 1.4970584
+    - _WindTime: 305.7743
     - _YWeight: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

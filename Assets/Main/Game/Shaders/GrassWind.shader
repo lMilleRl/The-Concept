@@ -22,6 +22,10 @@ Shader "TheConcept/GrassWind"
         _WindDirection ("Wind Direction", Vector) = (1, 1, 0, 0)
         _WindStrength ("Wind Strength", Float) = 1.5
         _WindTime ("Wind Time", Float) = 0
+
+        [Header(Instance Stiffness)]
+        _StiffnessMin ("Stiffness Min", Range(0, 1)) = 0.0
+        _StiffnessMax ("Stiffness Max", Range(0, 1)) = 1.0
         }
 
         SubShader
@@ -90,12 +94,19 @@ Shader "TheConcept/GrassWind"
             float2 _WindDirection;
             float _WindStrength;
             float _WindTime;
+            float _StiffnessMin;
+            float _StiffnessMax;
         CBUFFER_END
 
 
         float GetWavePhase(float2 worldPosition, float2 windDirection)
         {
             return dot(worldPosition, normalize(windDirection));
+        }
+
+        float GetInstanceRandom(float2 worldPosition)
+        {
+            return frac(sin(dot(worldPosition, float2(12.9898, 78.233))) * 43758.5453);
         }
 
         #if USE_SHAPE_LIGHT_TYPE_0
@@ -125,6 +136,10 @@ Shader "TheConcept/GrassWind"
 
             // World position for spatial variation
             float3 worldPos = TransformObjectToWorld(posOS);
+            float2 instanceOrigin = TransformObjectToWorld(float3(0.0, 0.0, 0.0)).xy;
+            float stiffnessMin = saturate(min(_StiffnessMin, _StiffnessMax));
+            float stiffnessMax = saturate(max(_StiffnessMin, _StiffnessMax));
+            float stiffness = lerp(stiffnessMin, stiffnessMax, GetInstanceRandom(instanceOrigin));
 
             // Fourier series: 2 harmonics
             float phasePosition = GetWavePhase(worldPos.xy, _WindDirection);
@@ -132,7 +147,7 @@ Shader "TheConcept/GrassWind"
             float wave2 = sin(phasePosition * _Frequency2 + _Time.y * _Speed2) * _Amplitude2;
 
             // Combined displacement
-            float2 displacement = (wave1 + wave2) * heightFactor * _WindStrength *
+            float2 displacement = (wave1 + wave2) * heightFactor * _WindStrength * (1.0 - stiffness) *
                 normalize(_WindDirection);
 
             posOS.x += displacement.x;
