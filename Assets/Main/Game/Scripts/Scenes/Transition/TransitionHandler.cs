@@ -53,6 +53,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
     private IEnumerator Translate(TransitionData transitionData)
     {
         SwitchToPassiveGameState();
+        VolumeAudioManager.Instance.ResumeCutscene();
 
         FadeOutSound(transitionData.FadeInPanelDurationInSec, transitionData.TransitionPanelEase);
         yield return FadeInTransitionPanel
@@ -63,6 +64,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
 
         if (!string.IsNullOrEmpty(transitionData.SceneName))
         {
+            VolumeAudioManager.Instance.MuteCutscene();
             SceneManager.LoadScene(transitionData.SceneName);
             GameStateManager.Instance.SetState(GameState.PassiveShow);
             if (_isTimeStopOnTransition)
