@@ -6,7 +6,9 @@ public class PlayerMovementInput : MonoBehaviour, IMoveInput
 
     public Vector2 GetMovementInput()
     {
-        if (!IsInputEnabled) return Vector2.zero;
+        if (!IsInputEnabled || GetRawMovementInput() == Vector2.zero)
+            return Vector2.zero;
+
         return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
     

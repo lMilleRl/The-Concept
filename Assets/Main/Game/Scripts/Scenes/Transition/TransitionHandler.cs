@@ -126,6 +126,7 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             var fadeEase = DOTween.defaultEaseType;
             Tween fadeInAnim = null;
             Tween fadeOutAnim = null;
+            bool fadeOutStarted = false;
 
             void StartFadeIn()
             {
@@ -139,11 +140,20 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
 
             void StartFadeOut()
             {
-                if (fadeOutAnim != null)
+                if (fadeOutStarted)
                     return;
 
-                fadeInAnim?.Kill();
+                fadeOutStarted = true;
+                if (fadeInAnim != null && fadeInAnim.IsActive())
+                    fadeInAnim.Kill();
                 var uiCutsceneFadeOutDuration = cutscene.UIFadeOutDurationInSec;
+                if (uiCutsceneFadeOutDuration <= 0f)
+                {
+                    _fadeCutsceneGroup.alpha = 0f;
+                    VolumeAudioManager.Instance.MuteCutscene();
+                    return;
+                }
+
                 fadeOutAnim = _fadeCutsceneGroup.DOFade(0f, uiCutsceneFadeOutDuration).SetUpdate(true);
                 VolumeAudioManager.Instance.FadeOutCutscene(uiCutsceneFadeOutDuration, fadeEase);
             }
@@ -154,7 +164,10 @@ public class TransitionHandler : MonoBehaviour, ITransitionHandler
             yield return _currentClipPlaying;
 
             StartFadeOut();
-            yield return fadeOutAnim.WaitForCompletion();
+            if (fadeOutAnim != null && fadeOutAnim.IsActive())
+                yield return fadeOutAnim.WaitForCompletion();
+
+            _fadeCutsceneGroup.alpha = 0f;
             VolumeAudioManager.Instance.MuteCutscene();
 
             yield return new WaitForSecondsRealtime(cutscene.PauseAfterCutsceneInSec);
