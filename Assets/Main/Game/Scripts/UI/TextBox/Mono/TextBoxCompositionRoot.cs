@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -55,7 +54,7 @@ namespace TextBox
             ICoroutineRunner coroutineRunner = _facadeMono;
             _typeRunner = new TypeRunner(coroutineRunner, debugWriter);
 
-            var textEffects = CreateEffects(_registry.Effects, _typeRunner);
+            var textEffects = TextBoxCompositionFactory.CreateEffects(_registry.Effects, _typeRunner);
 
             var ui = new TextBoxUI(_contentText, _board);
             
@@ -68,7 +67,7 @@ namespace TextBox
 
             var progressiveTargetService = new ProgressiveTargetService(_progressiveTargets);
             var eventRegistry = (IEventRegistry)_eventRegistry;
-            var commands = CreateCommands(_registry.Commands, _typeRunner, voiceSpeaker, textFormChanger, progressiveTargetService, debugWriter, eventRegistry);
+            var commands = TextBoxCompositionFactory.CreateCommands(_registry.Commands, _typeRunner, voiceSpeaker, textFormChanger, progressiveTargetService, debugWriter, eventRegistry);
             var coordinator = new CommandCoordinator(commands);
             _commandParser = new CommandParser(coordinator, _typeRunner, new TagParser());
 
@@ -105,69 +104,9 @@ namespace TextBox
         private void RegisterFacadeCommands(ICommandCoordinator coordinator, ITypeRunner typeRunner,
             ITextBoxFacade facade, IProgressiveTargetService progressiveTargetService, IDebugWriter debugWriter)
         {
-            var progressiveEntry = System.Array.Find(_registry.Commands, e => e.Type == TextBoxCommandType.Progressive);
-            var progressiveDefaultId = progressiveEntry.Type == TextBoxCommandType.Progressive
-                ? (ProgressiveTargetId)(int)progressiveEntry.DefaultValue
-                : ProgressiveTargetId.None;
-
-            _progressiveCommand = new ProgressiveCommand(typeRunner, facade, progressiveTargetService, debugWriter, progressiveDefaultId);
-            coordinator.Register(_progressiveCommand);
-            coordinator.Register(new ReplaceTextCommand(facade, _textRegistry, debugWriter));
-
-            _muteCommand = new MuteCommand(typeRunner, _voiceSpeaker, facade);
-            coordinator.Register(_muteCommand);
-        }
-
-        private ITextEffect[] CreateEffects(TextEffectEntry[] entries, ICharProgressProvider progressProvider)
-        {
-            var effects = new ITextEffect[entries.Length];
-
-            for (int i = 0; i < entries.Length; i++)
-            {
-                effects[i] = entries[i].Type switch
-                {
-                    TextBoxCommandType.Wave => new WaveEffect(entries[i].Params, progressProvider),
-                    TextBoxCommandType.Shake => new ShakeEffect(entries[i].Params, progressProvider),
-                    TextBoxCommandType.Distortion => new DistortionEffect(entries[i].Params, progressProvider),
-                    _ => null
-                };
-            }
-
-            return effects;
-        }
-
-        private ITextBoxCommand[] CreateCommands(TextCommandEntry[] entries,
-            ITypeRunner typeRunner, ITextBoxVoiceSpeaker voiceSpeaker, ITextFormChanger textFormChanger,
-            IProgressiveTargetService progressiveTargetService, IDebugWriter debugWriter, IEventRegistry eventRegistry)
-        {
-            var commands = new List<ITextBoxCommand>(entries.Length);
-
-            for (int i = 0; i < entries.Length; i++)
-            {
-                switch (entries[i].Type)
-                {
-                    case TextBoxCommandType.Progressive:
-                        continue;
-                    case TextBoxCommandType.ReplaceText:
-                        continue;
-                    case TextBoxCommandType.Mute:
-                        continue;
-                }
-                ITextBoxCommand commandToAdd = entries[i].Type switch
-                {
-                    TextBoxCommandType.Pause => new PauseCommand(typeRunner, entries[i].DefaultValue),
-                    TextBoxCommandType.Speed => new SpeedCommand(typeRunner, entries[i].DefaultValue),
-                    TextBoxCommandType.EaseSpeed => new EaseSpeedCommand(typeRunner, debugWriter, entries[i].DefaultValue),
-                    TextBoxCommandType.Event => new EventCommand(eventRegistry, debugWriter),
-                    TextBoxCommandType.Wave or
-                    TextBoxCommandType.Shake or
-                    TextBoxCommandType.Distortion => new EffectCommand(entries[i].Type, textFormChanger),
-                    _ => null
-                };
-                commands.Add(commandToAdd);
-            }
-
-            return commands.ToArray();
+            TextBoxCompositionFactory.RegisterFacadeCommands(coordinator, _registry.Commands, typeRunner,
+                facade, progressiveTargetService, _textRegistry, _voiceSpeaker, debugWriter,
+                out _progressiveCommand, out _muteCommand);
         }
 
         private IBoardTransition[] CreateTransitions(BoardTransitionEntry[] entries)

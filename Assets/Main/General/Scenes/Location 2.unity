@@ -169510,6 +169510,10 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 27.47
       objectReference: {fileID: 0}
+    - target: {fileID: 2708883281016216114, guid: 60e9ea4c89a4f2847afabcff55181b80, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3973692002567725042, guid: 60e9ea4c89a4f2847afabcff55181b80, type: 3}
       propertyPath: m_Name
       value: Road

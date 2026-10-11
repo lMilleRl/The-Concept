@@ -55,8 +55,8 @@ namespace TextBox
         
         public void Show(TextBoxData data)
         {
-            PrepareText(data, 0);
             _ui.ShowBoard(data.ShowTransition);
+            PrepareText(data, 0);
             _input.Enable();
 
             StartTyping(data);

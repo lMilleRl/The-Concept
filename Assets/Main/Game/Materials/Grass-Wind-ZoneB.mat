@@ -51,8 +51,8 @@ Material:
     - _StiffnessMax: 0.95
     - _StiffnessMin: 0.2
     - _WindDirection: 1
-    - _WindStrength: 1.3454998
-    - _WindTime: 472.9992
+    - _WindStrength: 1.0364457
+    - _WindTime: 244.85043
     - _YWeight: 0.6
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

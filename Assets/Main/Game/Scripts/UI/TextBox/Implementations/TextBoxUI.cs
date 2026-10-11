@@ -8,6 +8,7 @@ namespace TextBox
     {
         private readonly TMP_Text _text;
         private readonly ITextBoxBoard _board;
+        private readonly TextOverflowModes _overflowMode;
 
         private const int NoPendingPosition = -1;
 
@@ -20,7 +21,7 @@ namespace TextBox
 
         public bool IsTextInitialized => _isTextInitialized;
 
-        public TextBoxUI(TMP_Text text, ITextBoxBoard board)
+        public TextBoxUI(TMP_Text text, ITextBoxBoard board, TextOverflowModes overflowMode = TextOverflowModes.Page)
         {
             if (text == null)
                 Debug.LogError("[TextBoxUI] TMP_Text is null.");
@@ -29,6 +30,7 @@ namespace TextBox
 
             _text = text;
             _board = board;
+            _overflowMode = overflowMode;
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(OnTMPSystemTextChanged);
             _isSubscribed = true;
         }
@@ -63,9 +65,9 @@ namespace TextBox
             _isTextInitialized = false;
             _pendingCharIndex = Mathf.Max(0, startPosition);
             _text.maxVisibleCharacters = 0;
-            _text.overflowMode = TextOverflowModes.Page;
+            _text.overflowMode = _overflowMode;
             _text.text = richText;
-            _text.ForceMeshUpdate();
+            _text.ForceMeshUpdate(ignoreActiveState: true);
         }
 
         public int GetPageIndexForChar(int charIndex)
